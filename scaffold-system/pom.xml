@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.weiho.scaffold</groupId>
+        <artifactId>scaffold</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <groupId>com.weiho.scaffold.system</groupId>
+    <artifactId>scaffold-system</artifactId>
+    <version>1.0</version>
+
+    <name>Scaffold-system</name>
+    <description>Scaffold System project for Spring Scaffold</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- 引入项目公共模块 -->
+        <dependency>
+            <groupId>com.weiho.scaffold.common</groupId>
+            <artifactId>scaffold-common</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!-- 引入项目Mybatis-Plus模块 -->
+        <dependency>
+            <groupId>com.weiho.scaffold.mp</groupId>
+            <artifactId>scaffold-mp</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
