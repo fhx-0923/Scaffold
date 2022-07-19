@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.weiho.scaffold.mp</groupId>
-    <artifactId>scaffold-mp</artifactId>
+    <artifactId>scaffold-mybatis-plus</artifactId>
     <version>1.0</version>
 
     <name>Scaffold-mybatis-plus</name>

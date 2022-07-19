@@ -13,6 +13,7 @@ import com.weiho.scaffold.mp.mapper.CommonMapper;
 import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 
+
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -35,7 +36,7 @@ public class CodeGenerator {
         //父包名
         String parentPackageName = "com.weiho.scaffold.system";
         //要创建系列文件的表名
-        String[] tableNames = {"person"};
+        String[] tableNames = {"user","role","menu"};
         //若要设置Entity、Service、ServiceImpl、Controller的父类滑动下去修改
 
 

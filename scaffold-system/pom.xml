@@ -31,7 +31,7 @@
         <!-- 引入项目Mybatis-Plus模块 -->
         <dependency>
             <groupId>com.weiho.scaffold.mp</groupId>
-            <artifactId>scaffold-mp</artifactId>
+            <artifactId>scaffold-mybatis-plus</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

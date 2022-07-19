@@ -10,10 +10,10 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>scaffold-generator</artifactId>
+    <artifactId>scaffold-mybatis-generator</artifactId>
     <version>1.0</version>
 
-    <name>Scaffold-generator</name>
+    <name>Scaffold-mybatis-generator</name>
     <description>Scaffold Mybatis-Plus project for Scaffold</description>
 
     <properties>
@@ -44,7 +44,7 @@
         <!-- 引入mp模块 -->
         <dependency>
             <groupId>com.weiho.scaffold.mp</groupId>
-            <artifactId>scaffold-mp</artifactId>
+            <artifactId>scaffold-mybatis-plus</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

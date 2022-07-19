@@ -1,13 +1,13 @@
 package com.weiho.scaffold.system.mapper;
 
-import com.weiho.scaffold.system.entity.User;
+import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.mp.mapper.CommonMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
  * <p>
- * 系统用户表 Mapper 接口
+ * 系统菜单表 Mapper 接口
  * </p>
  *
  * @author Weiho
@@ -15,5 +15,5 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface UserMapper extends CommonMapper<User> {
+public interface MenuMapper extends CommonMapper<Menu> {
 }

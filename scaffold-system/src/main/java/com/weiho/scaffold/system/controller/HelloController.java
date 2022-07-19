@@ -5,8 +5,6 @@ import com.weiho.scaffold.common.annotation.NotControllerResponseAdvice;
 import com.weiho.scaffold.common.annotation.RateLimiter;
 import com.weiho.scaffold.common.limiting.enums.LimitType;
 import com.weiho.scaffold.common.util.redis.RedisUtils;
-import com.weiho.scaffold.system.entity.Testsss;
-import com.weiho.scaffold.system.mapper.UserMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

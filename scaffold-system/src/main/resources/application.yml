@@ -3,7 +3,7 @@ server:
 spring:
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher # 防止Spring Boot 2.6.X 与 SpringFox路径匹配不一致报错
+      matching-strategy: ant_path_matcher # 防止Spring Boot 2.7.X 与 SpringFox路径匹配不一致报错
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
