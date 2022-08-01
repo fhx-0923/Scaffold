@@ -16,13 +16,13 @@ public class ResponsePackException extends RuntimeException {
      * 默认错误信息
      */
     public ResponsePackException() {
-        super("Jackson -> Json序列化错误");
+        super("Jackson -> 响应体数据打包错误");
         this.code = ResultCodeEnum.SYSTEM_FORBIDDEN.getCode();
         this.msg = ResultCodeEnum.SYSTEM_FORBIDDEN.getMsg();
     }
 
     /**
-     * 默认错误信息
+     * 自定义错误信息
      */
     public ResponsePackException(String message) {
         super(message);

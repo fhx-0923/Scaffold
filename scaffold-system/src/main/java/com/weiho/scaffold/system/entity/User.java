@@ -5,14 +5,14 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.weiho.scaffold.mp.entity.CommonEntity;
-
-import java.util.Date;
-
+import com.weiho.scaffold.system.entity.enums.SexEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -47,7 +47,7 @@ public class User extends CommonEntity {
 
     @ApiModelProperty("性别 0-女 1-男")
     @TableField("sex")
-    private Integer sex;
+    private SexEnum sex;
 
     @ApiModelProperty("邮箱")
     @TableField("email")
@@ -59,7 +59,7 @@ public class User extends CommonEntity {
 
     @ApiModelProperty("状态：1启用 0禁用")
     @TableField("enabled")
-    private Long enabled;
+    private boolean enabled;
 
     @ApiModelProperty("最后修改密码时间")
     @TableField("last_pass_reset_time")

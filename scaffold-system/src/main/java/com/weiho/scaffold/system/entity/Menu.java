@@ -30,9 +30,13 @@ public class Menu extends CommonEntity {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty("组件")
+    @ApiModelProperty("组件路径")
     @TableField("component")
     private String component;
+
+    @ApiModelProperty("组件名称")
+    @TableField("component_name")
+    private String componentName;
 
     @ApiModelProperty("菜单名称")
     @TableField("name")
@@ -50,6 +54,10 @@ public class Menu extends CommonEntity {
     @TableField("path")
     private String path;
 
+    @ApiModelProperty("菜单权限")
+    @TableField("permission")
+    private String permission;
+
     @ApiModelProperty("是否保持激活")
     @TableField("keep_alive")
     private Long keepAlive;
@@ -64,6 +72,6 @@ public class Menu extends CommonEntity {
 
     @ApiModelProperty("是否启用")
     @TableField("enabled")
-    private Long enabled;
+    private boolean enabled;
 
 }

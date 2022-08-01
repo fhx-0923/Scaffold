@@ -1,6 +1,7 @@
 package com.weiho.scaffold.common.handler.exception;
 
 import com.weiho.scaffold.common.exception.BadRequestException;
+import com.weiho.scaffold.common.exception.CaptchaException;
 import com.weiho.scaffold.common.exception.RateLimitException;
 import com.weiho.scaffold.common.exception.ResponsePackException;
 import com.weiho.scaffold.common.util.result.Result;
@@ -53,6 +54,14 @@ public class GlobalExceptionHandler {
         log.error(ThrowableUtils.getStackTrace(e));
         ObjectError error = e.getBindingResult().getAllErrors().get(0);
         return Result.of(ResultCodeEnum.VALIDATE_ERROR, error.getDefaultMessage());
+    }
+
+    /**
+     * 处理验证码生成异常 CaptchaException 类
+     */
+    @ExceptionHandler({CaptchaException.class})
+    public Result captchaException(CaptchaException e) {
+        return Result.of(e.getCode(), e.getMsg(), e.getMessage());
     }
 
 }

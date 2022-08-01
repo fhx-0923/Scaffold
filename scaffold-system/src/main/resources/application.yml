@@ -98,11 +98,34 @@ scaffold:
   jwt:
     # token的请求头的key
     header: Authorization
+    # 令牌token的前缀
+    token-start-with: Bearer
+    # token加密的编码
+    secret: k09BQnaF
+    # token过期的时间（毫秒）
+    token-validity-in-seconds: 14400000
+    # token缓存中的Key前缀
+    online-key: Scaffold-Online-User-
+    # 是否允许用户单次登录
+    single-login: false
   code:
     # 存储在Redis中验证码的 Key
     code-key: Scaffold-VerifyCode-key-
     # 验证码过期时间 2 Min
     expiration: 2
+    # 验证码的类型(使用第三方jar包) https://gitee.com/ele-admin/EasyCaptcha
+    # com.wf.captcha.ArithmeticCaptcha - 算数类型(推荐)(默认是算数并且2位算术)
+    # com.wf.captcha.GifCaptcha - 动图类型(推荐)
+    # com.wf.captcha.SpecCaptcha - png类型(前后端分离用不上，最好使用Base64)
+    # com.wf.captcha.ChineseCaptcha - 中文类型(避免乱码,可用性不太高)
+    # com.wf.captcha.ChineseGifCaptcha - 中文gif类型(同上)
+    type: com.wf.captcha.ArithmeticCaptcha
+    # 验证码高度(默认40)
+    height: 40
+    # 验证码宽度(默认140)
+    width: 140
+    # 验证码的位数
+    len: 3
   swagger:
     # 是否开启Swagger
     enabled: true

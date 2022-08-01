@@ -1,9 +1,11 @@
 package com.weiho.scaffold.system;
 
+import com.weiho.scaffold.common.util.spring.SpringContextHolder;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -20,8 +22,18 @@ public class AppRun {
         SpringApplication.run(AppRun.class, args);
     }
 
+    /**
+     * 帮助工具类、过滤器等获取Spring容器中的实例
+     */
+    @Bean
+    public SpringContextHolder springContextHolder() {
+        return new SpringContextHolder();
+    }
+
+    /*
+      解决Druid连接池报警告“discard long time none received connection”
+     */
     static {
-        //解决Druid连接池报警告“discard long time none received connection”
         System.setProperty("druid.mysql.usePingMethod", "false");
     }
 }

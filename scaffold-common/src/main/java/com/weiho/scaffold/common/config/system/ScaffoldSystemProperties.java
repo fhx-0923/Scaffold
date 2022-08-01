@@ -1,5 +1,6 @@
 package com.weiho.scaffold.common.config.system;
 
+import com.weiho.scaffold.common.exception.CaptchaException;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,20 @@ public class ScaffoldSystemProperties {
     public static class JwtProperties {
         //token的头部的属性key
         private String header;
+        //令牌token的前缀
+        private String tokenStartWith;
+        //token加密的编码
+        private String secret;
+        //token过期的时间
+        private Long tokenValidityInSeconds;
+        //token缓存中的Key前缀
+        private String onlineKey;
+        //是否允许用户单次登录
+        private Boolean singleLogin;
+
+        public String getTokenStartWith() {
+            return tokenStartWith + " ";
+        }
     }
 
     @Getter
@@ -73,6 +88,22 @@ public class ScaffoldSystemProperties {
         private String codeKey;
         //验证码有效时间
         private Long expiration;
+        //验证码长度
+        private int height = 40;
+        //验证码宽度
+        private int width = 140;
+        //验证码位数
+        private int len = 2;
+        //验证码类型
+        private Class<?> type;
+
+        public CodeProperties() {
+            try {
+                this.type = Class.forName("com.wf.captcha.ArithmeticCaptcha");
+            } catch (ClassNotFoundException e) {
+                throw new CaptchaException("验证码生成异常,请联系管理员");
+            }
+        }
     }
 
     @Getter

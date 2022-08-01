@@ -195,6 +195,16 @@ public class RedisUtils {
     }
 
     /**
+     * 普通缓存获取
+     *
+     * @param key 关键
+     * @return {@link String}
+     */
+    public String getString(String key) {
+        return key == null || !redisTemplate.hasKey(key) ? "" : redisTemplate.opsForValue().get(key).toString();
+    }
+
+    /**
      * 普通缓存放入
      *
      * @param key   键
