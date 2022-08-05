@@ -4,33 +4,39 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.scripting.support.ResourceScriptSource;
+import org.springframework.util.ReflectionUtils;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 /**
  * Redis配置 (防止出现SpringBoot2.x缓存Redis序列化问题)
@@ -43,31 +49,42 @@ import java.util.Set;
 @ConditionalOnClass(RedisOperations.class)
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig extends CachingConfigurerSupport {
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
     /**
      * 设置 Redis 数据默认过期时间。默认2小时
      * 设置 @Cacheable 序列化方式
      */
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
-        FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
-        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
-        config = config.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer))//修改默认的序列化方式
-                .entryTtl(Duration.ofMinutes(5))//默认过期时间5min
+        RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new CacheableRedisSerializer<>(Object.class)))
                 .disableCachingNullValues();//设置不缓存空值
-        //设置一个初始化的缓存空间Set集合(两个空间)
-        Set<String> cacheNames = new HashSet<>();
-        cacheNames.add("Scaffold-cache1");
-        cacheNames.add("Scaffold-cache2");
-
-        //每个缓存空间设置不同策略
-        Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
-        configMap.put("Scaffold-cache1", config);
-        configMap.put("Scaffold-cache2", config.entryTtl(Duration.ofMinutes(3)));
-
-        return RedisCacheManager.builder(redisConnectionFactory)
-                .initialCacheNames(cacheNames)
-                .withInitialCacheConfigurations(configMap)
+        return RedisCacheManager.builder(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
+                .cacheDefaults(defaultCacheConfig)
+                .withInitialCacheConfigurations(buildInitCaches())
                 .build();
+    }
+
+    private Map<String, RedisCacheConfiguration> buildInitCaches() {
+        HashMap<String, RedisCacheConfiguration> cacheConfigMap = new HashMap<>();
+        Arrays.stream(applicationContext.getBeanNamesForType(Object.class))
+                .map(applicationContext::getType).filter(Objects::nonNull)
+                .forEach(clazz -> ReflectionUtils.doWithMethods(clazz, method -> {
+                            ReflectionUtils.makeAccessible(method);
+                            Cacheable cacheable = AnnotationUtils.findAnnotation(method, Cacheable.class);
+                            if (Objects.nonNull(cacheable)) {
+                                for (String cache : cacheable.cacheNames()) {
+                                    RedisSerializationContext.SerializationPair<Object> sp = RedisSerializationContext.SerializationPair
+                                            .fromSerializer(new CacheableRedisSerializer<>(method.getGenericReturnType()));
+                                    cacheConfigMap.put(cache, RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(sp).entryTtl(Duration.ofHours(2)));
+                                }
+                            }
+                        })
+                );
+        return cacheConfigMap;
     }
 
     @Bean(name = "redisTemplate")

@@ -4,18 +4,18 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.weiho.scaffold.system.entity.User">
-        <id column="id" property="id" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="is_del" property="isDel" />
-        <result column="avatar_id" property="avatarId" />
-        <result column="username" property="username" />
-        <result column="password" property="password" />
-        <result column="sex" property="sex" />
-        <result column="email" property="email" />
-        <result column="phone" property="phone" />
-        <result column="enabled" property="enabled" />
-        <result column="last_pass_reset_time" property="lastPassResetTime" />
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_del" property="isDel"/>
+        <result column="avatar_id" property="avatarId"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="sex" property="sex"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="enabled" property="enabled"/>
+        <result column="last_pass_reset_time" property="lastPassResetTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -25,5 +25,14 @@
         is_del,
         id, avatar_id, username, password, sex, email, phone, enabled, last_pass_reset_time
     </sql>
+
+    <select id="findByUsername" resultType="com.weiho.scaffold.system.entity.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        user
+        WHERE username = #{username}
+        AND is_del = 0
+    </select>
 
 </mapper>

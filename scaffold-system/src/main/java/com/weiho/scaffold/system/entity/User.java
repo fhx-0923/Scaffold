@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.Date;
 
@@ -20,13 +19,12 @@ import java.util.Date;
  * </p>
  *
  * @author Weiho
- * @since 2022-07-19
+ * @since 2022-08-04
  */
 @Getter
 @Setter
-@ToString
-@TableName("user")
 @ApiModel(value = "User对象", description = "系统用户表")
+@TableName("user")
 public class User extends CommonEntity {
 
     @ApiModelProperty("主键ID")

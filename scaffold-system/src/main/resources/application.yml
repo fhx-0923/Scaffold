@@ -2,8 +2,12 @@ server:
   port: 8888
 spring:
   mvc:
+    servlet:
+      load-on-startup: 1 # 取消 DispatcherServlet 懒加载 ，加快重启后接口调用的速度
     pathmatch:
       matching-strategy: ant_path_matcher # 防止Spring Boot 2.7.X 与 SpringFox路径匹配不一致报错
+  cache:
+    type: redis
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -95,6 +99,8 @@ pagehelper:
 
 scaffold:
   version: 1.0-SNAPSHOT
+  rsa:
+    private-key: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAK5QVo+pg09h7uqYwkacGVhx9s9etWcHCVg765+9jw+2cuspnlLjZnJ94lwC2hVfWfhES8RhQ6lWwwXJBim5BJBgFV5Y3FVpZ3gRm814Xl+NtcTaQXIDs3bVSVg1Uk/L0asAn2gCcguGecycjExmEqN2vEJUdRioNm2eR+eZHOPDAgMBAAECgYBTBmLkVFn9wmiYhp/qH8mWrdlflf2TD+/sfcXRtOjiFAWSaqVFV5hhKgJZzuXuzha9QFJSO/2NN4z2QXRVBRHdo/pEwujQ0a3tgnDP0gSmPEYJb6XYCqs7IhJVtsaFSsXJsI+tPwENjtEPU6ADQxYlfJfnQNAoP1K66oot+TTyEQJBAOrN2xiA/LpBRTj70VMLl67CENA/ZUB19E/Wj6IVdKuICMDdiUObVj/SrKCg0Ulmrj9k9Buug9EG542zXEwV8tkCQQC+DJj3d9kHVrDQOWs1J++IT/opbKjcHLs4x6SWYpKZw0+cbX1b58Upqi7MSNoyGzPG5kti8V3StT33R1/+1nH7AkA6b1zVblR3LgNCOTlRB5OKRHXWvdA/CJvyup0oY1qTzdkP1pJwptoCLDYWC6/KKqm20TMHKJlZjfRWiYqwzM2RAkBOAbW3vcWjMX4Zube7dczn0owH/MXCszhVsfxojcVGv9gpiPdvhc5zr5rN1wlYj7nM5jIDRrcQCbyJhw5r93GJAkEA1F7jbZ+toX6tjyXYfHilu14I/uaZZjOCb50ADoo5uGR2fp8X1/EKWkaVT20U6jZsbqn0qxiV+Hq3F0K9eoGZcA==
   jwt:
     # token的请求头的key
     header: Authorization

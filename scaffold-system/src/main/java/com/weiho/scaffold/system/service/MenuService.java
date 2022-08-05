@@ -1,7 +1,7 @@
 package com.weiho.scaffold.system.service;
 
-import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.mp.service.CommonService;
+import com.weiho.scaffold.system.entity.Menu;
 
 /**
  * <p>
@@ -9,7 +9,8 @@ import com.weiho.scaffold.mp.service.CommonService;
  * </p>
  *
  * @author Weiho
- * @since 2022-07-19
+ * @since 2022-08-04
  */
 public interface MenuService extends CommonService<Menu> {
+
 }

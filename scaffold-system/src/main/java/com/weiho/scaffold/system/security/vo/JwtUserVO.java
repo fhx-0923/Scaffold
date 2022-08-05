@@ -1,5 +1,6 @@
 package com.weiho.scaffold.system.security.vo;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.weiho.scaffold.system.entity.Avatar;
@@ -8,12 +9,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 /**
  * 用户登录后接收Security的用户信息与权限
@@ -23,6 +27,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
+@ToString
 @ApiModel("登录授权后用户实体")
 public class JwtUserVO implements UserDetails {
     @ApiModelProperty("主键ID")
@@ -55,31 +60,37 @@ public class JwtUserVO implements UserDetails {
 
     @ApiModelProperty("JWT创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Timestamp createTime;
 
     @JsonIgnore
+    @JSONField(serialize = false)
     @ApiModelProperty("用户权限集合")
     private Collection<SimpleGrantedAuthority> authorities;
 
     @JsonIgnore
+    @JSONField(serialize = false)
     @Override
     public String getPassword() {
         return password;
     }
 
     @JsonIgnore
+    @JSONField(serialize = false)
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @JsonIgnore
+    @JSONField(serialize = false)
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @JsonIgnore
+    @JSONField(serialize = false)
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
@@ -90,20 +101,11 @@ public class JwtUserVO implements UserDetails {
         return enabled;
     }
 
-    @Override
-    public String toString() {
-        return "JwtUserVO{" +
-                "id=" + id +
-                ", avatar=" + avatar +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", sex=" + sex +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", enabled=" + enabled +
-                ", lastPassResetTime=" + lastPassResetTime +
-                ", createTime=" + createTime +
-                ", authorities=" + authorities +
-                '}';
+    public Collection<String> getPermission() {
+        return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+    }
+
+    public void setPermission(Collection<SimpleGrantedAuthority> roles) {
+        this.authorities = roles;
     }
 }

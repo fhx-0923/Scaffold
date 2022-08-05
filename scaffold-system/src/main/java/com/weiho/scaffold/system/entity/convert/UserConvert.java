@@ -7,11 +7,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 /**
- * User转JwtUser
+ * User转JwtUserVO
  *
  * @author Weiho
  * @date 2022/7/29
  */
 @Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface JwtUserConvert extends MapStructConvert<User, JwtUserVO> {
+public interface UserConvert extends MapStructConvert<User, JwtUserVO> {
 }

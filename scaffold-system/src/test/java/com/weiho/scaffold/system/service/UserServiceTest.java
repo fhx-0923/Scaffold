@@ -1,17 +1,21 @@
-package com.weiho.scaffold.system.mapper;
+package com.weiho.scaffold.system.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * @author Weiho
+ * @date 2022/8/4
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserMapperTest {
+class UserServiceTest {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Test
-    void findByUsername() {
-        System.err.println(userMapper.findByUsername("root"));
+    void getBaseJwtUserVO() {
+        System.out.println(userService.getBaseJwtUserVO("root"));
     }
 }

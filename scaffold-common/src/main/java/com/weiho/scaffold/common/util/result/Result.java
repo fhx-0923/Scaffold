@@ -1,5 +1,6 @@
 package com.weiho.scaffold.common.util.result;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.weiho.scaffold.common.util.result.code.StatusCode;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 public class Result {
     //当前时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
     // 状态码
     private int code;

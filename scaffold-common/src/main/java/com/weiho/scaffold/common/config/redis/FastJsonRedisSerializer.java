@@ -6,6 +6,11 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * 重写FastJson的序列化器
+ *
+ * @param <T>
+ */
 public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
     private final Class<T> clazz;
 

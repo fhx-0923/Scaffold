@@ -4,21 +4,32 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.weiho.scaffold.system.entity.Role">
-        <id column="id" property="id" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="is_del" property="isDel" />
-        <result column="name" property="name" />
-        <result column="level" property="level" />
-        <result column="permission" property="permission" />
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_del" property="isDel"/>
+        <result column="name" property="name"/>
+        <result column="level" property="level"/>
+        <result column="permission" property="permission"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        create_time,
-        update_time,
-        is_del,
-        id, name, level, permission
+        r.create_time,
+        r.update_time,
+        r.is_del,
+        r.id, r.name, r.level, r.permission
     </sql>
+
+    <select id="findByUserId" resultType="com.weiho.scaffold.system.entity.Role">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        role r
+        LEFT OUTER JOIN users_roles ur on r.id = ur.role_id
+        LEFT OUTER JOIN user u on u.id = ur.user_id
+        WHERE r.is_del = 0
+        AND u.id = #{userId}
+    </select>
 
 </mapper>

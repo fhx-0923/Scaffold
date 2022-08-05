@@ -17,13 +17,13 @@ import lombok.ToString;
  * </p>
  *
  * @author Weiho
- * @since 2022-07-19
+ * @since 2022-08-04
  */
 @Getter
 @Setter
 @ToString
-@TableName("menu")
 @ApiModel(value = "Menu对象", description = "系统菜单表")
+@TableName("menu")
 public class Menu extends CommonEntity {
 
     @ApiModelProperty("主键ID")
@@ -38,6 +38,10 @@ public class Menu extends CommonEntity {
     @TableField("component_name")
     private String componentName;
 
+    @ApiModelProperty("前端使用的path")
+    @TableField("path")
+    private String path;
+
     @ApiModelProperty("菜单名称")
     @TableField("name")
     private String name;
@@ -49,10 +53,6 @@ public class Menu extends CommonEntity {
     @ApiModelProperty("后端使用的url")
     @TableField("url")
     private String url;
-
-    @ApiModelProperty("前端使用的path")
-    @TableField("path")
-    private String path;
 
     @ApiModelProperty("菜单权限")
     @TableField("permission")
@@ -74,4 +74,7 @@ public class Menu extends CommonEntity {
     @TableField("enabled")
     private boolean enabled;
 
+    @ApiModelProperty("类型 1-菜单项 2-权限菜单")
+    @TableField("type")
+    private int type;
 }

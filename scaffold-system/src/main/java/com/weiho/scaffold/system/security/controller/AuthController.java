@@ -2,14 +2,15 @@ package com.weiho.scaffold.system.security.controller;
 
 import com.weiho.scaffold.common.annotation.Anonymous;
 import com.weiho.scaffold.system.security.service.LoginService;
+import com.weiho.scaffold.system.security.vo.AuthUserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Slf4j
@@ -20,6 +21,12 @@ public class AuthController {
     @Autowired
     private LoginService loginService;
 
+    @Anonymous
+    @ApiOperation("登录授权接口")
+    @PostMapping("/login")
+    public Map<String, Object> login(@RequestBody @Validated AuthUserVO authUserVO, HttpServletRequest request) {
+        return loginService.login(authUserVO, request);
+    }
 
     @Anonymous
     @ApiOperation("获取验证码")

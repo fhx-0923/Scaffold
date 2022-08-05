@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
  * @date 2022/7/29
  */
 @Data
+@ApiModel("在线用户实体")
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("在线用户实体")
 public class OnlineUserVO {
     @ApiModelProperty("用户名")
     private String username;

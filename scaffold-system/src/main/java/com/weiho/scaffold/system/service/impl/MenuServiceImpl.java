@@ -1,9 +1,9 @@
 package com.weiho.scaffold.system.service.impl;
 
+import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.system.mapper.MenuMapper;
 import com.weiho.scaffold.system.service.MenuService;
-import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,8 +12,9 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Weiho
- * @since 2022-07-19
+ * @since 2022-08-04
  */
 @Service
 public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> implements MenuService {
+
 }

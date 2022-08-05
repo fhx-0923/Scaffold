@@ -4,14 +4,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * @author Weiho
+ * @date 2022/8/4
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserMapperTest {
+class MenuMapperTest {
 
     @Autowired
-    private UserMapper userMapper;
+    private MenuMapper menuMapper;
 
     @Test
-    void findByUsername() {
-        System.err.println(userMapper.findByUsername("root"));
+    void findMenusByRoleId() {
+        System.err.println(menuMapper.findMenusByRoleId(1L));
     }
 }

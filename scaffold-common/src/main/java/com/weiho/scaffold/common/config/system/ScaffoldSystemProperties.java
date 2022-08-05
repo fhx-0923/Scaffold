@@ -31,6 +31,8 @@ public class ScaffoldSystemProperties {
     private MonitorProperties monitorProperties;
     @Autowired
     private TaskThreadPoolProperties threadPoolProperties;
+    @Autowired
+    private RSAProperties rsaProperties;
 
     @Getter
     @Setter
@@ -130,5 +132,14 @@ public class ScaffoldSystemProperties {
         private int keepAliveSeconds;
         //线程名称前缀
         private String namePrefix;
+    }
+
+    @Getter
+    @Setter
+    @Configuration
+    @ConfigurationProperties(prefix = "scaffold.rsa")
+    public static class RSAProperties {
+        //RSA私钥
+        private String privateKey;
     }
 }

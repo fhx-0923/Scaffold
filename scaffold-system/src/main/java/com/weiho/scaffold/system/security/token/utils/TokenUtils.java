@@ -117,7 +117,7 @@ public class TokenUtils {
         String token = Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setExpiration(generateExpired())
-                .signWith(SignatureAlgorithm.ES512, secret)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
         //生成Redis的key (采用token作为key一部分防止相同用户多线程登录key唯一造成冲突)
         String key = REDIS_PREFIX_AUTH + userDetails.getUsername() + ":" + token;

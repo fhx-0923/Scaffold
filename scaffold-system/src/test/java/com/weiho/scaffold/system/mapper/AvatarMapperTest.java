@@ -4,14 +4,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * @author Weiho
+ * @date 2022/8/4
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserMapperTest {
+class AvatarMapperTest {
 
     @Autowired
-    private UserMapper userMapper;
+    private AvatarMapper avatarMapper;
 
     @Test
-    void findByUsername() {
-        System.err.println(userMapper.findByUsername("root"));
+    void selectByIdAvatar() {
+        System.err.println(avatarMapper.selectById(1L));
     }
 }
