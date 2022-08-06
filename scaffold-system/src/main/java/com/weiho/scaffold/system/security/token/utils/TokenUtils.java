@@ -1,10 +1,8 @@
 package com.weiho.scaffold.system.security.token.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSON;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.util.redis.RedisUtils;
-import com.weiho.scaffold.common.util.response.ExceptionResponseUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import io.jsonwebtoken.Claims;
@@ -16,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 /**
@@ -31,16 +28,6 @@ public class TokenUtils {
 
     @Autowired
     private ScaffoldSystemProperties.JwtProperties jwtProperties;
-
-    /**
-     * Redis权限缓存的前缀
-     */
-    private static final String REDIS_PREFIX_AUTH = "Scaffold-User-token-";
-
-    /**
-     * Redis用户信息缓存前缀
-     */
-    private static final String REDIS_PREFIX_USER = "Scaffold-User-details-";
 
     /**
      * 获得 Claims
@@ -120,7 +107,7 @@ public class TokenUtils {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
         //生成Redis的key (采用token作为key一部分防止相同用户多线程登录key唯一造成冲突)
-        String key = REDIS_PREFIX_AUTH + userDetails.getUsername() + ":" + token;
+        String key = jwtProperties.getTokenKey() + userDetails.getUsername() + ":" + token;
         //存入Redis
         redisUtils.set(key, token, jwtProperties.getTokenValidityInSeconds() / 1000);
         //将用户信息存入Redis
@@ -138,7 +125,7 @@ public class TokenUtils {
         //从token中获取用户名
         final String username = getUsernameFromToken(token);
         //组成Redis中的key
-        String key = REDIS_PREFIX_AUTH + username + ":" + token;
+        String key = jwtProperties.getTokenKey() + username + ":" + token;
         //从Redis中获取指定key的value
         Object data = redisUtils.get(key);
         //Redis中查询出来的Token
@@ -155,7 +142,7 @@ public class TokenUtils {
      */
     public void removeToken(String token) {
         final String username = getUsernameFromToken(token);
-        String key = REDIS_PREFIX_AUTH + username + ":" + token;
+        String key = jwtProperties.getTokenKey() + username + ":" + token;
         redisUtils.del(key);
         delUserDetails(username);
     }
@@ -168,8 +155,8 @@ public class TokenUtils {
      */
     protected String getUserDetailsString(String token) {
         final String username = getUsernameFromToken(token);
-        Object data = redisUtils.get(REDIS_PREFIX_USER + username);
-        return data == null ? null : data.toString();
+        Object data = redisUtils.get(jwtProperties.getDetailKey() + username);
+        return data.toString();
     }
 
     /**
@@ -178,16 +165,22 @@ public class TokenUtils {
      * @param token Token
      * @return UserDetails
      */
-    public UserDetails getUserDetails(String token, HttpServletResponse response) {
-        String userDetailsString = getUsernameFromToken(token);
+    public UserDetails getUserDetails(String token) {
+        String userDetailsString = getUserDetailsString(token);
         if (userDetailsString != null) {
-            try {
-                return new ObjectMapper().readValue(userDetailsString, JwtUserVO.class);
-            } catch (JsonProcessingException e) {
-                ExceptionResponseUtils.sendResponse(response, "无法根据token获取到用户信息");
-            }
+            return JSON.parseObject(formatUserDetailsString(userDetailsString), JwtUserVO.class);
         }
         return null;
+    }
+
+    /**
+     * 规范化json字符串，去除字符串中的permission数组，防止FastJson对中括号报异常
+     *
+     * @param userDetailsString 传入的Json字符串
+     * @return 能正常反序列化的字符串
+     */
+    public String formatUserDetailsString(String userDetailsString) {
+        return userDetailsString.replace(userDetailsString.substring(userDetailsString.indexOf("\"permission\""), userDetailsString.indexOf("]") + 2), "");
     }
 
     /**
@@ -196,7 +189,7 @@ public class TokenUtils {
      * @param userDetails 用户信息
      */
     private void putUserDetails(UserDetails userDetails) {
-        redisUtils.set(REDIS_PREFIX_USER + userDetails.getUsername(), userDetails, jwtProperties.getTokenValidityInSeconds() / 1000);
+        redisUtils.set(jwtProperties.getDetailKey() + userDetails.getUsername(), JSON.toJSON(userDetails), jwtProperties.getTokenValidityInSeconds() / 1000);
     }
 
     /**
@@ -205,7 +198,7 @@ public class TokenUtils {
      * @param username 用户名
      */
     public void delUserDetails(String username) {
-        redisUtils.del(REDIS_PREFIX_USER + username);
+        redisUtils.del(jwtProperties.getDetailKey() + username);
     }
 
     /**

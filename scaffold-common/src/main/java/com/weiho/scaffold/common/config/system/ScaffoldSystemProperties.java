@@ -71,8 +71,12 @@ public class ScaffoldSystemProperties {
         private String secret;
         //token过期的时间
         private Long tokenValidityInSeconds;
-        //token缓存中的Key前缀
+        //在线用户信息缓存中的Key前缀
         private String onlineKey;
+        //登录后用户信息的Key前缀
+        private String detailKey;
+        //登录后存储用户Token的Key
+        private String tokenKey;
         //是否允许用户单次登录
         private Boolean singleLogin;
 

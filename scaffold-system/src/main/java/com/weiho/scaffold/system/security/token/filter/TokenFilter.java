@@ -80,7 +80,7 @@ public class TokenFilter extends GenericFilterBean {
                 // token是否与已经登录的一致(缓存中的token未过期)
                 && tokenUtils.validateToken(authToken)) {
             //根据token获取Spring Security用户信息
-            UserDetails userDetails = tokenUtils.getUserDetails(authToken, (HttpServletResponse) servletResponse);
+            UserDetails userDetails = tokenUtils.getUserDetails(authToken);
             //Spring Security进行手动鉴权
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));

@@ -110,8 +110,12 @@ scaffold:
     secret: k09BQnaF
     # token过期的时间（毫秒）
     token-validity-in-seconds: 14400000
-    # token缓存中的Key前缀
+    # 在线用户信息缓存中的Key前缀
     online-key: Scaffold-Online-User-
+    # 登录后用户信息的Key前缀
+    detail-key: Scaffold-User-details-
+    # 登录后存储用户Token的Key
+    token-key: Scaffold-User-token-
     # 是否允许用户单次登录
     single-login: false
   code:

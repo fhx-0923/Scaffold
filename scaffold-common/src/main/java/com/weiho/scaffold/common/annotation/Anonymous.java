@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * 用于匿名访问方法
  *
- * @author yshopmall - https://gitee.com/guchengwuyue/yshopmall
+ * @author yshopmall - <a href="https://gitee.com/guchengwuyue/yshopmall">参考链接</a>
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

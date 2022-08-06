@@ -1,7 +1,6 @@
 package com.weiho.scaffold.system.security.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSON;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.exception.ResponsePackException;
 import com.weiho.scaffold.common.util.encrypt.EncryptUtils;
@@ -9,9 +8,9 @@ import com.weiho.scaffold.common.util.file.FileUtils;
 import com.weiho.scaffold.common.util.ip.IpUtils;
 import com.weiho.scaffold.common.util.page.PageUtils;
 import com.weiho.scaffold.common.util.redis.RedisUtils;
-import com.weiho.scaffold.common.util.response.ExceptionResponseUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.system.security.service.OnlineUserService;
+import com.weiho.scaffold.system.security.token.utils.TokenUtils;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.weiho.scaffold.system.security.vo.OnlineUserVO;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +38,9 @@ public class OnlineUserServiceImpl implements OnlineUserService {
 
     @Autowired
     private RedisUtils redisUtils;
+
+    @Autowired
+    private TokenUtils tokenUtils;
 
     @Override
     public void save(JwtUserVO jwtUser, String token, HttpServletRequest request) {
@@ -103,7 +105,11 @@ public class OnlineUserServiceImpl implements OnlineUserService {
 
     @Override
     public void logout(String token) {
-        redisUtils.del(jwtProperties.getOnlineKey() + token);
+        //清除缓存
+        String onlineCacheKey = jwtProperties.getOnlineKey() + token;
+        String tokenCacheKey = jwtProperties.getTokenKey() + tokenUtils.getUsernameFromToken(token) + ":" + token;
+        String detailCacheKey = jwtProperties.getDetailKey() + tokenUtils.getUsernameFromToken(token);
+        redisUtils.del(onlineCacheKey, tokenCacheKey, detailCacheKey);
     }
 
     @Override
@@ -123,12 +129,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
 
     @Override
     public OnlineUserVO getOne(String key, HttpServletResponse response) {
-        try {
-            return new ObjectMapper().readValue(redisUtils.getString(key), OnlineUserVO.class);
-        } catch (JsonProcessingException e) {
-            ExceptionResponseUtils.sendResponse(response, "用户不存在或token不合法");
-        }
-        return null;
+        return JSON.parseObject(redisUtils.getString(key), OnlineUserVO.class);
     }
 
     @Override

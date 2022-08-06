@@ -38,7 +38,7 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
     private RoleConvert roleConvert;
 
     @Override
-    @Cacheable(value = "Scaffold-Cacheable", key = "'loadPermissionByUser:' + #p0.getUsername()", unless = "#result.size() <= 1")
+    @Cacheable(value = "Scaffold-Permission", key = "'loadPermissionByUser:' + #p0.getUsername()", unless = "#result.size() <= 1")
     public Collection<SimpleGrantedAuthority> mapToGrantedAuthorities(User user) {
         //获取用户角色集合
         Set<Role> roles = this.getBaseMapper().findByUserId(user.getId());

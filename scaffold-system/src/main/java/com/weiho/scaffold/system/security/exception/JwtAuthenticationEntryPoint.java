@@ -1,6 +1,5 @@
 package com.weiho.scaffold.system.security.exception;
 
-import com.weiho.scaffold.common.util.response.ExceptionResponseUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -22,6 +21,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
-        ExceptionResponseUtils.sendResponse(response, "未提供任何凭据");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "未提供任何凭据");
     }
 }

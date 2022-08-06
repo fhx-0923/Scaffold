@@ -73,7 +73,7 @@ public class SwaggerConfig {
                 //设置接口名称除了"/auth"开头的不需要token
                 .paths(PathSelectors.ant("/auth/**").negate())
                 .build()
-                .groupName("需要token验证")
+                .groupName("需要token")
                 .globalRequestParameters(createHeaderRequired());
     }
 
@@ -91,7 +91,7 @@ public class SwaggerConfig {
                 //设置接口名称"/auth"开头的不需要token
                 .paths(PathSelectors.ant("/auth/**"))
                 .build()
-                .groupName("不需要token验证");
+                .groupName("不需要token");
     }
 
     /**
