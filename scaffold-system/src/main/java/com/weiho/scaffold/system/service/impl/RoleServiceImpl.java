@@ -4,7 +4,6 @@ import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.system.entity.Role;
-import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.convert.RoleConvert;
 import com.weiho.scaffold.system.entity.dto.RoleDTO;
 import com.weiho.scaffold.system.mapper.MenuMapper;
@@ -38,10 +37,10 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
     private RoleConvert roleConvert;
 
     @Override
-    @Cacheable(value = "Scaffold-Permission", key = "'loadPermissionByUser:' + #p0.getUsername()", unless = "#result.size() <= 1")
-    public Collection<SimpleGrantedAuthority> mapToGrantedAuthorities(User user) {
+    @Cacheable(value = "Scaffold-Permission", key = "'loadPermissionByUser:' + @userMapper.selectById(#p0).getUsername()", unless = "#result.size() <= 1")
+    public Collection<SimpleGrantedAuthority> mapToGrantedAuthorities(Long userId) {
         //获取用户角色集合
-        Set<Role> roles = this.getBaseMapper().findByUserId(user.getId());
+        Set<Role> roles = this.getBaseMapper().findByUserId(userId);
         Set<RoleDTO> roleDTOS = new HashSet<>();
         for (Role role : roles) {
             //转化DTO对象

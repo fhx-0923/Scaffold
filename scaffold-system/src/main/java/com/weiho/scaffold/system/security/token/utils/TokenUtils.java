@@ -5,6 +5,7 @@ import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.util.redis.RedisUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
+import com.weiho.scaffold.system.service.RoleService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,6 +29,9 @@ public class TokenUtils {
 
     @Autowired
     private ScaffoldSystemProperties.JwtProperties jwtProperties;
+
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 获得 Claims
@@ -168,7 +172,9 @@ public class TokenUtils {
     public UserDetails getUserDetails(String token) {
         String userDetailsString = getUserDetailsString(token);
         if (userDetailsString != null) {
-            return JSON.parseObject(formatUserDetailsString(userDetailsString), JwtUserVO.class);
+            JwtUserVO jwtUserVO = JSON.parseObject(formatUserDetailsString(userDetailsString), JwtUserVO.class);
+            jwtUserVO.setAuthorities(roleService.mapToGrantedAuthorities(jwtUserVO.getId()));
+            return jwtUserVO;
         }
         return null;
     }

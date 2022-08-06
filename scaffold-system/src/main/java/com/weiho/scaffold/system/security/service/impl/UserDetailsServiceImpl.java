@@ -50,7 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserDetails createJwtUserVO(User user) {
         JwtUserVO jwtUserVO = userService.getBaseJwtUserVO(user.getUsername());
         jwtUserVO.setCreateTime(DateUtils.getNowTimestamp());
-        jwtUserVO.setAuthorities(roleService.mapToGrantedAuthorities(user));
+        jwtUserVO.setAuthorities(roleService.mapToGrantedAuthorities(user.getId()));
         return jwtUserVO;
     }
 }
