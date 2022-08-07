@@ -5,19 +5,21 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.UserAgent;
-import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Objects;
 
 /**
  * IP工具类
  *
  * @author Weiho
  */
-@UtilityClass
+//@UtilityClass
 public class IpUtils {
     /**
      * 获取请求的信息
@@ -112,7 +114,7 @@ public class IpUtils {
     /**
      * 根据ip获取详细地址
      */
-    public String getCityInfo(String ip) {
+    public static String getCityInfo(String ip) {
         String api = String.format(IP_REQUEST_URL, ip);
         JSONObject object = JSONUtil.parseObj(HttpUtil.get(api));
         return object.get("addr", String.class);
@@ -124,9 +126,18 @@ public class IpUtils {
      * @param request 请求
      * @return String
      */
-    public String getBrowser(HttpServletRequest request) {
+    public static String getBrowser(HttpServletRequest request) {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
         Browser browser = userAgent.getBrowser();
         return browser.getName();
+    }
+
+    /**
+     * 获取 HttpServletRequest
+     *
+     * @return HttpServletRequest
+     */
+    public static HttpServletRequest getHttpServletRequest() {
+        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
     }
 }

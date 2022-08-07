@@ -13,7 +13,7 @@
     <artifactId>scaffold-system</artifactId>
     <version>1.0</version>
 
-    <name>Scaffold-system</name>
+    <name>系统主要模块</name>
     <description>Scaffold System project for Spring Scaffold</description>
 
     <properties>
@@ -35,6 +35,13 @@
             <version>1.0</version>
         </dependency>
 
+        <!-- 引入项目logging模块 -->
+        <dependency>
+            <groupId>com.weiho.scaffold.logging</groupId>
+            <artifactId>scaffold-logging</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!-- JWT支持 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -42,14 +49,5 @@
             <version>${jjwt.version}</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

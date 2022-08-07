@@ -26,11 +26,11 @@ public class MetaHandler implements MetaObjectHandler {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());//获取系统时间
             //先判断字段是否有Setter方法
             if (metaObject.hasSetter("createTime")) {
-                log.debug("Mybatis-Plus -> [{}]", "自动注入 createTime");
+                log.info("Mybatis-Plus -> [{}]", "自动注入 createTime");
                 this.setFieldValByName("createTime", timestamp, metaObject);//注入
             }
             if (metaObject.hasSetter("updateTime")) {
-                log.debug("Mybatis-Plus -> [{}]", "自动注入 updateTime");
+                log.info("Mybatis-Plus -> [{}]", "自动注入 updateTime");
                 this.setFieldValByName("updateTime", timestamp, metaObject);
             }
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class MetaHandler implements MetaObjectHandler {
         try {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             if (metaObject.hasSetter("updateTime")) {
-                log.debug("Mybatis-Plus -> [{}]", "自动注入 updateTime");
+                log.info("Mybatis-Plus -> [{}]", "自动注入 updateTime");
                 this.setFieldValByName("updateTime", timestamp, metaObject);
             }
         } catch (Exception e) {

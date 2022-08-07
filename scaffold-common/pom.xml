@@ -13,7 +13,7 @@
     <artifactId>scaffold-common</artifactId>
     <version>1.0</version>
 
-    <name>Scaffold-common</name>
+    <name>通用模块</name>
     <description>Scaffold Common project for Scaffold</description>
 
     <properties>

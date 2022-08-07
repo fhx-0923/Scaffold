@@ -29,13 +29,13 @@ public class CodeGenerator {
         //数据库连接密码
         String databasePassword = "970049938";
         //Java模块名称
-        String javaModuleName = "scaffold-system";
+        String javaModuleName = "scaffold-logging";
         //生成Java doc的作者名字
         String javaDocAuthorName = "Weiho";
         //父包名
-        String parentPackageName = "com.weiho.scaffold.system";
+        String parentPackageName = "com.weiho.scaffold.logging";
         //要创建系列文件的表名
-        String[] tableNames = {"user", "role", "menu"};
+        String[] tableNames = {"log"};
         //若要设置Entity、Service、ServiceImpl、Controller的父类滑动下去修改
 
 

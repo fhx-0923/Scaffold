@@ -1,0 +1,61 @@
+package com.weiho.scaffold.common.util.security;
+
+import cn.hutool.json.JSONObject;
+import com.weiho.scaffold.common.exception.BadRequestException;
+import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
+import com.weiho.scaffold.common.util.spring.SpringContextHolder;
+import lombok.experimental.UtilityClass;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+/**
+ * 获取当前登录的用户
+ *
+ * @author Weiho
+ * @date 2022/8/6
+ */
+@UtilityClass
+public class SecurityUtils {
+    /**
+     * 获取当前登录的用户信息
+     *
+     * @return 用户信息
+     */
+    public UserDetails getUserDetails() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            throw new BadRequestException(ResultCodeEnum.SYSTEM_FORBIDDEN, "当前登录状态已过期");
+        }
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            UserDetailsService userDetailsService = SpringContextHolder.getBean(UserDetailsService.class);
+            return userDetailsService.loadUserByUsername(userDetails.getUsername());
+        }
+        throw new BadRequestException(ResultCodeEnum.SYSTEM_FORBIDDEN, "找不到当前登录信息");
+    }
+
+    /**
+     * 获取当前系统用户名称
+     *
+     * @return 系统用户名称
+     */
+    public String getUsername() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            throw new BadRequestException(ResultCodeEnum.SYSTEM_FORBIDDEN, "当前登录状态已过期");
+        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
+    }
+
+    /**
+     * 获取系统用户的ID
+     *
+     * @return 系统用户的ID
+     */
+    public Long getUserId() {
+        return new JSONObject(getUserDetails()).get("id", Long.class);
+    }
+}

@@ -1,6 +1,7 @@
 package com.weiho.scaffold.system.security.controller;
 
 import com.weiho.scaffold.common.annotation.Anonymous;
+import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.system.security.service.LoginService;
 import com.weiho.scaffold.system.security.vo.AuthUserVO;
 import io.swagger.annotations.Api;
@@ -23,6 +24,7 @@ public class AuthController {
 
     @Anonymous
     @ApiOperation("登录授权接口")
+    @Logging(title = "用户登录")
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody @Validated AuthUserVO authUserVO, HttpServletRequest request) {
         return loginService.login(authUserVO, request);

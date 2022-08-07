@@ -69,7 +69,7 @@ public class LoginServiceImpl implements LoginService {
         //保存到Redis中
         redisUtils.set(uuid, result, properties.getCodeProperties().getExpiration(), TimeUnit.MINUTES);
         return new HashMap<String, Object>(3) {{
-            put("type", "verifyCode");
+            put("type", "VerifyCode");
             put("uuid", uuid);
             put("code_src", captcha.toBase64());
         }};

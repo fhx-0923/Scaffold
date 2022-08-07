@@ -14,7 +14,7 @@
     <artifactId>scaffold-mybatis-plus</artifactId>
     <version>1.0</version>
 
-    <name>Scaffold-mybatis-plus</name>
+    <name>Mybatis-Plus模块</name>
     <description>Scaffold Mybatis-Plus project for Scaffold</description>
 
     <properties>
