@@ -41,10 +41,8 @@ public class RateLimiterAspect {
 
     @Before("@annotation(rateLimiter)")
     public void doBefore(JoinPoint point, RateLimiter rateLimiter) {
-        String key = rateLimiter.key();
         int time = rateLimiter.time();
         int count = rateLimiter.count();
-
         String combineKey = getCombineKey(rateLimiter, point);
         List<Object> keys = Collections.singletonList(combineKey);
         try {
@@ -53,7 +51,7 @@ public class RateLimiterAspect {
                 if (number == null || number.intValue() > count) {
                     throw new RateLimitException("请求访问过于频繁，请稍候再试");
                 }
-                log.info("限制请求次数{},当前请求次数{},IP为{}", count, number.intValue(), IpUtils.getIp(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest()));
+                log.info("限制请求次数{},当前请求次数{},IP为{}", count, number.intValue(), IpUtils.getIp(IpUtils.getHttpServletRequest()));
             }
         } catch (RateLimitException e) {
             throw e;

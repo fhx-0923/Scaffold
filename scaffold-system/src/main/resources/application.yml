@@ -111,16 +111,16 @@ scaffold:
     # token过期的时间（毫秒）
     token-validity-in-seconds: 14400000
     # 在线用户信息缓存中的Key前缀
-    online-key: Scaffold-Online-User-
+    online-key: "Scaffold:OnlineUser:"
     # 登录后用户信息的Key前缀
-    detail-key: Scaffold-User-details-
+    detail-key: "Scaffold:UserDetails:"
     # 登录后存储用户Token的Key
-    token-key: Scaffold-User-token-
+    token-key: "Scaffold:UserToken:"
     # 是否允许用户单次登录
     single-login: false
   code:
     # 存储在Redis中验证码的 Key
-    code-key: Scaffold-VerifyCode-key-
+    code-key: "Scaffold:VerifyCode:"
     # 验证码过期时间 2 Min
     expiration: 2
     # 验证码的类型(使用第三方jar包) https://gitee.com/ele-admin/EasyCaptcha

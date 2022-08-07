@@ -16,7 +16,7 @@ public @interface RateLimiter {
     /**
      * 限流key
      */
-    String key() default "rate_limit:";
+    String key() default "Scaffold:Rate:Limit:";
 
     /**
      * 限流时间  默认60
@@ -26,7 +26,7 @@ public @interface RateLimiter {
     /**
      * 限流时间内能访问多少次 默认100
      */
-    int count() default 100;
+    int count() default 80;
 
     /**
      * 限流类型

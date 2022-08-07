@@ -1,7 +1,6 @@
 package com.weiho.scaffold.logging.service.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.weiho.scaffold.common.util.ip.IpUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.common.util.throwable.ThrowableUtils;
 import com.weiho.scaffold.logging.annotation.Logging;
@@ -39,14 +38,6 @@ public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements
     public void saveLogInfo(final JoinPoint joinPoint, HttpServletRequest request, Logging logging,
                             Log logInfo, final Exception e, Object jsonResult) {
         log.info("Log -> 开始收集操作日志信息");
-        //获取请求的IP
-        String ip = IpUtils.getIp(request);
-        //设置请求的IP
-        logInfo.setRequestIp(ip);
-        //设置请求的浏览器
-        logInfo.setBrowser(IpUtils.getBrowser(request));
-        //设置IP所在地
-        logInfo.setAddress(IpUtils.getCityInfo(ip));
         //设置操作状态
         if (e != null) {
             logInfo.setStatus(BusinessStatusEnum.FAIL.ordinal());

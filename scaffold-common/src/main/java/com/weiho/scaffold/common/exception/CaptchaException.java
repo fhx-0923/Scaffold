@@ -18,7 +18,7 @@ public class CaptchaException extends RuntimeException {
      * 默认错误信息
      */
     public CaptchaException(String message) {
-        super("Captcha -> 验证码生成异常");
+        super("Captcha -> [验证码生成异常]");
         this.code = ResultCodeEnum.FAILED.getCode();
         this.msg = message;
     }

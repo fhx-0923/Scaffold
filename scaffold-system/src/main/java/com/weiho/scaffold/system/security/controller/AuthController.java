@@ -1,6 +1,8 @@
 package com.weiho.scaffold.system.security.controller;
 
 import com.weiho.scaffold.common.annotation.Anonymous;
+import com.weiho.scaffold.common.annotation.RateLimiter;
+import com.weiho.scaffold.common.limiting.enums.LimitType;
 import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.system.security.service.LoginService;
 import com.weiho.scaffold.system.security.vo.AuthUserVO;
@@ -33,6 +35,7 @@ public class AuthController {
     @Anonymous
     @ApiOperation("获取验证码")
     @GetMapping(value = "/verifyCode")
+    @RateLimiter(limitType = LimitType.IP)
     public Map<String, Object> getVerifyCode() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         //获取验证码信息并打包成Json
         return loginService.getVerifyCodeInfo();

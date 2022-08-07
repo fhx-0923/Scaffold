@@ -5,6 +5,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.UserAgent;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,7 +20,7 @@ import java.util.Objects;
  *
  * @author Weiho
  */
-//@UtilityClass
+@UtilityClass
 public class IpUtils {
     /**
      * 获取请求的信息
@@ -32,7 +33,7 @@ public class IpUtils {
      * @param request 请求对象
      * @return IP地址
      */
-    public static String getIp(HttpServletRequest request) {
+    public String getIp(HttpServletRequest request) {
         if (request == null) {
             return "unknown";
         }
@@ -60,7 +61,7 @@ public class IpUtils {
      *
      * @return 本地IP地址
      */
-    public static String getHostIp() {
+    public String getHostIp() {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException ignored) {
@@ -73,7 +74,7 @@ public class IpUtils {
      *
      * @return 本地主机名
      */
-    public static String getHostName() {
+    public String getHostName() {
         try {
             return InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException ignored) {
@@ -87,7 +88,7 @@ public class IpUtils {
      * @param ip 获得的IP地址
      * @return 第一个非unknown IP地址
      */
-    public static String getMultistageReverseProxyIp(String ip) {
+    public String getMultistageReverseProxyIp(String ip) {
         // 多级反向代理检测
         if (ip != null && ip.indexOf(",") > 0) {
             final String[] ips = ip.trim().split(",");
@@ -107,14 +108,14 @@ public class IpUtils {
      * @param checkString 被检测的字符串
      * @return 是否未知
      */
-    public static boolean isUnknown(String checkString) {
+    public boolean isUnknown(String checkString) {
         return StringUtils.isBlank(checkString) || "unknown".equalsIgnoreCase(checkString);
     }
 
     /**
      * 根据ip获取详细地址
      */
-    public static String getCityInfo(String ip) {
+    public String getCityInfo(String ip) {
         String api = String.format(IP_REQUEST_URL, ip);
         JSONObject object = JSONUtil.parseObj(HttpUtil.get(api));
         return object.get("addr", String.class);
@@ -126,7 +127,7 @@ public class IpUtils {
      * @param request 请求
      * @return String
      */
-    public static String getBrowser(HttpServletRequest request) {
+    public String getBrowser(HttpServletRequest request) {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
         Browser browser = userAgent.getBrowser();
         return browser.getName();
@@ -137,7 +138,7 @@ public class IpUtils {
      *
      * @return HttpServletRequest
      */
-    public static HttpServletRequest getHttpServletRequest() {
+    public HttpServletRequest getHttpServletRequest() {
         return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
     }
 }

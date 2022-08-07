@@ -48,25 +48,42 @@ public class LoggingAspect {
     @AfterReturning(pointcut = "@annotation(logging)", returning = "jsonResult")
     public void doAfterReturning(JoinPoint joinPoint, Logging logging, Object jsonResult) {
         logInfo.setLogType(LogTypeEnum.INFO.getMsg());
-        //设置操作用户
-        logInfo.setUsername(getUsername());
         //获取HttpServletRequest对象
         HttpServletRequest request = IpUtils.getHttpServletRequest();
-        logInfo.setRequestMethod(request.getMethod());
-        logInfo.setRequestUrl(request.getRequestURI());
+        setLogInfoIp(logInfo, request);
         logService.saveLogInfo(joinPoint, request, logging, logInfo, null, jsonResult);
     }
 
     @AfterThrowing(value = "@annotation(logging)", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Logging logging, Exception e) {
         logInfo.setLogType(LogTypeEnum.ERROR.getMsg());
-        //设置操作用户
-        logInfo.setUsername(getUsername());
         //获取HttpServletRequest对象
         HttpServletRequest request = IpUtils.getHttpServletRequest();
-        logInfo.setRequestMethod(request.getMethod());
-        logInfo.setRequestUrl(request.getRequestURI());
+        setLogInfoIp(logInfo, request);
         logService.saveLogInfo(joinPoint, request, logging, logInfo, e, null);
+    }
+
+    /**
+     * 设置Log对象中关于HttpServletRequest的信息
+     *
+     * @param logInfo Log对象
+     * @param request 请求对象
+     */
+    public void setLogInfoIp(Log logInfo, HttpServletRequest request) {
+        //设置操作用户
+        logInfo.setUsername(getUsername());
+        //获取IP
+        String ip = IpUtils.getIp(request);
+        //设置请求的方法
+        logInfo.setRequestMethod(request.getMethod());
+        //设置请求的URL
+        logInfo.setRequestUrl(request.getRequestURI());
+        //设置请求的IP
+        logInfo.setRequestIp(ip);
+        //设置请求的浏览器
+        logInfo.setBrowser(IpUtils.getBrowser(request));
+        //设置IP所在地
+        logInfo.setAddress(IpUtils.getCityInfo(ip));
     }
 
     /**

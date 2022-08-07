@@ -25,7 +25,7 @@ public class LogoutServiceImpl implements LogoutService {
     private TokenUtils tokenUtils;
 
     @Override
-    @CacheEvict(value = "Scaffold-Permission", key = "'loadPermissionByUser:' + @tokenUtils.getUsernameFromToken(@tokenUtils.getTokenFromRequest(#p0))")
+    @CacheEvict(value = "Scaffold:Permission", key = "'loadPermissionByUser:' + @tokenUtils.getUsernameFromToken(@tokenUtils.getTokenFromRequest(#p0))")
     public Result logout(HttpServletRequest request) {
         onlineUserService.logout(tokenUtils.getTokenFromRequest(request));
         return Result.success("注销成功！");

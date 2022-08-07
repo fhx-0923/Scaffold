@@ -1,6 +1,8 @@
 package com.weiho.scaffold.system.controller;
 
 
+import com.weiho.scaffold.common.annotation.RateLimiter;
+import com.weiho.scaffold.common.limiting.enums.LimitType;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.common.util.security.SecurityUtils;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
@@ -29,6 +31,7 @@ public class UserController {
 
     @ApiOperation("获取登录后的用户信息")
     @GetMapping("/info")
+    @RateLimiter(limitType = LimitType.IP)
     public Result getUserInfo() {
         JwtUserVO jwtUserVO = (JwtUserVO) userDetailsService.loadUserByUsername(SecurityUtils.getUsername());
         return Result.success(jwtUserVO);
