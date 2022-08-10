@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,5 +26,13 @@ public interface MenuMapper extends CommonMapper<Menu> {
      * @param roleId 角色ID
      * @return 菜单集合
      */
-    Set<Menu> findMenusByRoleId(@Param("roleId") Long roleId);
+    Set<Menu> findSetByRoleId(@Param("roleId") Long roleId);
+
+    /**
+     * 根据角色ID列表查询所有能访问的菜单
+     *
+     * @param roleIds 角色ID列表
+     * @return 菜单列表
+     */
+    List<Menu> findListByRoles(@Param("roleIds") List<Long> roleIds);
 }

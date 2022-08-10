@@ -186,7 +186,7 @@ public class TokenUtils {
      * @return 能正常反序列化的字符串
      */
     public String formatUserDetailsString(String userDetailsString) {
-        return userDetailsString.replace(userDetailsString.substring(userDetailsString.indexOf("\"permission\""), userDetailsString.indexOf("]") + 2), "");
+        return userDetailsString.replace(userDetailsString.substring(userDetailsString.indexOf("\"permissions\""), userDetailsString.indexOf("]") + 2), "");
     }
 
     /**

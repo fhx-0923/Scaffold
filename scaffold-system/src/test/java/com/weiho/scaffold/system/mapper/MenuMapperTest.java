@@ -16,6 +16,6 @@ class MenuMapperTest {
 
     @Test
     void findMenusByRoleId() {
-        System.err.println(menuMapper.findMenusByRoleId(1L));
+        System.err.println(menuMapper.findSetByRoleId(1L));
     }
 }

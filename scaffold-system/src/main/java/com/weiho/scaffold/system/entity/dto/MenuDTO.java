@@ -1,84 +1,65 @@
-package com.weiho.scaffold.system.entity;
+package com.weiho.scaffold.system.entity.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.weiho.scaffold.mp.entity.CommonEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
- * <p>
- * 系统菜单表
- * </p>
- *
  * @author Weiho
- * @since 2022-08-04
+ * @date 2022/8/9
  */
-@Getter
-@Setter
-@ToString
-@ApiModel(value = "Menu对象", description = "系统菜单表")
-@TableName("menu")
-public class Menu extends CommonEntity {
-
+@Data
+@ApiModel(value = "menu的DTO对象")
+public class MenuDTO implements Serializable {
     @ApiModelProperty("主键ID")
-    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     @ApiModelProperty("组件路径")
-    @TableField("component")
     private String component;
 
     @ApiModelProperty("组件名称")
-    @TableField("component_name")
     private String componentName;
 
     @ApiModelProperty("前端使用的path")
-    @TableField("path")
     private String path;
 
     @ApiModelProperty("菜单名称")
-    @TableField("name")
     private String name;
 
     @ApiModelProperty("图标")
-    @TableField("icon_cls")
     private String iconCls;
 
     @ApiModelProperty("后端使用的url")
-    @TableField("url")
     private String url;
 
     @ApiModelProperty("菜单权限")
-    @TableField("permission")
     private String permission;
 
     @ApiModelProperty("是否保持激活")
-    @TableField("keep_alive")
     private Long keepAlive;
 
     @ApiModelProperty("是否隐藏")
-    @TableField("hidden")
     private Boolean hidden;
 
     @ApiModelProperty("上级菜单ID")
-    @TableField("parent_id")
     private Long parentId;
 
     @ApiModelProperty("是否启用")
-    @TableField("enabled")
     private boolean enabled;
 
     @ApiModelProperty("类型 1-菜单项 2-权限菜单")
-    @TableField("type")
     private int type;
 
     @ApiModelProperty("排序")
-    @TableField("sort")
     private Long sort;
+
+    @ApiModelProperty("创建时间")
+    private Timestamp createTime;
+
+    @ApiModelProperty("子菜单集合")
+    private List<MenuDTO> children;
 }

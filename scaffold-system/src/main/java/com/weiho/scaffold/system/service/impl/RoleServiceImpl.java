@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,13 +41,13 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
     @Cacheable(value = "Scaffold:Permission", key = "'loadPermissionByUser:' + @userMapper.selectById(#p0).getUsername()", unless = "#result.size() <= 1")
     public Collection<SimpleGrantedAuthority> mapToGrantedAuthorities(Long userId) {
         //获取用户角色集合
-        Set<Role> roles = this.getBaseMapper().findByUserId(userId);
+        Set<Role> roles = this.getBaseMapper().findSetByUserId(userId);
         Set<RoleDTO> roleDTOS = new HashSet<>();
         for (Role role : roles) {
             //转化DTO对象
             RoleDTO roleDTO = roleConvert.toDto(role);
             //根据角色ID获取menu集合
-            Set<Menu> menuSet = menuMapper.findMenusByRoleId(role.getId());
+            Set<Menu> menuSet = menuMapper.findSetByRoleId(role.getId());
             //放入DTO对象
             roleDTO.setMenus(menuSet);
             //加入DTO对象集合
@@ -61,5 +62,10 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
                         .filter(StringUtils::isNotBlank).collect(Collectors.toSet())
         );
         return permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Role> findListByUserId(Long userId) {
+        return this.getBaseMapper().findListByUserId(userId);
     }
 }

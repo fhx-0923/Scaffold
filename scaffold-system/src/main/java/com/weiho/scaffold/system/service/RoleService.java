@@ -5,6 +5,7 @@ import com.weiho.scaffold.system.entity.Role;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -22,4 +23,12 @@ public interface RoleService extends CommonService<Role> {
      * @return 权限集合
      */
     Collection<SimpleGrantedAuthority> mapToGrantedAuthorities(Long userId);
+
+    /**
+     * 根据用户ID查询所有的角色信息
+     *
+     * @param userId 用户ID
+     * @return 角色集合
+     */
+    List<Role> findListByUserId(Long userId);
 }

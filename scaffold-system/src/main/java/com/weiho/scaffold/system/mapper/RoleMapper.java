@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,5 +26,13 @@ public interface RoleMapper extends CommonMapper<Role> {
      * @param userId 用户ID
      * @return 角色集合
      */
-    Set<Role> findByUserId(@Param("userId") Long userId);
+    Set<Role> findSetByUserId(@Param("userId") Long userId);
+
+    /**
+     * 根据用户ID查询所有的角色信息
+     *
+     * @param userId 用户ID
+     * @return 角色集合
+     */
+    List<Role> findListByUserId(@Param("userId") Long userId);
 }

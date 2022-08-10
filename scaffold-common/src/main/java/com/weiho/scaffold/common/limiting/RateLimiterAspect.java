@@ -64,12 +64,12 @@ public class RateLimiterAspect {
     public String getCombineKey(RateLimiter rateLimiter, JoinPoint point) {
         StringBuffer stringBuffer = new StringBuffer(rateLimiter.key());
         if (rateLimiter.limitType() == LimitType.IP) {
-            stringBuffer.append(IpUtils.getIp(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest())).append("-");
+            stringBuffer.append(IpUtils.getIp(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest())).append(":");
         }
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         Class<?> targetClass = method.getDeclaringClass();
-        stringBuffer.append(targetClass.getName()).append("-").append(method.getName());
+        stringBuffer.append(targetClass.getName()).append(":").append(method.getName());
         return stringBuffer.toString();
     }
 }

@@ -71,7 +71,7 @@ public class LoginServiceImpl implements LoginService {
         return new HashMap<String, Object>(3) {{
             put("type", "VerifyCode");
             put("uuid", uuid);
-            put("code_src", captcha.toBase64());
+            put("code", captcha.toBase64());
         }};
     }
 

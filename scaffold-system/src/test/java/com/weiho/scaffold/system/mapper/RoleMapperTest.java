@@ -16,6 +16,6 @@ class RoleMapperTest {
 
     @Test
     void findByUserId() {
-        System.err.println(roleMapper.findByUserId(1L));
+        System.err.println(roleMapper.findSetByUserId(1L));
     }
 }
