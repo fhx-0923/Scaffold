@@ -95,6 +95,7 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
 
                 //处理Children
                 if (menuDTOList != null && menuDTOList.size() != 0) {
+                    menuVO.setRedirect("noRedirect");
                     //递归处理
                     menuVO.setChildren(buildMenuList(menuDTOList));
                 } else if (menuDTO.getParentId() == 0) {

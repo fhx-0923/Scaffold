@@ -25,6 +25,9 @@ public class MenuVO implements Serializable {
     @ApiModelProperty("菜单是否隐藏")
     private Boolean hidden;
 
+    @ApiModelProperty("是否重定向")
+    private String redirect;
+
     @ApiModelProperty("组件路径")
     private String component;
 
