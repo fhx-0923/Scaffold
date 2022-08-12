@@ -180,13 +180,13 @@ public class TokenUtils {
     }
 
     /**
-     * 规范化json字符串，去除字符串中的permission数组，防止FastJson对中括号报异常
+     * 规范化json字符串，去除字符串中的roles数组，防止FastJson对中括号报异常
      *
      * @param userDetailsString 传入的Json字符串
      * @return 能正常反序列化的字符串
      */
     public String formatUserDetailsString(String userDetailsString) {
-        return userDetailsString.replace(userDetailsString.substring(userDetailsString.indexOf("\"permissions\""), userDetailsString.indexOf("]") + 2), "");
+        return userDetailsString.replace(userDetailsString.substring(userDetailsString.indexOf("\"roles\""), userDetailsString.indexOf("]") + 2), "");
     }
 
     /**

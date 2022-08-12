@@ -101,11 +101,11 @@ public class JwtUserVO implements UserDetails {
         return enabled;
     }
 
-    public Collection<String> getPermissions() {
+    public Collection<String> getRoles() {
         return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
     }
 
-    public void setPermissions(Collection<SimpleGrantedAuthority> roles) {
+    public void setRoles(Collection<SimpleGrantedAuthority> roles) {
         this.authorities = roles;
     }
 }
