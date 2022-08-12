@@ -88,6 +88,8 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
                 //如果是顶级菜单，加上Layout标识，给前端处理
                 if (menuDTO.getParentId() == 0) {
                     menuVO.setComponent(StrUtil.isEmpty(menuDTO.getComponent()) ? "Layout" : menuVO.getComponent());
+                } else if (!StrUtil.isEmpty(menuDTO.getComponent())) {
+                    menuVO.setComponent(menuDTO.getComponent());
                 }
 
                 //设置Meta对象

@@ -68,7 +68,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
     public List<OnlineUserVO> getAll(String filter, int type) {
         List<String> keys = null;
         if (type == 1) {
-            keys = redisUtils.scan("m-online-token*");
+            keys = redisUtils.scan(":OnlineUser:*");
         } else {
             keys = redisUtils.scan(jwtProperties.getOnlineKey() + "*");
         }
