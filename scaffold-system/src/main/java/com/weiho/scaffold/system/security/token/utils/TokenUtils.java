@@ -169,7 +169,7 @@ public class TokenUtils {
         String userDetailsString = getUserDetailsString(token);
         if (userDetailsString != null) {
             JwtUserVO jwtUserVO = JSON.parseObject(formatUserDetailsString(userDetailsString), JwtUserVO.class);
-            jwtUserVO.setAuthorities(roleService.mapToGrantedAuthorities(jwtUserVO.getId()));
+            jwtUserVO.setAuthorities(roleService.mapToGrantedAuthorities(jwtUserVO.getId(), getUsernameFromToken(token)));
             return jwtUserVO;
         }
         return null;

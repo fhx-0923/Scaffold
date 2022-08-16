@@ -53,7 +53,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     private final ApplicationContext applicationContext;
 
     /**
-     * 设置 Redis 数据默认过期时间。默认2小时
+     * 设置 Redis 数据默认过期时间。默认1天
      * 设置 @Cacheable 序列化方式
      */
     @Bean
@@ -78,7 +78,7 @@ public class RedisConfig extends CachingConfigurerSupport {
                                 for (String cache : cacheable.cacheNames()) {
                                     RedisSerializationContext.SerializationPair<Object> sp = RedisSerializationContext.SerializationPair
                                             .fromSerializer(new CacheableRedisSerializer<>(method.getGenericReturnType()));
-                                    cacheConfigMap.put(cache, RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(sp).entryTtl(Duration.ofHours(2)));
+                                    cacheConfigMap.put(cache, RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(sp).entryTtl(Duration.ofDays(1)));
                                 }
                             }
                         })

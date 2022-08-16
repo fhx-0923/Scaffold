@@ -9,6 +9,7 @@ import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 @Api(tags = "系统用户接口")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserDetailsService userDetailsService;
 

@@ -2,6 +2,7 @@ package com.weiho.scaffold.system.service;
 
 import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.system.entity.Role;
+import com.weiho.scaffold.system.entity.User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
@@ -19,16 +20,17 @@ public interface RoleService extends CommonService<Role> {
     /**
      * 根据用户ID获取用户的所有权限
      *
-     * @param userId 用户ID
+     * @param userId   用户ID
+     * @param username 当前登录的用户名
      * @return 权限集合
      */
-    Collection<SimpleGrantedAuthority> mapToGrantedAuthorities(Long userId);
+    Collection<SimpleGrantedAuthority> mapToGrantedAuthorities(Long userId, String username);
 
     /**
      * 根据用户ID查询所有的角色信息
      *
-     * @param userId 用户ID
+     * @param user 用户实体
      * @return 角色集合
      */
-    List<Role> findListByUserId(Long userId);
+    List<Role> findListByUser(User user);
 }

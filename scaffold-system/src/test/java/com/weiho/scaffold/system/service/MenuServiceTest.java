@@ -34,6 +34,6 @@ class MenuServiceTest {
         List<Role> longs = new ArrayList<Role>() {{
             add(role);
         }};
-        System.err.println(JSON.toJSONString(menuService.buildMenuList(menuService.buildTree(menuService.findListByRoles(longs)))));
+        System.err.println(JSON.toJSONString(menuService.buildMenuList(menuService.buildTree(menuService.findListByRoles(longs, "root")))));
     }
 }

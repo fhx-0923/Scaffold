@@ -23,7 +23,7 @@ public interface MenuService extends CommonService<Menu> {
      * @param roles 角色列表
      * @return Menu列表
      */
-    List<MenuDTO> findListByRoles(List<Role> roles);
+    List<MenuDTO> findListByRoles(List<Role> roles, String username);
 
     /**
      * 根据菜单列表和父子关系构建菜单树

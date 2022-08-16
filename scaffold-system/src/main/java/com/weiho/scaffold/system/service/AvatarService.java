@@ -12,5 +12,12 @@ import com.weiho.scaffold.system.entity.Avatar;
  * @since 2022-07-29
  */
 public interface AvatarService extends CommonService<Avatar> {
-
+    /**
+     * 根据头像ID查询头像信息
+     *
+     * @param avatarId 头像ID
+     * @param username 当前登录的用户名
+     * @return 头像实体
+     */
+    Avatar selectByAvatarId(Long avatarId, String username);
 }

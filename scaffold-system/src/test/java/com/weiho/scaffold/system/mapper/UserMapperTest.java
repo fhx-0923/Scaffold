@@ -12,6 +12,6 @@ class UserMapperTest {
 
     @Test
     void findByUsername() {
-        System.err.println(userMapper.findByUsername("root"));
+//        System.err.println(userMapper.findByUsername("root"));
     }
 }

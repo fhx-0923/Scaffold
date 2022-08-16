@@ -1,6 +1,7 @@
 package com.weiho.scaffold.system.controller;
 
 import com.weiho.scaffold.common.util.security.SecurityUtils;
+import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.dto.MenuDTO;
 import com.weiho.scaffold.system.entity.vo.MenuVO;
 import com.weiho.scaffold.system.service.MenuService;
@@ -35,10 +36,11 @@ public class MenuController {
     @ApiOperation("获取前端所需菜单")
     @GetMapping("/build")
     public List<MenuVO> buildMenuList() {
+        String username = SecurityUtils.getUsername();
         //获取当前登录的用户的ID
-        Long userId = userService.findByUsername(SecurityUtils.getUsername()).getId();
+        User user = userService.findByUsername(username);
         //获取能访问的菜单列表
-        List<MenuDTO> menuDTOList = menuService.findListByRoles(roleService.findListByUserId(userId));
+        List<MenuDTO> menuDTOList = menuService.findListByRoles(roleService.findListByUser(user), username);
         //构建菜单树
         List<MenuDTO> menuDTOTree = menuService.buildTree(menuDTOList);
         //递归转成前端所需的结构,返回

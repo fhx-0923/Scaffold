@@ -1,5 +1,6 @@
 package com.weiho.scaffold.system.service;
 
+import com.weiho.scaffold.system.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,8 @@ class UserServiceTest {
 
     @Test
     void getBaseJwtUserVO() {
-        System.out.println(userService.getBaseJwtUserVO("root"));
+        User user = new User();
+        user.setUsername("root");
+        System.out.println(userService.getBaseJwtUserVO(user));
     }
 }

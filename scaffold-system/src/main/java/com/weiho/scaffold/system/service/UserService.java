@@ -14,12 +14,12 @@ import com.weiho.scaffold.system.security.vo.JwtUserVO;
  */
 public interface UserService extends CommonService<User> {
     /**
-     * 根据用户名生成基础的JwtUserVO对象(权限为空)
+     * 根据用户实体生成基础的JwtUserVO对象(权限为空)
      *
-     * @param username 用户名
+     * @param user 用户实体
      * @return 权限为空的JwtUserVO对象
      */
-    JwtUserVO getBaseJwtUserVO(String username);
+    JwtUserVO getBaseJwtUserVO(User user);
 
     /**
      * 根据用户名查找用户信息

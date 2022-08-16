@@ -21,7 +21,7 @@ class RoleServiceTest {
 
     @Test
     void mapToGrantedAuthorities() throws JsonProcessingException {
-        Collection<SimpleGrantedAuthority> list = roleService.mapToGrantedAuthorities(4L);
+        Collection<SimpleGrantedAuthority> list = roleService.mapToGrantedAuthorities(4L, "root");
         JwtUserVO jwtUserVO = new JwtUserVO();
         jwtUserVO.setAuthorities(list);
         System.err.println(jwtUserVO);
