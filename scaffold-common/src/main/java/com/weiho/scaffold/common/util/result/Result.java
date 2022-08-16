@@ -2,6 +2,7 @@ package com.weiho.scaffold.common.util.result;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.code.StatusCode;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import lombok.Data;
@@ -77,7 +78,7 @@ public class Result {
     public Result(Object data) {
         this.time = LocalDateTime.now();
         this.code = ResultCodeEnum.SUCCESS.getCode();
-        this.msg = ResultCodeEnum.SUCCESS.getMsg();
+        this.msg = I18nMessagesUtils.get("result.msg.SUCCESS");
         this.data = data;
     }
 

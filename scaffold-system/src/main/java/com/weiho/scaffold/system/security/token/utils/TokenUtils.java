@@ -9,8 +9,8 @@ import com.weiho.scaffold.system.service.RoleService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -23,15 +23,11 @@ import java.util.Date;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class TokenUtils {
-    @Autowired
-    private RedisUtils redisUtils;
-
-    @Autowired
-    private ScaffoldSystemProperties.JwtProperties jwtProperties;
-
-    @Autowired
-    private RoleService roleService;
+    private final RedisUtils redisUtils;
+    private final ScaffoldSystemProperties properties;
+    private final RoleService roleService;
 
     /**
      * 获得 Claims
@@ -43,7 +39,7 @@ public class TokenUtils {
         Claims claims;
         try {
             claims = Jwts.parser()
-                    .setSigningKey(jwtProperties.getSecret())
+                    .setSigningKey(properties.getJwtProperties().getSecret())
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
@@ -81,7 +77,7 @@ public class TokenUtils {
      * @return Date
      */
     private Date generateExpired() {
-        return new Date(System.currentTimeMillis() + jwtProperties.getTokenValidityInSeconds() * 1000);
+        return new Date(System.currentTimeMillis() + properties.getJwtProperties().getTokenValidityInSeconds() * 1000);
     }
 
     /**
@@ -103,7 +99,7 @@ public class TokenUtils {
      */
     public String generateToken(UserDetails userDetails) {
         //获取加密
-        String secret = jwtProperties.getSecret();
+        String secret = properties.getJwtProperties().getSecret();
         //根据用户名生成token
         String token = Jwts.builder()
                 .setSubject(userDetails.getUsername())
@@ -111,9 +107,9 @@ public class TokenUtils {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
         //生成Redis的key (采用token作为key一部分防止相同用户多线程登录key唯一造成冲突)
-        String key = jwtProperties.getTokenKey() + userDetails.getUsername() + ":" + token;
+        String key = properties.getJwtProperties().getTokenKey() + userDetails.getUsername() + ":" + token;
         //存入Redis
-        redisUtils.set(key, token, jwtProperties.getTokenValidityInSeconds() / 1000);
+        redisUtils.set(key, token, properties.getJwtProperties().getTokenValidityInSeconds() / 1000);
         //将用户信息存入Redis
         putUserDetails(userDetails);
         return token;
@@ -129,7 +125,7 @@ public class TokenUtils {
         //从token中获取用户名
         final String username = getUsernameFromToken(token);
         //组成Redis中的key
-        String key = jwtProperties.getTokenKey() + username + ":" + token;
+        String key = properties.getJwtProperties().getTokenKey() + username + ":" + token;
         //从Redis中获取指定key的value
         Object data = redisUtils.get(key);
         //Redis中查询出来的Token
@@ -146,7 +142,7 @@ public class TokenUtils {
      */
     public void removeToken(String token) {
         final String username = getUsernameFromToken(token);
-        String key = jwtProperties.getTokenKey() + username + ":" + token;
+        String key = properties.getJwtProperties().getTokenKey() + username + ":" + token;
         redisUtils.del(key);
         delUserDetails(username);
     }
@@ -159,7 +155,7 @@ public class TokenUtils {
      */
     protected String getUserDetailsString(String token) {
         final String username = getUsernameFromToken(token);
-        Object data = redisUtils.get(jwtProperties.getDetailKey() + username);
+        Object data = redisUtils.get(properties.getJwtProperties().getDetailKey() + username);
         return data.toString();
     }
 
@@ -195,7 +191,7 @@ public class TokenUtils {
      * @param userDetails 用户信息
      */
     private void putUserDetails(UserDetails userDetails) {
-        redisUtils.set(jwtProperties.getDetailKey() + userDetails.getUsername(), JSON.toJSON(userDetails), jwtProperties.getTokenValidityInSeconds() / 1000);
+        redisUtils.set(properties.getJwtProperties().getDetailKey() + userDetails.getUsername(), JSON.toJSON(userDetails), properties.getJwtProperties().getTokenValidityInSeconds() / 1000);
     }
 
     /**
@@ -204,7 +200,7 @@ public class TokenUtils {
      * @param username 用户名
      */
     public void delUserDetails(String username) {
-        redisUtils.del(jwtProperties.getDetailKey() + username);
+        redisUtils.del(properties.getJwtProperties().getDetailKey() + username);
     }
 
     /**
@@ -214,9 +210,9 @@ public class TokenUtils {
      * @return Token
      */
     public String getTokenFromRequest(HttpServletRequest request) {
-        final String requestHeader = request.getHeader(jwtProperties.getHeader());
-        if (requestHeader != null && requestHeader.startsWith(jwtProperties.getTokenStartWith())) {
-            return requestHeader.substring(jwtProperties.getTokenStartWith().length());
+        final String requestHeader = request.getHeader(properties.getJwtProperties().getHeader());
+        if (requestHeader != null && requestHeader.startsWith(properties.getJwtProperties().getTokenStartWith())) {
+            return requestHeader.substring(properties.getJwtProperties().getTokenStartWith().length());
         }
         return null;
     }

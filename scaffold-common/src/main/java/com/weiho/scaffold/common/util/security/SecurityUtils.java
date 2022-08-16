@@ -2,6 +2,7 @@ package com.weiho.scaffold.common.util.security;
 
 import cn.hutool.json.JSONObject;
 import com.weiho.scaffold.common.exception.BadRequestException;
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import com.weiho.scaffold.common.util.spring.SpringContextHolder;
 import lombok.experimental.UtilityClass;
@@ -26,14 +27,14 @@ public class SecurityUtils {
     public UserDetails getUserDetails() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
-            throw new BadRequestException(ResultCodeEnum.SYSTEM_FORBIDDEN, "当前登录状态已过期");
+            throw new BadRequestException(ResultCodeEnum.SYSTEM_FORBIDDEN, I18nMessagesUtils.get("security.login.overdue"));
         }
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             UserDetailsService userDetailsService = SpringContextHolder.getBean(UserDetailsService.class);
             return userDetailsService.loadUserByUsername(userDetails.getUsername());
         }
-        throw new BadRequestException(ResultCodeEnum.SYSTEM_FORBIDDEN, "找不到当前登录信息");
+        throw new BadRequestException(ResultCodeEnum.SYSTEM_FORBIDDEN, I18nMessagesUtils.get("security.login.not.found"));
     }
 
     /**
@@ -44,7 +45,7 @@ public class SecurityUtils {
     public String getUsername() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
-            throw new BadRequestException(ResultCodeEnum.SYSTEM_FORBIDDEN, "当前登录状态已过期");
+            throw new BadRequestException(ResultCodeEnum.SYSTEM_FORBIDDEN, I18nMessagesUtils.get("security.login.overdue"));
         }
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userDetails.getUsername();

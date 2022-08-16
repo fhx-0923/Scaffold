@@ -1,5 +1,6 @@
 package com.weiho.scaffold.common.exception;
 
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.code.StatusCode;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class RateLimitException extends RuntimeException {
         //状态码
         this.code = ResultCodeEnum.SYSTEM_FORBIDDEN.getCode();
         //状态码配套msg
-        this.msg = ResultCodeEnum.SYSTEM_FORBIDDEN.getMsg();
+        this.msg = I18nMessagesUtils.get("result.msg.SYSTEM_FORBIDDEN");
     }
 
     /**

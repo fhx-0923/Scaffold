@@ -3,7 +3,6 @@ package com.weiho.scaffold.common.config.system;
 import com.weiho.scaffold.common.exception.CaptchaException;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -19,20 +18,26 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "scaffold")
 public class ScaffoldSystemProperties {
     private String version;
-    @Autowired
     private SwaggerProperties swaggerProperties;
-    @Autowired
     private RateLimiterProperties rateLimiterProperties;
-    @Autowired
     private JwtProperties jwtProperties;
-    @Autowired
     private CodeProperties codeProperties;
-    @Autowired
     private MonitorProperties monitorProperties;
-    @Autowired
     private TaskThreadPoolProperties threadPoolProperties;
-    @Autowired
     private RSAProperties rsaProperties;
+
+    public ScaffoldSystemProperties(SwaggerProperties swaggerProperties, RateLimiterProperties rateLimiterProperties,
+                                    JwtProperties jwtProperties, CodeProperties codeProperties,
+                                    MonitorProperties monitorProperties, TaskThreadPoolProperties taskThreadPoolProperties,
+                                    RSAProperties rsaProperties) {
+        this.swaggerProperties = swaggerProperties;
+        this.rateLimiterProperties = rateLimiterProperties;
+        this.jwtProperties = jwtProperties;
+        this.codeProperties = codeProperties;
+        this.monitorProperties = monitorProperties;
+        this.threadPoolProperties = taskThreadPoolProperties;
+        this.rsaProperties = rsaProperties;
+    }
 
     @Getter
     @Setter
@@ -107,7 +112,7 @@ public class ScaffoldSystemProperties {
             try {
                 this.type = Class.forName("com.wf.captcha.ArithmeticCaptcha");
             } catch (ClassNotFoundException e) {
-                throw new CaptchaException("验证码生成异常,请联系管理员");
+                throw new CaptchaException();
             }
         }
     }

@@ -8,6 +8,10 @@ spring:
       matching-strategy: ant_path_matcher # 防止Spring Boot 2.7.X 与 SpringFox路径匹配不一致报错
   cache:
     type: redis
+  messages:
+    basename: i18n/messages # 国际化的资源文件相对路径
+    encoding: UTF-8
+    fallback-to-system-locale: true # 如果该属性为 true，则会默认查找当前系统对应的资源文件，否则就返回 null，返回 null 之后，最终又会调用到系统默认的 messages.properties 文件
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -99,8 +103,8 @@ pagehelper:
 
 scaffold:
   version: 1.0-SNAPSHOT
-  rsa:
-    private-key: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAK5QVo+pg09h7uqYwkacGVhx9s9etWcHCVg765+9jw+2cuspnlLjZnJ94lwC2hVfWfhES8RhQ6lWwwXJBim5BJBgFV5Y3FVpZ3gRm814Xl+NtcTaQXIDs3bVSVg1Uk/L0asAn2gCcguGecycjExmEqN2vEJUdRioNm2eR+eZHOPDAgMBAAECgYBTBmLkVFn9wmiYhp/qH8mWrdlflf2TD+/sfcXRtOjiFAWSaqVFV5hhKgJZzuXuzha9QFJSO/2NN4z2QXRVBRHdo/pEwujQ0a3tgnDP0gSmPEYJb6XYCqs7IhJVtsaFSsXJsI+tPwENjtEPU6ADQxYlfJfnQNAoP1K66oot+TTyEQJBAOrN2xiA/LpBRTj70VMLl67CENA/ZUB19E/Wj6IVdKuICMDdiUObVj/SrKCg0Ulmrj9k9Buug9EG542zXEwV8tkCQQC+DJj3d9kHVrDQOWs1J++IT/opbKjcHLs4x6SWYpKZw0+cbX1b58Upqi7MSNoyGzPG5kti8V3StT33R1/+1nH7AkA6b1zVblR3LgNCOTlRB5OKRHXWvdA/CJvyup0oY1qTzdkP1pJwptoCLDYWC6/KKqm20TMHKJlZjfRWiYqwzM2RAkBOAbW3vcWjMX4Zube7dczn0owH/MXCszhVsfxojcVGv9gpiPdvhc5zr5rN1wlYj7nM5jIDRrcQCbyJhw5r93GJAkEA1F7jbZ+toX6tjyXYfHilu14I/uaZZjOCb50ADoo5uGR2fp8X1/EKWkaVT20U6jZsbqn0qxiV+Hq3F0K9eoGZcA==
+  rsa: # 密钥对生成 http://web.chacuo.net/netrsakeypair
+    private-key: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAIb0hAgEMWJd2+a1he7Z0rHAAknNz2Pbzz3zoSTecOqfoNqhHEWzbsD4sVo6xy1FqlUau6wWeDV7IIku9F133XuQfiS96mcE9Ez/Vuqv6O/m1ceNeFz9l2F6Bp/94XjgV0/V/B3QmhvzdMFp3AWMbhJ1LqEknU5b+kVK+6hDFeFPAgMBAAECgYBFI/CgysUiSEPpJwa/IAm5101U0oR1/J9odfERGoVvLukSGYiKjSso4kC6oXJ51z806sVLnRdpDvPUVKINYOOvMARVC8bL7KzG/AiCP057R+fRv5nA6VclRV9RvAs56pfYMwCTX/PlXADkBXzi8kC6pFSvzrz3y1RD1QBe17SqAQJBAOSW5fA38vUqBB2wOA5smECjLwwfmZ8vZjZOlhglVEcyXZreI4m4E7crAu3j4AI29M72j3nAzNZokDD5Rthzpi8CQQCXI0mo8r7Q9YC/YBPcGOY1g7Utgvfsdx58WWE3zDNQm1FshJXQAeR+HbRuqk//6NIZBL1n6ZH9B387hmhO+c7hAkEAmATCZj7PFLwcgKHwpacSmensH+PkBjk/gF5C80vgAHk+Rv/0ImKIugegqxQgpVhm9jyCrjXKA80GF4uv0cMXgQJAEo67qan8sg2i/Fygs6K/CY0dfvQY2wkZTi1vWXmSR3B6w/dXqc3Br5aYJAp3fjWpLnc9hnfQfCAiiD2NqzzTIQJALAEVk2OlhwftnzTJPlLrPuWi4uonwemLGHZklQD6GmSIyyUTmnPlT+IMnFLP9CXR1V9xLc6Mpu9qkDSxoLAYTg==
   jwt:
     # token的请求头的key
     header: Authorization

@@ -5,12 +5,13 @@ import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.exception.RateLimitException;
 import com.weiho.scaffold.common.limiting.enums.LimitType;
 import com.weiho.scaffold.common.util.ip.IpUtils;
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
@@ -29,15 +30,11 @@ import java.util.List;
 @Aspect
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class RateLimiterAspect {
-    @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
-
-    @Autowired
-    private RedisScript<Long> limitScript;
-
-    @Autowired
-    ScaffoldSystemProperties.RateLimiterProperties rateLimiterProperties;
+    private final RedisTemplate<Object, Object> redisTemplate;
+    private final RedisScript<Long> limitScript;
+    private final ScaffoldSystemProperties properties;
 
     @Before("@annotation(rateLimiter)")
     public void doBefore(JoinPoint point, RateLimiter rateLimiter) {
@@ -46,10 +43,10 @@ public class RateLimiterAspect {
         String combineKey = getCombineKey(rateLimiter, point);
         List<Object> keys = Collections.singletonList(combineKey);
         try {
-            if (rateLimiterProperties.isEnabled()) {
+            if (properties.getRateLimiterProperties().isEnabled()) {
                 Long number = redisTemplate.execute(limitScript, keys, count, time);
                 if (number == null || number.intValue() > count) {
-                    throw new RateLimitException("请求访问过于频繁，请稍候再试");
+                    throw new RateLimitException(I18nMessagesUtils.get("exception.rate.limit.error"));
                 }
                 log.info("限制请求次数{},当前请求次数{},IP为{}", count, number.intValue(), IpUtils.getIp(IpUtils.getHttpServletRequest()));
             }

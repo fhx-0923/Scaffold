@@ -1,5 +1,6 @@
 package com.weiho.scaffold.common.exception;
 
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import lombok.Getter;
 
@@ -17,9 +18,9 @@ public class CaptchaException extends RuntimeException {
     /**
      * 默认错误信息
      */
-    public CaptchaException(String message) {
+    public CaptchaException() {
         super("Captcha -> [验证码生成异常]");
         this.code = ResultCodeEnum.FAILED.getCode();
-        this.msg = message;
+        this.msg = I18nMessagesUtils.get("exception.captcha.error");
     }
 }

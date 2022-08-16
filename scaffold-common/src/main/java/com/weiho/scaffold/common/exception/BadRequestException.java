@@ -1,6 +1,6 @@
 package com.weiho.scaffold.common.exception;
 
-import com.weiho.scaffold.common.util.result.code.StatusCode;
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import lombok.Getter;
 
@@ -25,7 +25,7 @@ public class BadRequestException extends RuntimeException {
         //状态码
         this.code = ResultCodeEnum.BAD_REQUEST_ERROR.getCode();
         //状态码配套msg
-        this.msg = ResultCodeEnum.BAD_REQUEST_ERROR.getMsg();
+        this.msg = I18nMessagesUtils.get("result.msg.BAD_REQUEST_ERROR");
     }
 
     /**
@@ -34,13 +34,13 @@ public class BadRequestException extends RuntimeException {
      * @param code    手动选择状态码
      * @param message 手动填入错误信息
      */
-    public BadRequestException(StatusCode code, String message) {
+    public BadRequestException(ResultCodeEnum code, String message) {
         // message用于用户设置抛出错误详情
         super(message);
         //状态码
         this.code = code.getCode();
         //状态码配套msg
-        this.msg = code.getMsg();
+        this.msg = I18nMessagesUtils.get("result.msg." + code.name());
     }
 
 }

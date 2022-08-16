@@ -1,6 +1,7 @@
 package com.weiho.scaffold.common.util.redis;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.Cursor;
@@ -24,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils {
     private RedisTemplate<Object, Object> redisTemplate;
 
+    @Autowired
     public RedisUtils(RedisTemplate<Object, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
         //解决RedisTemplate的key默认序列化问题

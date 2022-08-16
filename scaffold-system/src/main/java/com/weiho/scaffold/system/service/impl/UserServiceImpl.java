@@ -7,7 +7,7 @@ import com.weiho.scaffold.system.mapper.AvatarMapper;
 import com.weiho.scaffold.system.mapper.UserMapper;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.weiho.scaffold.system.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,12 +19,10 @@ import org.springframework.stereotype.Service;
  * @since 2022-08-04
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> implements UserService {
-    @Autowired
-    private AvatarMapper avatarMapper;
-
-    @Autowired
-    private UserConvert userConvert;
+    private final AvatarMapper avatarMapper;
+    private final UserConvert userConvert;
 
     @Override
     public JwtUserVO getBaseJwtUserVO(String username) {

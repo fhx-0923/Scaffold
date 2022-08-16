@@ -1,18 +1,20 @@
 package com.weiho.scaffold.system.security.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.crypto.asymmetric.RSA;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.exception.BadRequestException;
 import com.weiho.scaffold.common.exception.CaptchaException;
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.redis.RedisUtils;
+import com.weiho.scaffold.common.util.rsa.RsaUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.system.security.service.LoginService;
+import com.weiho.scaffold.system.security.service.OnlineUserService;
 import com.weiho.scaffold.system.security.token.utils.TokenUtils;
 import com.weiho.scaffold.system.security.vo.AuthUserVO;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.wf.captcha.base.Captcha;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -26,21 +28,13 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
-    @Autowired
-    private ScaffoldSystemProperties properties;
-
-    @Autowired
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
-
-    @Autowired
-    private RedisUtils redisUtils;
-
-    @Autowired
-    private TokenUtils tokenUtils;
-
-    @Autowired
-    private OnlineUserServiceImpl onlineUserService;
+    private final ScaffoldSystemProperties properties;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final RedisUtils redisUtils;
+    private final TokenUtils tokenUtils;
+    private final OnlineUserService onlineUserService;
 
     @Override
     public Map<String, Object> getVerifyCodeInfo() {
@@ -49,7 +43,7 @@ public class LoginServiceImpl implements LoginService {
         try {
             captcha = (Captcha) Class.forName(properties.getCodeProperties().getType().getName()).newInstance();
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            throw new CaptchaException("验证码生成异常,请联系管理员");
+            throw new CaptchaException();
         }
         //验证码设置高度
         captcha.setHeight(properties.getCodeProperties().getHeight());
@@ -68,30 +62,27 @@ public class LoginServiceImpl implements LoginService {
         String uuid = properties.getCodeProperties().getCodeKey() + IdUtil.simpleUUID();
         //保存到Redis中
         redisUtils.set(uuid, result, properties.getCodeProperties().getExpiration(), TimeUnit.MINUTES);
-        return new HashMap<String, Object>(3) {{
-            put("type", "VerifyCode");
+        return new HashMap<String, Object>(2) {{
             put("uuid", uuid);
             put("code", captcha.toBase64());
         }};
     }
 
     @Override
-    public Map<String, Object> login(AuthUserVO authUserVO, HttpServletRequest request) {
+    public Map<String, Object> login(AuthUserVO authUserVO, HttpServletRequest request) throws Exception {
         //使用RSA私钥解密
-        RSA rsa = new RSA(properties.getRsaProperties().getPrivateKey(), null);
-        //对密码进行解密
-//        String password = new String(rsa.decrypt(authUserVO.getPassword(), KeyType.PrivateKey));
+        String password = RsaUtils.decryptByPrivateKey(properties.getRsaProperties().getPrivateKey(), authUserVO.getPassword());
         //测试用
-        String password = authUserVO.getPassword();
+//        String password = authUserVO.getPassword();
         //查询验证码
         String code = (String) redisUtils.get(authUserVO.getUuid());
         //清除验证码
         redisUtils.del(authUserVO.getUuid());
         if (StringUtils.isBlank(code)) {
-            throw new BadRequestException("验证码不存在或已过期！");
+            throw new BadRequestException(I18nMessagesUtils.get("captcha.exception.not.found"));
         }
         if (StringUtils.isBlank(authUserVO.getCode()) || !authUserVO.getCode().equalsIgnoreCase(code)) {
-            throw new BadRequestException("验证码错误！");
+            throw new BadRequestException(I18nMessagesUtils.get("captcha.exception.error"));
         }
         //手动授权
         UsernamePasswordAuthenticationToken authenticationToken =

@@ -9,7 +9,7 @@ import com.weiho.scaffold.system.entity.dto.RoleDTO;
 import com.weiho.scaffold.system.mapper.MenuMapper;
 import com.weiho.scaffold.system.mapper.RoleMapper;
 import com.weiho.scaffold.system.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -29,13 +29,10 @@ import java.util.stream.Collectors;
  * @since 2022-08-04
  */
 @Service
+@RequiredArgsConstructor
 public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> implements RoleService {
-
-    @Autowired
-    private MenuMapper menuMapper;
-
-    @Autowired
-    private RoleConvert roleConvert;
+    private final MenuMapper menuMapper;
+    private final RoleConvert roleConvert;
 
     @Override
     @Cacheable(value = "Scaffold:Permission", key = "'loadPermissionByUser:' + @userMapper.selectById(#p0).getUsername()", unless = "#result.size() <= 1")

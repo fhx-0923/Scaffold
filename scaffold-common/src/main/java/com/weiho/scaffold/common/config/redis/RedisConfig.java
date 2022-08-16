@@ -2,9 +2,9 @@ package com.weiho.scaffold.common.config.redis;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -48,10 +48,9 @@ import java.util.Objects;
 @EnableCaching
 @ConditionalOnClass(RedisOperations.class)
 @EnableConfigurationProperties(RedisProperties.class)
+@RequiredArgsConstructor
 public class RedisConfig extends CachingConfigurerSupport {
-
-    @Autowired
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
     /**
      * 设置 Redis 数据默认过期时间。默认2小时
@@ -144,7 +143,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @SuppressWarnings("all")
     public CacheErrorHandler errorHandler() {
         // 异常处理，当Redis发生异常时，打印日志，但是程序正常走
-        log.info("Redis -> [{}]", "Redis缓存错误处理程序初始化");
+        log.info("Redis -> [Redis缓存错误处理程序初始化]");
         return new CacheErrorHandler() {
             @Override
             public void handleCacheGetError(RuntimeException e, Cache cache, Object key) {

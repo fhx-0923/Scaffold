@@ -1,5 +1,6 @@
 package com.weiho.scaffold.system.security.exception;
 
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.response.ExceptionResponseUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -22,6 +23,6 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        ExceptionResponseUtils.sendResponse(response, "访问受限资源时没有得到许可");
+        ExceptionResponseUtils.sendResponse(response, I18nMessagesUtils.get("access.not.denied"));
     }
 }

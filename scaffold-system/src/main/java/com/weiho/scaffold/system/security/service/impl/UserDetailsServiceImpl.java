@@ -2,11 +2,12 @@ package com.weiho.scaffold.system.security.service.impl;
 
 import com.weiho.scaffold.common.exception.BadRequestException;
 import com.weiho.scaffold.common.util.date.DateUtils;
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.weiho.scaffold.system.service.RoleService;
 import com.weiho.scaffold.system.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,22 +21,19 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("userDetailsService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByUsername(username);
         if (user == null) {
-            throw new BadRequestException("账号不存在！");
+            throw new BadRequestException(I18nMessagesUtils.get("user.not.found"));
         } else {
             if (!user.isEnabled()) {
-                throw new BadRequestException("账号未激活！");
+                throw new BadRequestException(I18nMessagesUtils.get("user.not.enabled"));
             }
             return createJwtUserVO(user);
         }

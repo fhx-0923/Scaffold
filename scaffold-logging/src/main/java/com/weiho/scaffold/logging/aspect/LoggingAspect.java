@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,12 +22,15 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 @Slf4j
 public class LoggingAspect {
-    @Autowired
-    private LogService logService;
+    private final LogService logService;
 
     private final ThreadLocal<Long> currentTime = new ThreadLocal<>();
 
     private Log logInfo;
+
+    public LoggingAspect(LogService logService) {
+        this.logService = logService;
+    }
 
     @Before(value = "@annotation(logging)")
     public void deBefore(Logging logging) {

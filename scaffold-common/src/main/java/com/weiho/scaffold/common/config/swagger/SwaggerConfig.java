@@ -2,8 +2,8 @@ package com.weiho.scaffold.common.config.swagger;
 
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,12 +26,9 @@ import java.util.List;
 @Slf4j
 @Configuration
 @EnableSwagger2
+@RequiredArgsConstructor
 public class SwaggerConfig {
-    @Autowired
-    private ScaffoldSystemProperties.SwaggerProperties swaggerProperties;
-
-    @Autowired
-    private ScaffoldSystemProperties.JwtProperties jwtProperties;
+    private final ScaffoldSystemProperties properties;
 
     /**
      * 构造分组公用的Docket
@@ -66,14 +63,14 @@ public class SwaggerConfig {
      */
     @Bean(value = "defaultApi")
     public Docket defaultApi() {
-        if (swaggerProperties.getEnabled()) {
+        if (properties.getSwaggerProperties().getEnabled()) {
             log.info("Swagger -> [{}]", "Swagger接口文档分组 '需要token验证' 初始化");
         }
-        return createCommonDocket(swaggerProperties.getEnabled(), apiInfo(), "com.weiho.scaffold")
+        return createCommonDocket(properties.getSwaggerProperties().getEnabled(), apiInfo(), "com.weiho.scaffold")
                 //设置接口名称除了"/auth"开头的不需要token
                 .paths(PathSelectors.ant("/auth/**").negate())
                 .build()
-                .groupName("需要token")
+                .groupName("需要Token")
                 .globalRequestParameters(createHeaderRequired());
     }
 
@@ -84,14 +81,14 @@ public class SwaggerConfig {
      */
     @Bean(value = "publicApi")
     public Docket publicApi() {
-        if (swaggerProperties.getEnabled()) {
+        if (properties.getSwaggerProperties().getEnabled()) {
             log.info("Swagger -> [{}]", "Swagger接口文档分组 '不需要token验证' 初始化");
         }
-        return createCommonDocket(swaggerProperties.getEnabled(), apiInfo(), "com.weiho.scaffold")
+        return createCommonDocket(properties.getSwaggerProperties().getEnabled(), apiInfo(), "com.weiho.scaffold")
                 //设置接口名称"/auth"开头的不需要token
                 .paths(PathSelectors.ant("/auth/**"))
                 .build()
-                .groupName("不需要token");
+                .groupName("不需要Token");
     }
 
     /**
@@ -101,10 +98,10 @@ public class SwaggerConfig {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title(swaggerProperties.getTitle())
-                .description(swaggerProperties.getDescription())
+                .title(properties.getSwaggerProperties().getTitle())
+                .description(properties.getSwaggerProperties().getDescription())
                 .contact(new Contact("Scaffold By Weiho", "", "970049938@qq.com"))
-                .version(swaggerProperties.getVersion())
+                .version(properties.getSwaggerProperties().getVersion())
                 .build();
     }
 
@@ -128,7 +125,7 @@ public class SwaggerConfig {
      */
     public List<RequestParameter> createHeaderRequired() {
         List<RequestParameter> parameters = new ArrayList<>();
-        parameters.add(new RequestParameterBuilder().description("token").name(jwtProperties.getHeader())
+        parameters.add(new RequestParameterBuilder().description("token").name(properties.getJwtProperties().getHeader())
                 .in(ParameterType.HEADER).required(true)
                 .query(param -> param.model(model -> model.scalarModel(ScalarType.STRING))).build());
         return parameters;

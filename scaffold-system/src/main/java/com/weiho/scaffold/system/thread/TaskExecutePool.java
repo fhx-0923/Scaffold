@@ -2,7 +2,6 @@ package com.weiho.scaffold.system.thread;
 
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -18,23 +17,25 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 @Slf4j
 public class TaskExecutePool implements AsyncConfigurer {
+    private final ScaffoldSystemProperties properties;
 
-    @Autowired
-    private ScaffoldSystemProperties.TaskThreadPoolProperties threadPoolProperties;
+    public TaskExecutePool(ScaffoldSystemProperties properties) {
+        this.properties = properties;
+    }
 
     @Override
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new VisibleThreadPoolTaskExecutor();
         //核心线程数
-        executor.setCorePoolSize(threadPoolProperties.getCorePoolSize());
+        executor.setCorePoolSize(properties.getThreadPoolProperties().getCorePoolSize());
         //最大线程数
-        executor.setMaxPoolSize(threadPoolProperties.getMaxPoolSize());
+        executor.setMaxPoolSize(properties.getThreadPoolProperties().getMaxPoolSize());
         //队列容量
-        executor.setQueueCapacity(threadPoolProperties.getQueueCapacity());
+        executor.setQueueCapacity(properties.getThreadPoolProperties().getQueueCapacity());
         //活跃时间
-        executor.setKeepAliveSeconds(threadPoolProperties.getKeepAliveSeconds());
+        executor.setKeepAliveSeconds(properties.getThreadPoolProperties().getKeepAliveSeconds());
         //线程名字前缀
-        executor.setThreadNamePrefix(threadPoolProperties.getNamePrefix());
+        executor.setThreadNamePrefix(properties.getThreadPoolProperties().getNamePrefix());
         // setRejectedExecutionHandler：当pool已经达到max size的时候，如何处理新任务
         // CallerRunsPolicy：不在新线程中执行任务，而是由调用者所在的线程来执行
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());

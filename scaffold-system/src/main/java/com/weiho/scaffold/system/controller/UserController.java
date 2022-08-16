@@ -8,7 +8,7 @@ import com.weiho.scaffold.common.util.security.SecurityUtils;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/user")
 @Api(tags = "系统用户接口")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @ApiOperation("获取登录后的用户信息")
     @GetMapping("/info")

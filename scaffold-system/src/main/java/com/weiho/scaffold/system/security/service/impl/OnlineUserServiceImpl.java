@@ -10,11 +10,10 @@ import com.weiho.scaffold.common.util.page.PageUtils;
 import com.weiho.scaffold.common.util.redis.RedisUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.system.security.service.OnlineUserService;
-import com.weiho.scaffold.system.security.token.utils.TokenUtils;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.weiho.scaffold.system.security.vo.OnlineUserVO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -32,15 +31,10 @@ import java.util.*;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class OnlineUserServiceImpl implements OnlineUserService {
-    @Autowired
-    private ScaffoldSystemProperties.JwtProperties jwtProperties;
-
-    @Autowired
-    private RedisUtils redisUtils;
-
-    @Autowired
-    private TokenUtils tokenUtils;
+    private final ScaffoldSystemProperties properties;
+    private final RedisUtils redisUtils;
 
     @Override
     public void save(JwtUserVO jwtUser, String token, HttpServletRequest request) {
@@ -57,8 +51,8 @@ public class OnlineUserServiceImpl implements OnlineUserService {
                     browser, ip, address, EncryptUtils.desEncrypt(token),
                     new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
             //存入Redis
-            redisUtils.set(jwtProperties.getOnlineKey() + token,
-                    onlineUser, jwtProperties.getTokenValidityInSeconds() / 1000);
+            redisUtils.set(properties.getJwtProperties().getOnlineKey() + token,
+                    onlineUser, properties.getJwtProperties().getTokenValidityInSeconds() / 1000);
         } catch (Exception e) {
             throw new ResponsePackException();
         }
@@ -70,7 +64,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
         if (type == 1) {
             keys = redisUtils.scan(":OnlineUser:*");
         } else {
-            keys = redisUtils.scan(jwtProperties.getOnlineKey() + "*");
+            keys = redisUtils.scan(properties.getJwtProperties().getOnlineKey() + "*");
         }
         Collections.reverse(keys);
         List<OnlineUserVO> onlineUsers = new ArrayList<>();
@@ -99,17 +93,15 @@ public class OnlineUserServiceImpl implements OnlineUserService {
 
     @Override
     public void kickOut(String key) throws Exception {
-        key = jwtProperties.getOnlineKey() + EncryptUtils.desDecrypt(key);
+        key = properties.getJwtProperties().getOnlineKey() + EncryptUtils.desDecrypt(key);
         redisUtils.del(key);
     }
 
     @Override
     public void logout(String token) {
         //清除缓存
-        String onlineCacheKey = jwtProperties.getOnlineKey() + token;
-        String tokenCacheKey = jwtProperties.getTokenKey() + tokenUtils.getUsernameFromToken(token) + ":" + token;
-        String detailCacheKey = jwtProperties.getDetailKey() + tokenUtils.getUsernameFromToken(token);
-        redisUtils.del(onlineCacheKey, tokenCacheKey, detailCacheKey);
+        String onlineCacheKey = properties.getJwtProperties().getOnlineKey() + token;
+        redisUtils.del(onlineCacheKey);
     }
 
     @Override

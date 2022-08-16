@@ -20,5 +20,5 @@ public interface LoginService {
      * @param request    请求
      * @return 返回token和用户信息给前端
      */
-    Map<String, Object> login(AuthUserVO authUserVO, HttpServletRequest request);
+    Map<String, Object> login(AuthUserVO authUserVO, HttpServletRequest request) throws Exception;
 }

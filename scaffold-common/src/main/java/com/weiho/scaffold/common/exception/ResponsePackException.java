@@ -1,5 +1,6 @@
 package com.weiho.scaffold.common.exception;
 
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import lombok.Getter;
 
@@ -18,7 +19,7 @@ public class ResponsePackException extends RuntimeException {
     public ResponsePackException() {
         super("Jackson -> [响应体数据打包错误]");
         this.code = ResultCodeEnum.SYSTEM_FORBIDDEN.getCode();
-        this.msg = ResultCodeEnum.SYSTEM_FORBIDDEN.getMsg();
+        this.msg = I18nMessagesUtils.get("result.msg.SYSTEM_FORBIDDEN");
     }
 
     /**
@@ -27,6 +28,6 @@ public class ResponsePackException extends RuntimeException {
     public ResponsePackException(String message) {
         super(message);
         this.code = ResultCodeEnum.SYSTEM_FORBIDDEN.getCode();
-        this.msg = ResultCodeEnum.SYSTEM_FORBIDDEN.getMsg();
+        this.msg = I18nMessagesUtils.get("result.msg.SYSTEM_FORBIDDEN");
     }
 }

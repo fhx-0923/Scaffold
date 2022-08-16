@@ -24,10 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint(value = "/websocket/monitor", configurator = MyEndpointConfigure.class)
 public class MonitorServer {
     @Autowired
-    AsyncTaskExecutor asyncTaskExecutor;
+    private AsyncTaskExecutor asyncTaskExecutor;
 
     @Autowired
-    private ScaffoldSystemProperties.MonitorProperties monitorProperties;
+    private ScaffoldSystemProperties properties;
     /**
      * 连接集合
      */
@@ -40,7 +40,7 @@ public class MonitorServer {
     public void onOpen(Session session) {
         //添加到集合中
         sessionMap.put(session.getId(), session);
-        if (monitorProperties.isEnabled()) {
+        if (properties.getMonitorProperties().isEnabled()) {
             //获取系统监控信息
             asyncTaskExecutor.submit(() -> {
                 log.info("MonitorServer系统检测任务开始");

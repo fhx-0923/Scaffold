@@ -11,7 +11,7 @@ import com.weiho.scaffold.system.entity.vo.MenuMetaVO;
 import com.weiho.scaffold.system.entity.vo.MenuVO;
 import com.weiho.scaffold.system.mapper.MenuMapper;
 import com.weiho.scaffold.system.service.MenuService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,11 +26,12 @@ import java.util.stream.Collectors;
  * @since 2022-08-04
  */
 @Service
+@RequiredArgsConstructor
 public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> implements MenuService {
+    private final MenuConvert menuConvert;
 
-    @Autowired
-    private MenuConvert menuConvert;
-
+    //    @Cacheable(value = "Scaffold:MenuList",key = "'loadByUser:' + ")
+// TODO: 2022/8/15  
     @Override
     public List<MenuDTO> findListByRoles(List<Role> roles) {
         List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());

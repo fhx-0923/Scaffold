@@ -4,8 +4,7 @@ import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.system.security.service.LogoutService;
 import com.weiho.scaffold.system.security.service.OnlineUserService;
 import com.weiho.scaffold.system.security.token.utils.TokenUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,15 +16,12 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2022/8/5
  */
 @Service
+@RequiredArgsConstructor
 public class LogoutServiceImpl implements LogoutService {
-    @Autowired
-    private OnlineUserService onlineUserService;
-
-    @Autowired
-    private TokenUtils tokenUtils;
+    private final OnlineUserService onlineUserService;
+    private final TokenUtils tokenUtils;
 
     @Override
-    @CacheEvict(value = "Scaffold:Permission", key = "'loadPermissionByUser:' + @tokenUtils.getUsernameFromToken(@tokenUtils.getTokenFromRequest(#p0))")
     public Result logout(HttpServletRequest request) {
         onlineUserService.logout(tokenUtils.getTokenFromRequest(request));
         return Result.success("注销成功！");

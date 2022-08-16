@@ -5,7 +5,7 @@ import com.weiho.scaffold.system.security.exception.JwtAccessDeniedHandler;
 import com.weiho.scaffold.system.security.exception.JwtAuthenticationEntryPoint;
 import com.weiho.scaffold.system.security.token.config.TokenConfigurer;
 import com.weiho.scaffold.system.security.token.utils.TokenUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,21 +37,13 @@ import java.util.Set;
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)//开启Spring Security注解支持
+@RequiredArgsConstructor
 public class SecurityConfig {
-    @Autowired
-    private TokenUtils tokenUtils;
-
-    @Autowired
-    private CorsFilter corsFilter;
-
-    @Autowired
-    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
-    @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-    @Autowired
-    private ApplicationContext applicationContext;
+    private final TokenUtils tokenUtils;
+    private final CorsFilter corsFilter;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final ApplicationContext applicationContext;
 
     /**
      * 去除 ROLE_ 前缀
