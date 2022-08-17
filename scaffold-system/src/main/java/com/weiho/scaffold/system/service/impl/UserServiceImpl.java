@@ -8,7 +8,6 @@ import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.weiho.scaffold.system.service.AvatarService;
 import com.weiho.scaffold.system.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> implements UserService {
     private final AvatarService avatarService;
     private final UserConvert userConvert;
@@ -37,9 +35,12 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     }
 
     @Override
-    @Cacheable(value = "Scaffold:Commons:User", key = "'loadUserByUsername:' + #p0")
+    @Cacheable(value = "Scaffold:Commons:User", key = "'loadUserByUsername:' + #p0", unless = "#result == null || #result.enabled == false")
     public User findByUsername(String username) {
-        log.debug("拉取用户信息开始");
-        return this.getBaseMapper().findByUsername(username);
+        try {
+            return this.getBaseMapper().findByUsername(username);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

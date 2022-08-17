@@ -30,6 +30,18 @@ public class MenuDTO implements Serializable {
     @ApiModelProperty("菜单名称")
     private String name;
 
+    @ApiModelProperty("菜单中文名字")
+    private String nameZhCn;
+
+    @ApiModelProperty("菜单中国香港名字")
+    private String nameZhHk;
+
+    @ApiModelProperty("菜单中国台湾名字")
+    private String nameZhTw;
+
+    @ApiModelProperty("菜单英文名字")
+    private String nameEnUs;
+
     @ApiModelProperty("图标")
     private String iconCls;
 

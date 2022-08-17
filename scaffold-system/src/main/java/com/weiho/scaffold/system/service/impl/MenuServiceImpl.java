@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -71,7 +72,9 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
     }
 
     @Override
-    public List<MenuVO> buildMenuList(List<MenuDTO> menuDTOS) {
+    public List<MenuVO> buildMenuList(List<MenuDTO> menuDTOS, HttpServletRequest request) {
+        //获取语言环境
+        String language = request.getHeader("Accept-Language");
         //采用链表结构，提高add和remove有效率
         List<MenuVO> menuVOs = new LinkedList<>();
         menuDTOS.forEach(menuDTO -> {
@@ -81,7 +84,7 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
                 //构造VO对象
                 MenuVO menuVO = new MenuVO();
                 //设置菜单名称 (如果组件名不为空则拿组件名，否则拿name)
-                menuVO.setName(ObjectUtil.isNotEmpty(menuDTO.getComponentName()) ? menuDTO.getComponentName() : menuDTO.getName());
+                menuVO.setName(ObjectUtil.isNotEmpty(menuDTO.getComponentName()) ? menuDTO.getComponentName() : getMenuNameForLanguage(menuDTO, language));
                 //一级目录的path需要加上'/'
                 menuVO.setPath(menuDTO.getParentId() == 0 ? "/" + menuDTO.getPath() : menuDTO.getPath());
                 menuVO.setHidden(menuDTO.getHidden());
@@ -94,20 +97,20 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
                 }
 
                 //设置Meta对象
-                menuVO.setMeta(new MenuMetaVO(menuDTO.getName(), menuDTO.getIconCls()));
+                menuVO.setMeta(new MenuMetaVO(getMenuNameForLanguage(menuDTO, language), menuDTO.getIconCls()));
 
                 //处理Children
                 if (menuDTOList != null && menuDTOList.size() != 0) {
                     menuVO.setRedirect("noRedirect");
                     //递归处理
-                    menuVO.setChildren(buildMenuList(menuDTOList));
+                    menuVO.setChildren(buildMenuList(menuDTOList, request));
                 } else if (menuDTO.getParentId() == 0) {
                     //当一级菜单没有子菜单
                     //构造一个子菜单
                     MenuVO menuVO1 = new MenuVO();
                     menuVO1.setMeta(menuVO.getMeta());
                     menuVO1.setPath("index");
-                    menuVO1.setName(menuVO.getName());
+                    menuVO1.setName(getMenuNameForLanguage(menuDTO, language));
                     menuVO1.setComponent(menuVO.getComponent());
                     menuVO1.setHidden(false);
 
@@ -125,5 +128,20 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
             }
         });
         return menuVOs;
+    }
+
+    public String getMenuNameForLanguage(MenuDTO menuDTO, String language) {
+        switch (language) {
+            case "zh-CN":
+                return menuDTO.getNameZhCn();
+            case "zh-HK":
+                return menuDTO.getNameZhHk();
+            case "zh-TW":
+                return menuDTO.getNameZhTw();
+            case "en-US":
+                return menuDTO.getNameEnUs();
+            default:
+                return menuDTO.getName();
+        }
     }
 }

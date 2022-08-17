@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class MenuController {
 
     @ApiOperation("获取前端所需菜单")
     @GetMapping("/build")
-    public List<MenuVO> buildMenuList() {
+    public List<MenuVO> buildMenuList(HttpServletRequest request) {
         String username = SecurityUtils.getUsername();
         //获取当前登录的用户的ID
         User user = userService.findByUsername(username);
@@ -44,6 +45,6 @@ public class MenuController {
         //构建菜单树
         List<MenuDTO> menuDTOTree = menuService.buildTree(menuDTOList);
         //递归转成前端所需的结构,返回
-        return menuService.buildMenuList(menuDTOTree);
+        return menuService.buildMenuList(menuDTOTree, request);
     }
 }

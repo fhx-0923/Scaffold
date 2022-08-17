@@ -6,6 +6,7 @@ import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.dto.MenuDTO;
 import com.weiho.scaffold.system.entity.vo.MenuVO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -39,5 +40,5 @@ public interface MenuService extends CommonService<Menu> {
      * @param menuDTOS 菜单树
      * @return 前端所需的路由表json
      */
-    List<MenuVO> buildMenuList(List<MenuDTO> menuDTOS);
+    List<MenuVO> buildMenuList(List<MenuDTO> menuDTOS, HttpServletRequest request);
 }

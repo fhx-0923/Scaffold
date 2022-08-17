@@ -46,6 +46,22 @@ public class Menu extends CommonEntity {
     @TableField("name")
     private String name;
 
+    @ApiModelProperty("菜单中文名字")
+    @TableField("name_zh_cn")
+    private String nameZhCn;
+
+    @ApiModelProperty("菜单中国香港名字")
+    @TableField("name_zh_hk")
+    private String nameZhHk;
+
+    @ApiModelProperty("菜单中国台湾名字")
+    @TableField("name_zh_tw")
+    private String nameZhTw;
+
+    @ApiModelProperty("菜单英文名字")
+    @TableField("name_en_us")
+    private String nameEnUs;
+
     @ApiModelProperty("图标")
     @TableField("icon_cls")
     private String iconCls;
