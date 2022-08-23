@@ -14,6 +14,8 @@ import com.weiho.scaffold.system.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> implements MenuService {
     private final MenuConvert menuConvert;
 

@@ -123,7 +123,9 @@ public class ScaffoldSystemProperties {
     @ConfigurationProperties(prefix = "scaffold.monitor")
     public static class MonitorProperties {
         //是否开启系统参数监测
-        private boolean enabled = false;
+        private boolean systemMonitorEnabled = false;
+        //是否开启实时控制台传输
+        private boolean loggingMonitorEnabled = false;
     }
 
     @Getter

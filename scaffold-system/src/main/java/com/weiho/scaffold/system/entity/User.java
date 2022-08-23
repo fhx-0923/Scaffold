@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.weiho.scaffold.mp.entity.CommonEntity;
+import com.weiho.scaffold.mp.handler.EncryptHandler;
 import com.weiho.scaffold.system.entity.enums.SexEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,7 +25,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ApiModel(value = "User对象", description = "系统用户表")
-@TableName("user")
+@TableName(value = "user", autoResultMap = true)
 public class User extends CommonEntity {
 
     @ApiModelProperty("主键ID")
@@ -40,7 +41,7 @@ public class User extends CommonEntity {
     private String username;
 
     @ApiModelProperty("密码")
-    @TableField("password")
+    @TableField(value = "password", typeHandler = EncryptHandler.class)
     private String password;
 
     @ApiModelProperty("性别 0-女 1-男")
@@ -48,11 +49,11 @@ public class User extends CommonEntity {
     private SexEnum sex;
 
     @ApiModelProperty("邮箱")
-    @TableField("email")
+    @TableField(value = "email", typeHandler = EncryptHandler.class)
     private String email;
 
     @ApiModelProperty("手机号码")
-    @TableField("phone")
+    @TableField(value = "phone", typeHandler = EncryptHandler.class)
     private String phone;
 
     @ApiModelProperty("状态：1启用 0禁用")

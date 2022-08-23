@@ -114,7 +114,7 @@ public class SecurityConfig {
                         "/**/*.css",
                         "/**/*.js",
                         "/websocket/**",
-                        "/avatar/**"
+                        "/local/avatar/**"
                 ).permitAll()
                 //放行Swagger文档
                 .antMatchers("/swagger-ui.html").permitAll()
@@ -131,6 +131,9 @@ public class SecurityConfig {
 
                 //放行 OPTION 请求
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                //放行favicon.ico图标
+                .antMatchers("/favicon.ico").permitAll()
 
                 //放行添加了 @Anonymous 注解的方法
                 .antMatchers(anonymousUrls.toArray(new String[0])).permitAll()

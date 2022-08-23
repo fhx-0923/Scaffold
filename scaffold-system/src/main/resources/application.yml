@@ -1,6 +1,8 @@
 server:
   port: 8888
 spring:
+  application:
+    name: Scaffold
   mvc:
     servlet:
       load-on-startup: 1 # 取消 DispatcherServlet 懒加载 ，加快重启后接口调用的速度
@@ -53,6 +55,10 @@ spring:
         reset-enable: false
         login-username: druid
         login-password: druid
+        allow: ""
+      web-stat-filter:
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
       filter:
         stat:
           enabled: true
@@ -151,18 +157,20 @@ scaffold:
     version: SNAPSHOT
   thread-pool:
     # 核心线程数
-    corePoolSize: 20
+    core-pool-size: 20
     # 最大线程数
-    maxPoolSize: 40
+    max-pool-size: 40
     # 队列大小
-    queueCapacity: 999
+    queue-capacity: 999
     # 活跃时间
-    keepAliveSeconds: 300
+    keep-alive-seconds: 300
     # 线程名称前缀
-    namePrefix: Scaffold-async-thread-
+    name-prefix: Scaffold-async-thread-
   limit:
     # 是否开启接口限流
     enabled: true
   monitor:
     # 是否开启 WebSocket 系统状态监控
-    enabled: false
+    system-monitor-enabled: true
+    # 是否开启实时控制台传输
+    logging-monitor-enabled: true

@@ -10,10 +10,10 @@
         <result column="is_del" property="isDel"/>
         <result column="avatar_id" property="avatarId"/>
         <result column="username" property="username"/>
-        <result column="password" property="password"/>
+        <result column="password" property="password" typeHandler="com.weiho.scaffold.mp.handler.EncryptHandler"/>
         <result column="sex" property="sex"/>
-        <result column="email" property="email"/>
-        <result column="phone" property="phone"/>
+        <result column="email" property="email" typeHandler="com.weiho.scaffold.mp.handler.EncryptHandler"/>
+        <result column="phone" property="phone" typeHandler="com.weiho.scaffold.mp.handler.EncryptHandler"/>
         <result column="enabled" property="enabled"/>
         <result column="last_pass_reset_time" property="lastPassResetTime"/>
     </resultMap>
@@ -26,7 +26,7 @@
         id, avatar_id, username, password, sex, email, phone, enabled, last_pass_reset_time
     </sql>
 
-    <select id="findByUsername" resultType="com.weiho.scaffold.system.entity.User">
+    <select id="findByUsername" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM

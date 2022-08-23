@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * 配置跨域
@@ -13,7 +16,8 @@ import org.springframework.web.filter.CorsFilter;
  * @date 2022/7/29
  */
 @Configuration
-public class GlobalCorsConfig {
+@EnableWebMvc
+public class GlobalCorsConfig implements WebMvcConfigurer {
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -36,6 +40,14 @@ public class GlobalCorsConfig {
         config.addAllowedMethod("PATCH");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/local/**").addResourceLocations("file:" + System.getProperty("user.dir") + "/").setCachePeriod(0);
+        registry.addResourceHandler("/favicon.ico").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }
 

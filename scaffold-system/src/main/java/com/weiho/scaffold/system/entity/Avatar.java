@@ -22,7 +22,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@TableName("avatar")
+@TableName(autoResultMap = true, value = "avatar")
 @ApiModel(value = "Avatar对象", description = "用户头像表")
 public class Avatar extends CommonEntity {
 
@@ -31,7 +31,7 @@ public class Avatar extends CommonEntity {
     private Long id;
 
     @ApiModelProperty("真实文件名")
-    @TableField("real_name")
+    @TableField(value = "real_name")
     private String realName;
 
     @ApiModelProperty("文件路径")
