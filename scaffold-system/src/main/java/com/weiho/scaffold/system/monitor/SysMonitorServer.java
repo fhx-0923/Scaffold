@@ -2,11 +2,12 @@ package com.weiho.scaffold.system.monitor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
+import com.weiho.scaffold.common.util.monitor.Monitor;
 import com.weiho.scaffold.common.util.monitor.SystemMonitorUtils;
 import com.weiho.scaffold.common.util.websocket.WebSocketErrorUtils;
-import com.weiho.scaffold.system.monitor.websocket.MyEndpointConfigure;
+import com.weiho.scaffold.system.monitor.config.MyEndpointConfigure;
+import com.weiho.scaffold.system.monitor.entity.WebSocketResult;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -17,17 +18,22 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * WebSocket获取实时系统监控并输出到Web页面
+ *
+ * @author huanzi-qch <a href="https://www.cnblogs.com/huanzi-qch/">参考链接</a>
  */
 @Slf4j
 @Component
 @SuppressWarnings("all")
 @ServerEndpoint(value = "/websocket/monitor", configurator = MyEndpointConfigure.class)
-public class MonitorServer {
-    @Autowired
-    private AsyncTaskExecutor asyncTaskExecutor;
+public class SysMonitorServer {
+    private final AsyncTaskExecutor asyncTaskExecutor;
+    private final ScaffoldSystemProperties properties;
 
-    @Autowired
-    private ScaffoldSystemProperties properties;
+    public SysMonitorServer(AsyncTaskExecutor asyncTaskExecutor, ScaffoldSystemProperties properties) {
+        this.asyncTaskExecutor = asyncTaskExecutor;
+        this.properties = properties;
+    }
+
     /**
      * 连接集合
      */
@@ -40,14 +46,14 @@ public class MonitorServer {
     public void onOpen(Session session) {
         //添加到集合中
         sessionMap.put(session.getId(), session);
-        if (properties.getMonitorProperties().isEnabled()) {
+        if (properties.getMonitorProperties().isSystemMonitorEnabled()) {
             //获取系统监控信息
             asyncTaskExecutor.submit(() -> {
-                log.info("MonitorServer系统检测任务开始");
+                log.info("Monitor -> [SysMonitorServer 系统监测任务开始]");
                 while (sessionMap.get(session.getId()) != null) {
                     try {
                         //获取系统监控信息 发送
-                        send(session, new ObjectMapper().writeValueAsString(SystemMonitorUtils.getSysMonitor()));
+                        send(session, new ObjectMapper().writeValueAsString(new WebSocketResult<Monitor>(10006, SystemMonitorUtils.getSysMonitor())));
                         //休眠一秒
                         Thread.sleep(1000);
                     } catch (Exception e) {
@@ -55,7 +61,7 @@ public class MonitorServer {
                         log.error(WebSocketErrorUtils.errorInfoToString(e));
                     }
                 }
-                log.info("MonitorServer系统检测任务结束");
+                log.info("Monitor -> [SysMonitorServer 系统监测任务结束]");
             });
         }
     }

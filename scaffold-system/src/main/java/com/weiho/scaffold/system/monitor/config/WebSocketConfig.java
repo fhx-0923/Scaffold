@@ -1,4 +1,4 @@
-package com.weiho.scaffold.system.monitor.websocket;
+package com.weiho.scaffold.system.monitor.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -32,7 +32,7 @@
         <apache-commons-lang3.version>3.12.0</apache-commons-lang3.version>
         <apache-commons-codec.version>1.15</apache-commons-codec.version>
         <hutool.version>5.8.4</hutool.version>
-        <druid.version>1.2.11</druid.version>
+        <druid.version>1.2.8</druid.version>
         <swagger.version>3.0.0</swagger.version>
         <knife4j.version>3.0.3</knife4j.version>
         <swagger-annotations.version>1.6.6</swagger-annotations.version>

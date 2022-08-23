@@ -11,6 +11,7 @@ import lombok.Data;
 public class Monitor {
     private String os;//操作系统
     private String runTime;//程序启动时间
+    private String timeNow;//当前系统时间
     private String jvmJavaVersion;//java版本
 
     //jvm

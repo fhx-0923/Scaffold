@@ -1,6 +1,7 @@
 package com.weiho.scaffold.common.util.monitor;
 
 import com.sun.management.OperatingSystemMXBean;
+import com.weiho.scaffold.common.util.date.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import oshi.SystemInfo;
 import oshi.hardware.HWDiskStore;
@@ -37,26 +38,27 @@ public class SystemMonitorUtils {
     }
 
     public static Monitor getSysMonitor() {
+        monitor.setTimeNow(DateUtils.getNowDateToStr());
         //jvm
         MemoryUsage heapInfo = getHeapInfo();
-        monitor.setJvmHeapInit(decimalFormat.format(heapInfo.getInit() / 1024 / 1024));
-        monitor.setJvmHeapMax(decimalFormat.format(heapInfo.getMax() / 1024 / 1024));
-        monitor.setJvmHeapUsed(decimalFormat.format(heapInfo.getUsed() / 1024 / 1024));
-        monitor.setJvmHeapCommitted(decimalFormat.format(heapInfo.getCommitted() / 1024 / 1024));
+        monitor.setJvmHeapInit(decimalFormat.format(Double.parseDouble(String.valueOf(heapInfo.getInit())) / 1024 / 1024));
+        monitor.setJvmHeapMax(decimalFormat.format(Double.parseDouble(String.valueOf(heapInfo.getMax())) / 1024 / 1024));
+        monitor.setJvmHeapUsed(decimalFormat.format(Double.parseDouble(String.valueOf(heapInfo.getUsed())) / 1024 / 1024));
+        monitor.setJvmHeapCommitted(decimalFormat.format(Double.parseDouble(String.valueOf(heapInfo.getCommitted())) / 1024 / 1024));
         MemoryUsage noHeapInfo = getNoHeapInfo();
-        monitor.setJvmNonHeapInit(decimalFormat.format(noHeapInfo.getInit() / 1024 / 1024));
-        monitor.setJvmNonHeapMax(decimalFormat.format(noHeapInfo.getMax() / 1024 / 1024));
-        monitor.setJvmNonHeapUsed(decimalFormat.format(noHeapInfo.getUsed() / 1024 / 1024));
-        monitor.setJvmNonHeapCommitted(decimalFormat.format(noHeapInfo.getCommitted() / 1024 / 1024));
+        monitor.setJvmNonHeapInit(decimalFormat.format(Double.parseDouble(String.valueOf(noHeapInfo.getInit())) / 1024 / 1024));
+        monitor.setJvmNonHeapMax(decimalFormat.format(Double.parseDouble(String.valueOf(noHeapInfo.getMax())) / 1024 / 1024));
+        monitor.setJvmNonHeapUsed(decimalFormat.format(Double.parseDouble(String.valueOf(noHeapInfo.getUsed())) / 1024 / 1024));
+        monitor.setJvmNonHeapCommitted(decimalFormat.format(Double.parseDouble(String.valueOf(noHeapInfo.getCommitted())) / 1024 / 1024));
 
         //系统信息
         monitor.setCpuUseRate(decimalFormat.format(getCpuUsage() * 100));
         OperatingSystemMXBean memoryUsage = getMemoryUsage();
-        monitor.setRamTotal(decimalFormat.format(memoryUsage.getTotalPhysicalMemorySize() / 1024 / 1024 / 1024));
-        monitor.setRamUsed(decimalFormat.format((memoryUsage.getTotalPhysicalMemorySize() - memoryUsage.getFreePhysicalMemorySize()) / 1024 / 1024 / 1024));
+        monitor.setRamTotal(decimalFormat.format(Double.parseDouble(String.valueOf(memoryUsage.getTotalPhysicalMemorySize())) / 1024 / 1024 / 1024));
+        monitor.setRamUsed(decimalFormat.format((Double.parseDouble(String.valueOf(memoryUsage.getTotalPhysicalMemorySize() - memoryUsage.getFreePhysicalMemorySize()))) / 1024 / 1024 / 1024));
         HashMap<String, Double> diskUsage = getDiskUsage();
-        monitor.setDiskTotal(decimalFormat.format(diskUsage.get("total")));
-        monitor.setDiskUsed(decimalFormat.format(diskUsage.get("used")));
+        monitor.setDiskTotal(decimalFormat.format(Double.parseDouble(String.valueOf(diskUsage.get("total")))));
+        monitor.setDiskUsed(decimalFormat.format(Double.parseDouble(String.valueOf(diskUsage.get("used")))));
         return monitor;
     }
 
@@ -98,14 +100,13 @@ public class SystemMonitorUtils {
         HashMap<String, Double> hashMap = new HashMap<>(2);
         File[] files = File.listRoots();
         double total = 0;
-        double used = 0;
+        double unused = 0;
         for (File file : files) {
             total = total + file.getTotalSpace() / 1024 / 1024 / 1024;
-            used = used + file.getFreeSpace() / 1024 / 1024 / 1024;
+            unused = unused + file.getFreeSpace() / 1024 / 1024 / 1024;
         }
         hashMap.put("total", total);
-        hashMap.put("used", used);
-
+        hashMap.put("used", total - unused);
         return hashMap;
     }
 
