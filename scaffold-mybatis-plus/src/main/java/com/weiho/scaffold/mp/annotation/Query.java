@@ -25,7 +25,6 @@ public @interface Query {
      */
     QueryTypeEnum type() default QueryTypeEnum.EQUAL;
 
-
     /**
      * 多字段模糊搜索，仅支持String类型字段，多个用逗号隔开, 如@Query(blurry = "email,username")
      */

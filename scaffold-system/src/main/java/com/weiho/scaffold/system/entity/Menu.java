@@ -80,7 +80,7 @@ public class Menu extends CommonEntity {
 
     @ApiModelProperty("是否隐藏")
     @TableField("hidden")
-    private Boolean hidden;
+    private boolean hidden;
 
     @ApiModelProperty("上级菜单ID")
     @TableField("parent_id")

@@ -1,8 +1,8 @@
 package com.weiho.scaffold.system.security.controller;
 
 import com.weiho.scaffold.common.annotation.Anonymous;
-import com.weiho.scaffold.common.annotation.RateLimiter;
-import com.weiho.scaffold.common.limiting.enums.LimitType;
+import com.weiho.scaffold.redis.limiter.annotation.RateLimiter;
+import com.weiho.scaffold.redis.limiter.enums.LimitType;
 import com.weiho.scaffold.system.security.service.LoginService;
 import com.weiho.scaffold.system.security.vo.AuthUserVO;
 import io.swagger.annotations.Api;

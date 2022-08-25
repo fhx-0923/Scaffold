@@ -1,5 +1,7 @@
 package com.weiho.scaffold.system.entity.dto;
 
+import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -70,6 +72,8 @@ public class MenuDTO implements Serializable {
     private Long sort;
 
     @ApiModelProperty("创建时间")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp createTime;
 
     @ApiModelProperty("子菜单集合")

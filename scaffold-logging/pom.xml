@@ -15,7 +15,9 @@
     <version>1.0</version>
 
     <name>日志模块</name>
-    <description>Scaffold Logging project for Scaffold</description>
+    <description>
+        该系统为日志模块
+    </description>
 
     <properties>
         <java.version>1.8</java.version>

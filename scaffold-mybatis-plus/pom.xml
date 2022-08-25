@@ -15,7 +15,9 @@
     <version>1.0</version>
 
     <name>Mybatis-Plus模块</name>
-    <description>Scaffold Mybatis-Plus project for Scaffold</description>
+    <description>
+        Mybatis-Plus模块
+    </description>
 
     <properties>
         <java.version>1.8</java.version>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.weiho.scaffold</groupId>
+        <artifactId>scaffold</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <groupId>com.weiho.scaffold.websocket</groupId>
+    <artifactId>scaffold-websocket</artifactId>
+    <version>1.0</version>
+
+    <name>WebSocket模块</name>
+    <description>
+        该模块是提供WebSocket服务
+    </description>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- Spring Boot Websocket -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <!-- OShi获取系统硬件信息 -->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-json</artifactId>
+            <version>${oshi.version}</version>
+        </dependency>
+
+        <!-- 引入公共模块 -->
+        <dependency>
+            <groupId>com.weiho.scaffold.common</groupId>
+            <artifactId>scaffold-common</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+</project>
