@@ -14,6 +14,8 @@ import java.sql.SQLException;
  * 一定要在实体类的上面的@TableName里面加autoResultMap = true,否则查出来是不解密的
  * 然后在要加密的字段上面的@TableField(value = "real_name")加入typeHandler = EncryptHandler.class
  * 即可完成插入自动加密，查询自动解密
+ * <p>
+ * 若使用xml自己写sql,需要在resultMap中给typeHandler赋值该类,否则也是不解密
  *
  * @author Weiho
  * @date 2022/8/23

@@ -1,0 +1,83 @@
+2022-08-24 23:58:15.946 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.3.Final
+2022-08-24 23:58:15.954 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - Starting AppRun using Java 1.8.0_144 on LAPTOP-SR0899OB with PID 8680 (E:\Graduation_ChouChou\Scaffold-Weiho\Scaffold\scaffold-system\target\classes started by Weiho in E:\Graduation_ChouChou\Scaffold-Weiho\Scaffold)
+2022-08-24 23:58:15.954 [restartedMain] DEBUG com.weiho.scaffold.system.AppRun - Running with Spring Boot v2.7.0, Spring v5.3.20
+2022-08-24 23:58:15.955 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - No active profile set, falling back to 1 default profile: "default"
+2022-08-24 23:58:16.014 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-08-24 23:58:16.014 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-08-24 23:58:16.938 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-08-24 23:58:16.940 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-08-24 23:58:16.968 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2022-08-24 23:58:17.866 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8888 (http)
+2022-08-24 23:58:17.874 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8888"]
+2022-08-24 23:58:17.874 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-08-24 23:58:17.875 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2022-08-24 23:58:17.940 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-08-24 23:58:17.940 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1926 ms
+2022-08-24 23:58:18.151 [restartedMain] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2022-08-24 23:58:18.643 [restartedMain] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2022-08-24 23:58:20.069 [restartedMain] INFO  c.w.scaffold.common.config.swagger.SwaggerConfig - Swagger -> [Swagger接口文档分组 '需要token验证' 初始化]
+2022-08-24 23:58:20.090 [restartedMain] INFO  c.w.scaffold.common.config.swagger.SwaggerConfig - Swagger -> [Swagger接口文档分组 '不需要token验证' 初始化]
+2022-08-24 23:58:20.529 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2022-08-24 23:58:20.987 [restartedMain] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2760423b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6ba7cfe1, org.springframework.security.web.context.SecurityContextPersistenceFilter@3118588f, org.springframework.security.web.header.HeaderWriterFilter@10edb0f0, org.springframework.security.web.authentication.logout.LogoutFilter@650cf172, org.springframework.web.filter.CorsFilter@2f52c6d7, com.weiho.scaffold.system.security.token.filter.TokenFilter@3a7b6153, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@66c65cf9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1ab82b78, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5e8d70a2, org.springframework.security.web.session.SessionManagementFilter@57da365f, org.springframework.security.web.access.ExceptionTranslationFilter@5ef25260, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@26b84193]
+2022-08-24 23:58:21.125 [restartedMain] INFO  com.weiho.scaffold.redis.config.RedisConfig - Redis -> [Redis缓存错误处理程序初始化]
+2022-08-24 23:58:22.021 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8888"]
+2022-08-24 23:58:22.053 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-08-24 23:58:22.053 [restartedMain] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-08-24 23:58:22.055 [restartedMain] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2022-08-24 23:58:22.057 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8888 (http) with context path ''
+2022-08-24 23:58:22.495 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - Started AppRun in 6.882 seconds (JVM running for 7.77)
+2022-08-24 23:59:04.582 [http-nio-8888-exec-1] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:UserToken:root:eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb290IiwiZXhwIjoxNjY4NTQ4MDIzfQ.EoQzlq74YvMRZk4VUD2X_77vTjmYQ37sDFaMGmm6CsYOwZejxOUBt7RdZ4F5eUJM-eb0q6EhA88MfJxkuvnPnw，结果：false
+2022-08-24 23:59:04.583 [http-nio-8888-exec-1] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:UserDetails:root，结果：false
+2022-08-24 23:59:04.583 [http-nio-8888-exec-1] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 找不到有效的 JWT 令牌,uri:{/api/user/info}
+2022-08-24 23:59:04.600 [http-nio-8888-exec-1] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:UserToken:root:eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb290IiwiZXhwIjoxNjY4NTQ4MDIzfQ.EoQzlq74YvMRZk4VUD2X_77vTjmYQ37sDFaMGmm6CsYOwZejxOUBt7RdZ4F5eUJM-eb0q6EhA88MfJxkuvnPnw，结果：false
+2022-08-24 23:59:04.601 [http-nio-8888-exec-1] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:UserDetails:root，结果：false
+2022-08-24 23:59:04.601 [http-nio-8888-exec-1] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 找不到有效的 JWT 令牌,uri:{/error}
+2022-08-24 23:59:04.683 [http-nio-8888-exec-5] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:UserToken:root:eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb290IiwiZXhwIjoxNjY4NTQ4MDIzfQ.EoQzlq74YvMRZk4VUD2X_77vTjmYQ37sDFaMGmm6CsYOwZejxOUBt7RdZ4F5eUJM-eb0q6EhA88MfJxkuvnPnw，结果：false
+2022-08-24 23:59:04.684 [http-nio-8888-exec-5] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:UserDetails:root，结果：false
+2022-08-24 23:59:04.684 [http-nio-8888-exec-5] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 找不到有效的 JWT 令牌,uri:{/api/out/logout}
+2022-08-24 23:59:04.690 [http-nio-8888-exec-5] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:OnlineUser:eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb290IiwiZXhwIjoxNjY4NTQ4MDIzfQ.EoQzlq74YvMRZk4VUD2X_77vTjmYQ37sDFaMGmm6CsYOwZejxOUBt7RdZ4F5eUJM-eb0q6EhA88MfJxkuvnPnw，结果：false
+2022-08-24 23:59:11.793 [http-nio-8888-exec-3] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:OnlineUser:null，结果：false
+2022-08-24 23:59:16.127 [http-nio-8888-exec-9] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:VerifyCode:da97eff9831045a5a5742624156bc60a，结果：true
+2022-08-24 23:59:16.618 [http-nio-8888-exec-10] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/menus/build}
+2022-08-24 23:59:19.492 [task-1] INFO  c.weiho.scaffold.websocket.server.SysMonitorServer - Monitor -> [SysMonitorServer 系统监测任务开始]
+2022-08-24 23:59:37.641 [SpringApplicationShutdownHook] INFO  c.w.s.common.util.spring.SpringContextHolder - SpringContextHolder -> [清除SpringContextHolder中的ApplicationContext:org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5845e0c7, started on Wed Aug 24 23:58:16 GMT+08:00 2022]
+2022-08-24 23:59:37.645 [task-1] ERROR c.weiho.scaffold.websocket.server.SysMonitorServer - java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at com.weiho.scaffold.websocket.server.SysMonitorServer.lambda$onOpen$0(SysMonitorServer.java:58)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+
+2022-08-24 23:59:37.645 [task-1] INFO  c.weiho.scaffold.websocket.server.SysMonitorServer - Monitor -> [SysMonitorServer 系统监测任务结束]
+2022-08-24 23:59:37.761 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-08-24 23:59:37.767 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-08-24 23:59:47.896 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.3.Final
+2022-08-24 23:59:47.901 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - Starting AppRun using Java 1.8.0_144 on LAPTOP-SR0899OB with PID 22916 (E:\Graduation_ChouChou\Scaffold-Weiho\Scaffold\scaffold-system\target\classes started by Weiho in E:\Graduation_ChouChou\Scaffold-Weiho\Scaffold)
+2022-08-24 23:59:47.901 [restartedMain] DEBUG com.weiho.scaffold.system.AppRun - Running with Spring Boot v2.7.0, Spring v5.3.20
+2022-08-24 23:59:47.901 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - No active profile set, falling back to 1 default profile: "default"
+2022-08-24 23:59:47.952 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-08-24 23:59:47.952 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-08-24 23:59:48.882 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-08-24 23:59:48.884 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-08-24 23:59:48.910 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2022-08-24 23:59:49.694 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8888 (http)
+2022-08-24 23:59:49.702 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8888"]
+2022-08-24 23:59:49.702 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-08-24 23:59:49.702 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2022-08-24 23:59:49.769 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-08-24 23:59:49.770 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1818 ms
+2022-08-24 23:59:49.944 [restartedMain] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2022-08-24 23:59:50.302 [restartedMain] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2022-08-24 23:59:51.738 [restartedMain] INFO  c.w.scaffold.common.config.swagger.SwaggerConfig - Swagger -> [Swagger接口文档分组 '需要token验证' 初始化]
+2022-08-24 23:59:51.759 [restartedMain] INFO  c.w.scaffold.common.config.swagger.SwaggerConfig - Swagger -> [Swagger接口文档分组 '不需要token验证' 初始化]
+2022-08-24 23:59:52.140 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2022-08-24 23:59:52.480 [restartedMain] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@14af21cc, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6ca717b1, org.springframework.security.web.context.SecurityContextPersistenceFilter@30454fc0, org.springframework.security.web.header.HeaderWriterFilter@79332ccc, org.springframework.security.web.authentication.logout.LogoutFilter@6e1dfd91, org.springframework.web.filter.CorsFilter@4ba5eaae, com.weiho.scaffold.system.security.token.filter.TokenFilter@7e5053f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1bff2207, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4efcff59, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3483256f, org.springframework.security.web.session.SessionManagementFilter@4bf7c7fa, org.springframework.security.web.access.ExceptionTranslationFilter@44b32df4, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6f37a683]
+2022-08-24 23:59:52.590 [restartedMain] INFO  com.weiho.scaffold.redis.config.RedisConfig - Redis -> [Redis缓存错误处理程序初始化]
+2022-08-24 23:59:52.989 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8888"]
+2022-08-24 23:59:53.006 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-08-24 23:59:53.006 [restartedMain] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-08-24 23:59:53.008 [restartedMain] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2022-08-24 23:59:53.008 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8888 (http) with context path ''
+2022-08-24 23:59:53.179 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - Started AppRun in 5.605 seconds (JVM running for 6.362)

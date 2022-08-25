@@ -15,7 +15,9 @@
     <version>1.0</version>
 
     <name>代码生成器模块</name>
-    <description>Scaffold Mybatis-Plus project for Scaffold</description>
+    <description>
+        Mybatis-Plus 代码生成器
+    </description>
 
     <properties>
         <java.version>1.8</java.version>

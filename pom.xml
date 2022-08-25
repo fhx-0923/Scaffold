@@ -10,6 +10,8 @@
         <module>scaffold-system</module>
         <module>scaffold-mybatis-generator</module>
         <module>scaffold-logging</module>
+        <module>scaffold-websocket</module>
+        <module>scaffold-redis</module>
     </modules>
 
     <parent>
@@ -56,12 +58,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <!-- Spring Data Redis -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <!-- Spring Boot AOP -->
@@ -166,12 +162,6 @@
             <version>${druid.version}</version>
         </dependency>
 
-        <!-- 解决内置Jackson不支持Java8时间类型 -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-
         <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>
@@ -183,13 +173,6 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
-        </dependency>
-
-        <!-- 自定义配置文件属性 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
         </dependency>
 
         <!-- Swagger2 APIs 文档-->
@@ -229,40 +212,6 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
-        </dependency>
-
-        <!-- Swagger2 UI 相关 -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>${knife4j.version}</version>
-        </dependency>
-
-        <!-- Spring Boot Websocket -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-
-        <!-- OShi获取系统硬件信息 -->
-        <dependency>
-            <groupId>com.github.oshi</groupId>
-            <artifactId>oshi-json</artifactId>
-            <version>${oshi.version}</version>
-        </dependency>
-
-        <!-- 验证码支持 -->
-        <dependency>
-            <groupId>com.github.whvcse</groupId>
-            <artifactId>easy-captcha</artifactId>
-            <version>${easy-captcha-whvcse.version}</version>
-        </dependency>
-
-        <!-- 用于获取用户登录的浏览器信息 -->
-        <dependency>
-            <groupId>eu.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
-            <version>${bitwalker.version}</version>
         </dependency>
 
         <!-- fastjson 用于Redis缓存序列化和反序列化 -->

@@ -1,10 +1,10 @@
 package com.weiho.scaffold.system.controller;
 
 
-import com.weiho.scaffold.common.annotation.RateLimiter;
-import com.weiho.scaffold.common.limiting.enums.LimitType;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.common.util.security.SecurityUtils;
+import com.weiho.scaffold.redis.limiter.annotation.RateLimiter;
+import com.weiho.scaffold.redis.limiter.enums.LimitType;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

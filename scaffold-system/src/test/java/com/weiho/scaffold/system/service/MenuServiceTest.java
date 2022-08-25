@@ -1,7 +1,7 @@
 package com.weiho.scaffold.system.service;
 
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
-import com.weiho.scaffold.common.util.redis.RedisUtils;
+import com.weiho.scaffold.redis.util.RedisUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

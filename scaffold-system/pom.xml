@@ -14,7 +14,9 @@
     <version>1.0</version>
 
     <name>系统主要模块</name>
-    <description>Scaffold System project for Spring Scaffold</description>
+    <description>
+        该模块主要是系统的主要业务逻辑
+    </description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -42,11 +44,32 @@
             <version>1.0</version>
         </dependency>
 
+        <!-- 引入WebSocket模块 -->
+        <dependency>
+            <groupId>com.weiho.scaffold.websocket</groupId>
+            <artifactId>scaffold-websocket</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!-- 引入Redis模块 -->
+        <dependency>
+            <groupId>com.weiho.scaffold.redis</groupId>
+            <artifactId>scaffold-redis</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!-- JWT支持 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>${jjwt.version}</version>
+        </dependency>
+
+        <!-- 验证码支持 -->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>${easy-captcha-whvcse.version}</version>
         </dependency>
     </dependencies>
 
