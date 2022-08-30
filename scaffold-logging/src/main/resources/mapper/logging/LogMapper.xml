@@ -30,7 +30,14 @@
         create_time,
         update_time,
         is_del,
-        id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, status, exception_detail, time
+        id, title, business_type, method, request_method, username, request_url, request_ip, browser, address,
+        request_params, response_result, status, exception_detail, time
     </sql>
 
+    <update id="deleteByLogType">
+        UPDATE log
+        SET is_del = 1
+        WHERE log_type = #{logType}
+          AND is_del = 0
+    </update>
 </mapper>

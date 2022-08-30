@@ -1,7 +1,6 @@
 package com.weiho.scaffold.redis.serializer;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson2.JSON;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.nio.charset.StandardCharsets;
@@ -24,7 +23,7 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
         if (t == null) {
             return new byte[0];
         }
-        return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(StandardCharsets.UTF_8);
+        return JSON.toJSONString(t).getBytes(StandardCharsets.UTF_8);
     }
 
     @Override

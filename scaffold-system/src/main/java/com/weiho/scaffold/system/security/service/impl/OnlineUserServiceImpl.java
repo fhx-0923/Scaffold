@@ -1,6 +1,6 @@
 package com.weiho.scaffold.system.security.service.impl;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.exception.ResponsePackException;
 import com.weiho.scaffold.common.util.encrypt.EncryptUtils;
@@ -11,7 +11,7 @@ import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.redis.util.RedisUtils;
 import com.weiho.scaffold.system.security.service.OnlineUserService;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
-import com.weiho.scaffold.system.security.vo.OnlineUserVO;
+import com.weiho.scaffold.system.security.vo.online.OnlineUserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -60,7 +60,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
 
     @Override
     public List<OnlineUserVO> getAll(String filter, int type) {
-        List<String> keys = null;
+        List<String> keys;
         if (type == 1) {
             keys = redisUtils.scan(":OnlineUser:*");
         } else {
@@ -69,7 +69,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
         Collections.reverse(keys);
         List<OnlineUserVO> onlineUsers = new ArrayList<>();
         for (String key : keys) {
-            OnlineUserVO onlineUser = (OnlineUserVO) redisUtils.get(key);
+            OnlineUserVO onlineUser = JSON.parseObject(redisUtils.getString(key), OnlineUserVO.class);
             if (StringUtils.isNotBlank(filter)) {
                 if (onlineUser.toString().contains(filter)) {
                     onlineUsers.add(onlineUser);

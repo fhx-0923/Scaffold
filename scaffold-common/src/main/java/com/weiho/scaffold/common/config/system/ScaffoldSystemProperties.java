@@ -25,11 +25,12 @@ public class ScaffoldSystemProperties {
     private MonitorProperties monitorProperties;
     private TaskThreadPoolProperties threadPoolProperties;
     private RSAProperties rsaProperties;
+    private RabbitMqProperties rabbitMqProperties;
 
     public ScaffoldSystemProperties(SwaggerProperties swaggerProperties, RateLimiterProperties rateLimiterProperties,
                                     JwtProperties jwtProperties, CodeProperties codeProperties,
                                     MonitorProperties monitorProperties, TaskThreadPoolProperties taskThreadPoolProperties,
-                                    RSAProperties rsaProperties) {
+                                    RSAProperties rsaProperties, RabbitMqProperties rabbitMqProperties) {
         this.swaggerProperties = swaggerProperties;
         this.rateLimiterProperties = rateLimiterProperties;
         this.jwtProperties = jwtProperties;
@@ -37,6 +38,7 @@ public class ScaffoldSystemProperties {
         this.monitorProperties = monitorProperties;
         this.threadPoolProperties = taskThreadPoolProperties;
         this.rsaProperties = rsaProperties;
+        this.rabbitMqProperties = rabbitMqProperties;
     }
 
     @Getter
@@ -152,5 +154,18 @@ public class ScaffoldSystemProperties {
     public static class RSAProperties {
         //RSA私钥
         private String privateKey;
+    }
+
+    @Getter
+    @Setter
+    @Configuration
+    @ConfigurationProperties(prefix = "scaffold.rabbitmq")
+    public static class RabbitMqProperties {
+        // 队列名称
+        private String queueName;
+        // 队列交换机名称
+        private String exchangeName;
+        // 路由Key名称
+        private String routingKeyName;
     }
 }

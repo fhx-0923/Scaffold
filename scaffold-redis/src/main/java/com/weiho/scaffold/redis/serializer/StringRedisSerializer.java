@@ -1,7 +1,7 @@
 package com.weiho.scaffold.redis.serializer;
 
 import cn.hutool.core.lang.Assert;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import reactor.util.annotation.Nullable;

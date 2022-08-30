@@ -15,9 +15,7 @@
     <version>1.0</version>
 
     <name>Redis模块</name>
-    <description>
-        系统Redis模块
-    </description>
+    <description>Redis模块</description>
 
     <properties>
         <java.version>1.8</java.version>

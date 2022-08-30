@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.system.entity.Role;
-import com.weiho.scaffold.system.entity.convert.MenuConvert;
+import com.weiho.scaffold.system.entity.convert.MenuDTOConvert;
 import com.weiho.scaffold.system.entity.dto.MenuDTO;
 import com.weiho.scaffold.system.entity.vo.MenuMetaVO;
 import com.weiho.scaffold.system.entity.vo.MenuVO;
@@ -33,14 +33,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> implements MenuService {
-    private final MenuConvert menuConvert;
+    private final MenuDTOConvert menuDTOConvert;
 
     @Override
     @Cacheable(value = "Scaffold:Commons:Menus", key = "'loadMenusByUsername:' + #p1")
     public List<MenuDTO> findListByRoles(List<Role> roles, String username) {
         List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
         List<Menu> menus = this.getBaseMapper().findListByRoles(roleIds);
-        return menuConvert.toDto(menus);
+        return menuDTOConvert.toDto(menus);
     }
 
     @Override

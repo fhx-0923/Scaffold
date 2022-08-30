@@ -1,7 +1,6 @@
 package com.weiho.scaffold.websocket.util;
 
 import com.sun.management.OperatingSystemMXBean;
-import com.weiho.scaffold.common.util.date.DateUtils;
 import com.weiho.scaffold.websocket.entity.Monitor;
 import lombok.extern.slf4j.Slf4j;
 import oshi.SystemInfo;
@@ -39,7 +38,6 @@ public class SystemMonitorUtils {
     }
 
     public static Monitor getSysMonitor() {
-        monitor.setTimeNow(DateUtils.getNowDateToStr());
         //jvm
         MemoryUsage heapInfo = getHeapInfo();
         monitor.setJvmHeapInit(decimalFormat.format(Double.parseDouble(String.valueOf(heapInfo.getInit())) / 1024 / 1024));

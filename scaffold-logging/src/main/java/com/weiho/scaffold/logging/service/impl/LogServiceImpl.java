@@ -1,26 +1,39 @@
 package com.weiho.scaffold.logging.service.impl;
 
+import cn.hutool.core.lang.Dict;
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson2.JSON;
+import com.github.pagehelper.PageInfo;
+import com.weiho.scaffold.common.util.file.FileUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.common.util.throwable.ThrowableUtils;
+import com.weiho.scaffold.common.util.validation.ValidationUtils;
 import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.logging.entity.Log;
+import com.weiho.scaffold.logging.entity.convert.LogErrorVOConvert;
+import com.weiho.scaffold.logging.entity.convert.LogVOConvert;
+import com.weiho.scaffold.logging.entity.criteria.LogQueryCriteria;
 import com.weiho.scaffold.logging.enums.BusinessStatusEnum;
 import com.weiho.scaffold.logging.mapper.LogMapper;
 import com.weiho.scaffold.logging.service.LogService;
+import com.weiho.scaffold.mp.core.QueryHelper;
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.CastUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * <p>
@@ -32,7 +45,33 @@ import java.util.Map;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements LogService {
+
+    private final LogErrorVOConvert logErrorVOConvert;
+    private final LogVOConvert logVOConvert;
+
+    @Override
+    public List<Log> findAll(LogQueryCriteria criteria) {
+        return this.getBaseMapper().selectList(CastUtils.cast(QueryHelper.getQueryWrapper(Log.class, criteria)));
+    }
+
+    @Override
+    public Map<String, Object> findAllByPage(LogQueryCriteria criteria, Pageable pageable) {
+        startPage(pageable);
+        PageInfo<Log> pageInfo = new PageInfo<>(findAll(criteria));
+        Map<String, Object> map = new LinkedHashMap<>(2);
+        if (!StringUtils.isBlank(criteria.getLogType())) {
+            if (criteria.getLogType().equals("INFO")) {
+                map.put("content", logVOConvert.toDto(pageInfo.getList()));
+                map.put("totalElements", pageInfo.getTotal());
+            } else {
+                map.put("content", logErrorVOConvert.toDto(pageInfo.getList()));
+                map.put("totalElements", pageInfo.getTotal());
+            }
+        }
+        return map;
+    }
 
     @Override
     public void saveLogInfo(final JoinPoint joinPoint, HttpServletRequest request, Logging logging,
@@ -40,10 +79,10 @@ public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements
         log.info("Log -> 开始收集操作日志信息");
         //设置操作状态
         if (e != null) {
-            logInfo.setStatus(BusinessStatusEnum.FAIL.ordinal());
+            logInfo.setStatus(BusinessStatusEnum.FAIL);
             logInfo.setExceptionDetail(StringUtils.substring(ThrowableUtils.getStackTrace(e), 0, 6000));
         } else {
-            logInfo.setStatus(BusinessStatusEnum.SUCCESS.ordinal());
+            logInfo.setStatus(BusinessStatusEnum.SUCCESS);
         }
         //设置请求方法名称
         String className = joinPoint.getTarget().getClass().getName();
@@ -54,6 +93,52 @@ public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements
         //存入数据库
         this.save(logInfo);
         log.info("Log -> 操作日志已保存");
+    }
+
+    @Override
+    public void download(List<Log> logs, HttpServletResponse response) throws IOException {
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (Log log : logs) {
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("操作用户", log.getUsername());
+            map.put("操作描述", log.getTitle());
+            map.put("业务类型", log.getBusinessType());
+            map.put("请求方法名称", log.getMethod());
+            map.put("请求方式", log.getRequestMethod());
+            map.put("请求URL", log.getRequestUrl());
+            map.put("请求IP", log.getRequestIp());
+            map.put("请求的浏览器", log.getBrowser());
+            map.put("IP所在地", log.getAddress());
+            map.put("请求参数", log.getRequestParams());
+            map.put("响应结果", log.getResponseResult());
+            map.put("日志级别", log.getLogType());
+            map.put("操作状态", log.getStatus());
+            map.put("错误信息", StringUtils.isBlank(log.getExceptionDetail()) ? "" : log.getExceptionDetail());
+            map.put("消耗时间", log.getTime());
+            map.put("创建时间", log.getCreateTime());
+            list.add(map);
+        }
+        FileUtils.downloadExcel(list, response);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteAllByInfo() {
+        this.getBaseMapper().deleteByLogType("INFO");
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteAllByError() {
+        this.getBaseMapper().deleteByLogType("ERROR");
+    }
+
+    @Override
+    public Object findByErrorDetail(Long id) {
+        Log log = this.getById(id);
+        ValidationUtils.isNull(log.getId(), "Log", "id", id);
+        byte[] details = log.getExceptionDetail().getBytes();
+        return Dict.create().set("exception", new String(ObjectUtil.isNotNull(details) ? details : "".getBytes()));
     }
 
     /**
@@ -69,7 +154,7 @@ public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements
         //模块名称
         logInfo.setTitle(logging.title());
         //设置业务类型
-        logInfo.setBusinessType(logging.businessType().ordinal());
+        logInfo.setBusinessType(logging.businessType());
         //是否需要保存请求参数信息
         if (logging.saveRequestData()) {
             //获取参数信息，放入对象中

@@ -1,7 +1,6 @@
 package com.weiho.scaffold.redis.config;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson2.JSON;
 import com.weiho.scaffold.redis.serializer.CacheableRedisSerializer;
 import com.weiho.scaffold.redis.serializer.FastJsonRedisSerializer;
 import com.weiho.scaffold.redis.serializer.StringRedisSerializer;
@@ -95,15 +94,10 @@ public class RedisConfig extends CachingConfigurerSupport {
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         //序列化
-        FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
+        FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
         // value值的序列化采用FastJsonRedisSerializer
         template.setValueSerializer(fastJsonRedisSerializer);
         template.setHashValueSerializer(fastJsonRedisSerializer);
-        // 全局开启AutoType，这里方便开发，使用全局的方式
-        ParserConfig.getGlobalInstance();
-        // 建议使用这种方式，小范围指定白名单
-        // ParserConfig.getGlobalInstance().addAccept("me.zhengjie.domain");
-        // key的序列化采用StringRedisSerializer
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());
         template.setConnectionFactory(redisConnectionFactory);

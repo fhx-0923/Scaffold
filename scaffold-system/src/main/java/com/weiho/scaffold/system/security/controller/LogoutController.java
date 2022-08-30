@@ -2,6 +2,8 @@ package com.weiho.scaffold.system.security.controller;
 
 import com.weiho.scaffold.common.annotation.Anonymous;
 import com.weiho.scaffold.common.util.result.Result;
+import com.weiho.scaffold.logging.annotation.Logging;
+import com.weiho.scaffold.logging.enums.BusinessTypeEnum;
 import com.weiho.scaffold.system.security.service.LogoutService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +28,7 @@ public class LogoutController {
 
     @Anonymous
     @ApiOperation("注销登录")
-//    @Logging(title = "注销登录")
+    @Logging(title = "注销登录", businessType = BusinessTypeEnum.DELETE)
     @DeleteMapping("/logout")
     public Result logout(HttpServletRequest request) {
         return logoutService.logout(request);

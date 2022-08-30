@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.weiho.scaffold.logging.enums.BusinessStatusEnum;
+import com.weiho.scaffold.logging.enums.BusinessTypeEnum;
 import com.weiho.scaffold.mp.entity.CommonEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * <p>
@@ -21,6 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("log")
+@ToString
 @ApiModel(value = "Log对象", description = "操作日志表")
 public class Log extends CommonEntity {
 
@@ -34,7 +38,7 @@ public class Log extends CommonEntity {
 
     @ApiModelProperty("业务类型(0-其他,1-新增,2-修改,3-删除)")
     @TableField("business_type")
-    private Integer businessType;
+    private BusinessTypeEnum businessType;
 
     @ApiModelProperty("请求方法名称")
     @TableField("method")
@@ -78,7 +82,7 @@ public class Log extends CommonEntity {
 
     @ApiModelProperty("操作状态(0-正常,1-失败)")
     @TableField("status")
-    private Integer status;
+    private BusinessStatusEnum status;
 
     @ApiModelProperty("错误信息")
     @TableField("exception_detail")
