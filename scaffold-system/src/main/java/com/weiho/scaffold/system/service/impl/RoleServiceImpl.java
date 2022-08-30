@@ -5,7 +5,7 @@ import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.User;
-import com.weiho.scaffold.system.entity.convert.RoleConvert;
+import com.weiho.scaffold.system.entity.convert.RoleDTOConvert;
 import com.weiho.scaffold.system.entity.dto.RoleDTO;
 import com.weiho.scaffold.system.mapper.MenuMapper;
 import com.weiho.scaffold.system.mapper.RoleMapper;
@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> implements RoleService {
     private final MenuMapper menuMapper;
-    private final RoleConvert roleConvert;
+    private final RoleDTOConvert roleDTOConvert;
 
     @Override
     @Cacheable(value = "Scaffold:Commons:Permission", key = "'loadPermissionByUsername:' + #p1", unless = "#result.size() <= 1")
@@ -46,7 +46,7 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
         Set<RoleDTO> roleDTOS = new HashSet<>();
         for (Role role : roles) {
             //转化DTO对象
-            RoleDTO roleDTO = roleConvert.toDto(role);
+            RoleDTO roleDTO = roleDTOConvert.toDto(role);
             //根据角色ID获取menu集合
             Set<Menu> menuSet = menuMapper.findSetByRoleId(role.getId());
             //放入DTO对象

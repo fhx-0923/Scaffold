@@ -65,7 +65,7 @@ spring:
           # 记录慢SQL
           log-slow-sql: true
           slow-sql-millis: 1000
-          merge-sql: true
+          merge-sql: false
         wall:
           config:
             multi-statement-allow: true
@@ -77,6 +77,12 @@ spring:
     password: 970049938
     #连接超时时间
     timeout: 5000
+  rabbitmq:
+    virtual-host: /
+    host: 192.168.137.128
+    port: 5672
+    username: admin
+    password: 970049938
 
 logging:
   level:
@@ -174,3 +180,10 @@ scaffold:
     system-monitor-enabled: true
     # 是否开启实时控制台传输
     logging-monitor-enabled: true
+  rabbitmq:
+    # 队列名称
+    queue-name: ${spring.application.name}.middleware.log.queue
+    # 队列交换机名称
+    exchange-name: ${spring.application.name}.log.exchange
+    # 路由Key名称
+    routing-key-name: ${spring.application.name}.log.routing.key

@@ -26,7 +26,7 @@ public abstract class CommonServiceImpl<M extends BaseMapper<E>, E> extends Serv
      *
      * @param pageable 分页参数接收 (page,size,sort)
      */
-    protected void getPage(Pageable pageable) {
+    protected void startPage(Pageable pageable) {
         String order;
         order = pageable.getSort().toString();//获取排序信息
         order = order.replace(":", "");//拆分前端传入的字段 id:asc -> id asc
@@ -49,7 +49,7 @@ public abstract class CommonServiceImpl<M extends BaseMapper<E>, E> extends Serv
      * @param orderByDataBaseColumn 要按照数据库中的哪一个字段排序
      * @param sortBy                排序方式（asc,desc）
      */
-    protected void getPage(Pageable pageable, String orderByDataBaseColumn, SortTypeEnum sortBy) {
+    protected void startPage(Pageable pageable, String orderByDataBaseColumn, SortTypeEnum sortBy) {
         String order;
         order = pageable.getSort().toString();//获取排序信息
         order = order.replace(":", "");//拆分前端传入的字段 id:asc -> id asc

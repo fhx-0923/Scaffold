@@ -3,6 +3,8 @@ package com.weiho.scaffold.system;
 import com.weiho.scaffold.common.annotation.Anonymous;
 import com.weiho.scaffold.common.annotation.NotControllerResponseAdvice;
 import com.weiho.scaffold.common.util.spring.SpringContextHolder;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+@Api(tags = "后端健康监测")
 @EnableCaching
 @EnableAsync
 @EnableSwagger2
@@ -61,6 +64,7 @@ public class AppRun {
      */
     @Anonymous
     @GetMapping("/")
+    @ApiOperation("后端健康监测")
     @NotControllerResponseAdvice
     public String index() {
         return "Backend service started successfully";

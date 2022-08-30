@@ -1,4 +1,4 @@
-package com.weiho.scaffold.system.security.vo;
+package com.weiho.scaffold.system.security.vo.online;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

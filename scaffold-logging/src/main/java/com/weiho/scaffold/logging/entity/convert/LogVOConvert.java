@@ -1,15 +1,15 @@
-package com.weiho.scaffold.system.entity.convert;
+package com.weiho.scaffold.logging.entity.convert;
 
 import com.weiho.scaffold.common.mapstruct.MapStructConvert;
-import com.weiho.scaffold.system.entity.Role;
-import com.weiho.scaffold.system.entity.dto.RoleDTO;
+import com.weiho.scaffold.logging.entity.Log;
+import com.weiho.scaffold.logging.entity.vo.LogVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 /**
  * @author Weiho
- * @date 2022/8/4
+ * @date 2022/8/29
  */
 @Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface RoleConvert extends MapStructConvert<Role, RoleDTO> {
+public interface LogVOConvert extends MapStructConvert<Log, LogVO> {
 }

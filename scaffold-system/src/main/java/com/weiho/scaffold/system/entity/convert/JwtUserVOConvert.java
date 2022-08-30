@@ -13,5 +13,5 @@ import org.mapstruct.ReportingPolicy;
  * @date 2022/7/29
  */
 @Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface UserConvert extends MapStructConvert<User, JwtUserVO> {
+public interface JwtUserVOConvert extends MapStructConvert<User, JwtUserVO> {
 }

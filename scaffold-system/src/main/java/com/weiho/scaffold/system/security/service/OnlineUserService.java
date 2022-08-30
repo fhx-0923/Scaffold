@@ -1,7 +1,7 @@
 package com.weiho.scaffold.system.security.service;
 
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
-import com.weiho.scaffold.system.security.vo.OnlineUserVO;
+import com.weiho.scaffold.system.security.vo.online.OnlineUserVO;
 import org.springframework.data.domain.Pageable;
 
 import javax.servlet.http.HttpServletRequest;

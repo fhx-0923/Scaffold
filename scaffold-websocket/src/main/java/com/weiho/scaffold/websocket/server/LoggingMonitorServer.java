@@ -67,7 +67,7 @@ public class LoggingMonitorServer {
 
         if (properties.getMonitorProperties().isLoggingMonitorEnabled()) {
             asyncTaskExecutor.submit(() -> {
-                log.info("Monitor -> [Loggin、gMonitorServer 控制台日志监测任务开始]");
+                log.info("Monitor -> [LoggingMonitorServer 控制台日志监测任务开始]");
                 boolean first = true;
                 BufferedReader reader = null;
                 FileReader fileReader = null;

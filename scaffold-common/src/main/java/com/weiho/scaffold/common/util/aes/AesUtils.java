@@ -2,8 +2,7 @@ package com.weiho.scaffold.common.util.aes;
 
 import com.weiho.scaffold.common.util.throwable.ThrowableUtils;
 import lombok.experimental.UtilityClass;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -70,7 +69,7 @@ public class AesUtils {
             IvParameterSpec iv = new IvParameterSpec(OFFSET.getBytes());//使用CBC模式，需要一个向量iv，可增加加密算法的强度
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
             byte[] encrypted = cipher.doFinal(data.getBytes(ENCODING));
-            return new BASE64Encoder().encode(encrypted);//此处使用BASE64做转码。
+            return Base64.encodeBase64String(encrypted);//此处使用BASE64做转码。
         } catch (Exception e) {
             ThrowableUtils.getStackTrace(e);
         }
@@ -90,7 +89,7 @@ public class AesUtils {
             SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.US_ASCII), ALGORITHM);
             IvParameterSpec iv = new IvParameterSpec(OFFSET.getBytes());//使用CBC模式，需要一个向量iv，可增加加密算法的强度
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-            byte[] buffer = new BASE64Decoder().decodeBuffer(data);
+            byte[] buffer = Base64.decodeBase64(data);
             byte[] encrypted = cipher.doFinal(buffer);
             return new String(encrypted, ENCODING);//此处使用BASE64做转码。
         } catch (Exception e) {

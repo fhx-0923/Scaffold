@@ -14,9 +14,7 @@
     <version>1.0</version>
 
     <name>系统主要模块</name>
-    <description>
-        该模块主要是系统的主要业务逻辑
-    </description>
+    <description>系统的主要业务逻辑</description>
 
     <properties>
         <java.version>1.8</java.version>

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.code.StatusCode;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,16 +17,20 @@ import java.time.LocalDateTime;
  * @author Weiho
  */
 @Data
+@ApiModel("统一返回体")
 public class Result {
-    //当前时间
+    @ApiModelProperty("当前时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
-    // 状态码
+
+    @ApiModelProperty("状态码")
     private int code;
-    //状态信息
+
+    @ApiModelProperty("状态信息")
     private String msg;
-    //返回对象
+
+    @ApiModelProperty("返回对象")
     private Object data;
 
     /**

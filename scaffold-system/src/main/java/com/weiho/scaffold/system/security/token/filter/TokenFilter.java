@@ -6,7 +6,7 @@ import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.system.security.service.OnlineUserService;
 import com.weiho.scaffold.system.security.service.impl.OnlineUserServiceImpl;
 import com.weiho.scaffold.system.security.token.utils.TokenUtils;
-import com.weiho.scaffold.system.security.vo.OnlineUserVO;
+import com.weiho.scaffold.system.security.vo.online.OnlineUserVO;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

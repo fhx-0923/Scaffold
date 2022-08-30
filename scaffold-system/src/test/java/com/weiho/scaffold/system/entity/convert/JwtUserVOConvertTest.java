@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @date 2022/7/29
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserConvertTest {
+class JwtUserVOConvertTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 

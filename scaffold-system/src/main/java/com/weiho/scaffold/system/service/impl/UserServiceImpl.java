@@ -2,7 +2,7 @@ package com.weiho.scaffold.system.service.impl;
 
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.User;
-import com.weiho.scaffold.system.entity.convert.UserConvert;
+import com.weiho.scaffold.system.entity.convert.JwtUserVOConvert;
 import com.weiho.scaffold.system.mapper.UserMapper;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.weiho.scaffold.system.service.AvatarService;
@@ -23,12 +23,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> implements UserService {
     private final AvatarService avatarService;
-    private final UserConvert userConvert;
+    private final JwtUserVOConvert jwtUserVOConvert;
 
     @Override
     public JwtUserVO getBaseJwtUserVO(User user) {
         //转化对象
-        JwtUserVO jwtUserVO = userConvert.toDto(user);
+        JwtUserVO jwtUserVO = jwtUserVOConvert.toDto(user);
         //放入头像对象
         jwtUserVO.setAvatar(avatarService.selectByAvatarId(user.getAvatarId(), user.getUsername()));
         return jwtUserVO;

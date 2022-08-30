@@ -11,5 +11,5 @@ import org.mapstruct.ReportingPolicy;
  * @date 2022/8/9
  */
 @Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface MenuConvert extends MapStructConvert<Menu, MenuDTO> {
+public interface MenuDTOConvert extends MapStructConvert<Menu, MenuDTO> {
 }

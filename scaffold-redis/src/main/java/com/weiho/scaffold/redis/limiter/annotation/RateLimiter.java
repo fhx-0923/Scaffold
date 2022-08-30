@@ -24,7 +24,7 @@ public @interface RateLimiter {
     int time() default 60;
 
     /**
-     * 限流时间内能访问多少次 默认100
+     * 限流时间内能访问多少次 默认80
      */
     int count() default 80;
 
