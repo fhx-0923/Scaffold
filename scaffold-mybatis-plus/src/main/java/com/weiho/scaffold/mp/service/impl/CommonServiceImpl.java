@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
  * @param <E> 实体类
  */
 @Slf4j
+@SuppressWarnings("all")
 public abstract class CommonServiceImpl<M extends BaseMapper<E>, E> extends ServiceImpl<M, E> implements CommonService<E> {
     /**
      * 通用分页方法

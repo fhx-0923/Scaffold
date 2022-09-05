@@ -1,5 +1,6 @@
 package com.weiho.scaffold.system.security.service.impl;
 
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.system.security.service.LogoutService;
 import com.weiho.scaffold.system.security.service.OnlineUserService;
@@ -24,6 +25,6 @@ public class LogoutServiceImpl implements LogoutService {
     @Override
     public Result logout(HttpServletRequest request) {
         onlineUserService.logout(tokenUtils.getTokenFromRequest(request));
-        return Result.success("注销成功！");
+        return Result.success(I18nMessagesUtils.get("logout.success.tip"));
     }
 }

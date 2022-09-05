@@ -1,6 +1,9 @@
 package com.weiho.scaffold.system.security.controller;
 
 import com.alibaba.fastjson2.JSON;
+import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
+import com.weiho.scaffold.common.util.des.DesUtils;
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.logging.enums.BusinessTypeEnum;
@@ -30,11 +33,12 @@ import java.util.Set;
  */
 @Api(tags = "在线用户管理")
 @RestController
-@RequestMapping("/api/onlines")
+@RequestMapping("/api/online")
 @RequiredArgsConstructor
 public class OnlineUserController {
     private final OnlineUserService onlineUserService;
     private final RedisUtils redisUtils;
+    private final ScaffoldSystemProperties properties;
 
     @ApiOperation("查询在线用户")
     @GetMapping("/list")
@@ -71,10 +75,10 @@ public class OnlineUserController {
     public Result delete(@RequestBody Set<String> keys) throws Exception {
         Set<String> usernames = new HashSet<>();
         for (String key : keys) {
-            onlineUserService.kickOut(key);
-            OnlineUserVO onlineUserVO = JSON.parseObject(redisUtils.getString(key), OnlineUserVO.class);
+            OnlineUserVO onlineUserVO = JSON.parseObject(redisUtils.getString(properties.getJwtProperties().getOnlineKey() + DesUtils.desDecrypt(key)), OnlineUserVO.class);
             usernames.add(onlineUserVO.getUsername());
+            onlineUserService.kickOut(key);
         }
-        return Result.success("用户:" + usernames + "已被踢下线");
+        return Result.success(I18nMessagesUtils.get("online.user") + usernames + I18nMessagesUtils.get("online.kick.tip"));
     }
 }

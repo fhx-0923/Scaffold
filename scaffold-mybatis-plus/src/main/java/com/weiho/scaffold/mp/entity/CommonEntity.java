@@ -39,5 +39,6 @@ public class CommonEntity implements Serializable {
     @TableField(value = "is_del")
     @TableLogic(value = "0", delval = "1")//开启逻辑删除,存在 - 0，被删除 - 1
     @JsonIgnore//序列化时忽略该字段 (序列化和反序列化都有影响)
+    @JSONField(serialize = false)
     private Integer isDel;
 }

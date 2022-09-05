@@ -21,7 +21,7 @@ class JwtUserVOConvertTest {
     @Test
     void jwtUserTest() throws Exception {
 //        User user = new User(1L, 1L, "ASD", "ASDASD", SexEnum.MAN, "987@qq.com", "123", true, new Date());
-//        JwtUserVO jwtUserVO = jwtUserConvert.toDto(user);
+//        JwtUserVO jwtUserVO = jwtUserConvert.toPojo(user);
 //        System.out.println(jwtUserVO);
 //        System.out.println(new ObjectMapper().writeValueAsString(jwtUserVO));
 //        System.out.println(passwordEncoder.encode("admin"));

@@ -22,12 +22,6 @@
     </properties>
 
     <dependencies>
-        <!-- 引入RabbitMQ模块 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-
         <!-- 引入项目公共模块 -->
         <dependency>
             <groupId>com.weiho.scaffold.common</groupId>

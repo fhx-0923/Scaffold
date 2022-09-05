@@ -56,6 +56,13 @@
             <version>1.0</version>
         </dependency>
 
+        <!-- 引入Tools模块 -->
+        <dependency>
+            <groupId>com.weiho.scaffold.tools</groupId>
+            <artifactId>scaffold-tools</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!-- JWT支持 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

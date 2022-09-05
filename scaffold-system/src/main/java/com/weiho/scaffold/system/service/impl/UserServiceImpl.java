@@ -1,5 +1,7 @@
 package com.weiho.scaffold.system.service.impl;
 
+import com.weiho.scaffold.common.util.date.DateUtils;
+import com.weiho.scaffold.common.util.date.FormatEnum;
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.convert.JwtUserVOConvert;
@@ -28,7 +30,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     @Override
     public JwtUserVO getBaseJwtUserVO(User user) {
         //转化对象
-        JwtUserVO jwtUserVO = jwtUserVOConvert.toDto(user);
+        JwtUserVO jwtUserVO = jwtUserVOConvert.toPojo(user);
         //放入头像对象
         jwtUserVO.setAvatar(avatarService.selectByAvatarId(user.getAvatarId(), user.getUsername()));
         return jwtUserVO;
@@ -42,5 +44,10 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public void updatePass(String username, String encryptPassword) {
+        this.getBaseMapper().updatePass(username, encryptPassword, DateUtils.getNowDateFormat(FormatEnum.YYYY_MM_DD_HH_MM_SS));
     }
 }

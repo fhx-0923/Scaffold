@@ -12,6 +12,7 @@
         <module>scaffold-logging</module>
         <module>scaffold-websocket</module>
         <module>scaffold-redis</module>
+        <module>scaffold-tools</module>
     </modules>
 
     <parent>
@@ -53,6 +54,7 @@
         <apache-commons-text.version>1.9</apache-commons-text.version>
         <apachepoi.version>4.1.2</apachepoi.version>
         <xerces.version>2.11.0</xerces.version>
+        <mail.version>1.4.7</mail.version>
     </properties>
 
     <dependencies>
@@ -168,6 +170,12 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- 引入RabbitMQ模块 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
         <!-- hutool工具包 -->

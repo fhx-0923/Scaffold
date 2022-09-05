@@ -140,4 +140,16 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return str.substring(start, end);
     }
 
+    /**
+     * 字符串反转(递归实现)
+     *
+     * @param originStr 传入字符串
+     * @return 反转后
+     */
+    public String reverse(String originStr) {
+        if (!isNotEmpty(originStr) || originStr.length() <= 1) {
+            return originStr;
+        }
+        return reverse(originStr.substring(1)) + originStr.charAt(0);
+    }
 }

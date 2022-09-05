@@ -63,10 +63,10 @@ public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements
         Map<String, Object> map = new LinkedHashMap<>(2);
         if (!StringUtils.isBlank(criteria.getLogType())) {
             if (criteria.getLogType().equals("INFO")) {
-                map.put("content", logVOConvert.toDto(pageInfo.getList()));
+                map.put("content", logVOConvert.toPojo(pageInfo.getList()));
                 map.put("totalElements", pageInfo.getTotal());
             } else {
-                map.put("content", logErrorVOConvert.toDto(pageInfo.getList()));
+                map.put("content", logErrorVOConvert.toPojo(pageInfo.getList()));
                 map.put("totalElements", pageInfo.getTotal());
             }
         }

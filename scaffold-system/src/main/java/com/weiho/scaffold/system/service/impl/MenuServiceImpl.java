@@ -40,7 +40,7 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
     public List<MenuDTO> findListByRoles(List<Role> roles, String username) {
         List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
         List<Menu> menus = this.getBaseMapper().findListByRoles(roleIds);
-        return menuDTOConvert.toDto(menus);
+        return menuDTOConvert.toPojo(menus);
     }
 
     @Override
