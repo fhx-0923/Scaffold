@@ -1,5 +1,7 @@
 package com.weiho.scaffold.logging.entity.vo;
 
+import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.weiho.scaffold.logging.enums.BusinessStatusEnum;
 import com.weiho.scaffold.logging.enums.BusinessTypeEnum;
 import io.swagger.annotations.ApiModel;
@@ -57,12 +59,8 @@ public class LogErrorVO {
     @ApiModelProperty("操作状态(0-正常,1-失败)")
     private BusinessStatusEnum status;
 
-    @ApiModelProperty("错误信息")
-    private String exceptionDetail;
-
-    @ApiModelProperty("消耗时间(ms)")
-    private Long time;
-
     @ApiModelProperty("创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Timestamp createTime;
 }

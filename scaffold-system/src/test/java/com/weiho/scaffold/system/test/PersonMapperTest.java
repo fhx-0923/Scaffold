@@ -29,7 +29,7 @@ class PersonMapperTest {
         System.err.println("序列化:" + mapper.writeValueAsString(p));
         //下面只是测试将结果集转化成DTO后再转会实体类进行插入，看看数据库中的sex字段会不会受到影响
         //符合预期(不受影响)
-        PersonDto dto = personConvert.toDto(p);
+        PersonDto dto = personConvert.toPojo(p);
         System.out.println(dto.toString());
         Person person = personConvert.toEntity(dto);
         personService.save(person);
@@ -42,7 +42,7 @@ class PersonMapperTest {
         Person p = new Person(1L, "测试", 20, "123", "97@qq.com", SexEnum.MAN);
         Testsss testsss = new Testsss("测试", "ceshi");
         p.setTestsss(testsss);
-        PersonDto dto = personConvert.toDto(p);
+        PersonDto dto = personConvert.toPojo(p);
         System.out.println(dto.toString());
         System.out.println(new ObjectMapper().writeValueAsString(dto));
     }
@@ -53,7 +53,7 @@ class PersonMapperTest {
         Person p = new Person(1L, "测试", 20, "123", "97@qq.com", SexEnum.MAN);
         Testsss testsss = new Testsss("测试", "ceshi");
         p.setTestsss(testsss);
-        System.out.println(personConvert.toDto(p));
+        System.out.println(personConvert.toPojo(p));
     }
     */
 }

@@ -68,40 +68,40 @@ import java.util.List;
  *     </li>
  * </ol>
  *
- * @param <D> DTO
+ * @param <P> POJO
  * @param <E> Entity(DO)
  * @author Weiho
  */
-public interface MapStructConvert<E, D> {
+public interface MapStructConvert<E, P> {
     /**
-     * DTO 转 Entity
+     * POJO 转 Entity
      *
-     * @param dto DTO对象
+     * @param pojo DTO对象
      * @return Entity对象
      */
-    E toEntity(D dto);
+    E toEntity(P pojo);
 
     /**
-     * Entity 转 DTO
+     * Entity 转 POJO
      *
      * @param entity 实体类
      * @return DTO对象
      */
-    D toDto(E entity);
+    P toPojo(E entity);
 
     /**
-     * DTO集合 转 Entity集合
+     * POJO集合 转 Entity集合
      *
-     * @param dtoList DTO集合
+     * @param pojoList DTO集合
      * @return Entity集合
      */
-    List<E> toEntity(List<D> dtoList);
+    List<E> toEntity(List<P> pojoList);
 
     /**
-     * Entity集合 转 DTO集合
+     * Entity集合 转 POJO集合
      *
      * @param entityList Entity集合
      * @return DTO集合
      */
-    List<D> toDto(List<E> entityList);
+    List<P> toPojo(List<E> entityList);
 }

@@ -1,4 +1,4 @@
-package com.weiho.scaffold.logging.rabbitmq.core;
+package com.weiho.scaffold.tools.rabbitmq.core;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

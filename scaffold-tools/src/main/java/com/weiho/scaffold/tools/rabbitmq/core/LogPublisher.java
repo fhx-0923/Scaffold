@@ -1,4 +1,4 @@
-package com.weiho.scaffold.logging.rabbitmq.core;
+package com.weiho.scaffold.tools.rabbitmq.core;
 
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.weiho.scaffold.common.util.encrypt;
+package com.weiho.scaffold.common.util.des;
 
 import lombok.experimental.UtilityClass;
 
@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
  * @author <a href="https://gitee.com/guchengwuyue/yshopmall">参考链接</a>
  */
 @UtilityClass
-public class EncryptUtils {
+public class DesUtils {
     /**
      * 用于加密的盐(必须为8位，否则抛异常)
      */

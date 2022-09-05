@@ -46,7 +46,7 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
         Set<RoleDTO> roleDTOS = new HashSet<>();
         for (Role role : roles) {
             //转化DTO对象
-            RoleDTO roleDTO = roleDTOConvert.toDto(role);
+            RoleDTO roleDTO = roleDTOConvert.toPojo(role);
             //根据角色ID获取menu集合
             Set<Menu> menuSet = menuMapper.findSetByRoleId(role.getId());
             //放入DTO对象

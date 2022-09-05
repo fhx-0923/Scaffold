@@ -28,4 +28,12 @@ public interface UserService extends CommonService<User> {
      * @return 返回的用户信息对象
      */
     User findByUsername(String username);
+
+    /**
+     * 用户修改密码
+     *
+     * @param username        用户名
+     * @param encryptPassword 加密后的新密码
+     */
+    void updatePass(String username, String encryptPassword);
 }

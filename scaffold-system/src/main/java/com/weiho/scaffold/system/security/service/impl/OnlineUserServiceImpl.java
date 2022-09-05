@@ -3,7 +3,7 @@ package com.weiho.scaffold.system.security.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.exception.ResponsePackException;
-import com.weiho.scaffold.common.util.encrypt.EncryptUtils;
+import com.weiho.scaffold.common.util.des.DesUtils;
 import com.weiho.scaffold.common.util.file.FileUtils;
 import com.weiho.scaffold.common.util.ip.IpUtils;
 import com.weiho.scaffold.common.util.page.PageUtils;
@@ -48,7 +48,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
         try {
             //构造实体
             onlineUser = new OnlineUserVO(jwtUser.getUsername(),
-                    browser, ip, address, EncryptUtils.desEncrypt(token),
+                    browser, ip, address, DesUtils.desEncrypt(token),
                     new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
             //存入Redis
             redisUtils.set(properties.getJwtProperties().getOnlineKey() + token,
@@ -93,7 +93,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
 
     @Override
     public void kickOut(String key) throws Exception {
-        key = properties.getJwtProperties().getOnlineKey() + EncryptUtils.desDecrypt(key);
+        key = properties.getJwtProperties().getOnlineKey() + DesUtils.desDecrypt(key);
         redisUtils.del(key);
     }
 
@@ -133,7 +133,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
         for (OnlineUserVO onlineUser : onlineUsers) {
             if (onlineUser.getUsername().equals(username)) {
                 try {
-                    String token = EncryptUtils.desDecrypt(onlineUser.getKey());
+                    String token = DesUtils.desDecrypt(onlineUser.getKey());
                     if (StringUtils.isNotBlank(ignoreToken) && !ignoreToken.equals(token)) {
                         this.kickOut(onlineUser.getKey());
                     } else if (StringUtils.isBlank(ignoreToken)) {

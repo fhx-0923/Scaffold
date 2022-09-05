@@ -18,18 +18,18 @@ import javax.validation.constraints.NotBlank;
 @ApiModel("前端登录VO对象")
 public class AuthUserVO {
     @NotBlank(message = "用户名不能为空")
-    @ApiModelProperty("用户名")
+    @ApiModelProperty(value = "用户名", required = true)
     private String username;
 
     @NotBlank(message = "密码不能为空")
-    @ApiModelProperty("密码")
+    @ApiModelProperty(value = "密码", required = true)
     private String password;
 
     @NotBlank(message = "验证码不能为空")
-    @ApiModelProperty("验证码")
+    @ApiModelProperty(value = "验证码", required = true)
     private String code;
 
-    @ApiModelProperty("UUID")
+    @ApiModelProperty(value = "UUID", required = true)
     private String uuid;
 
     @Override

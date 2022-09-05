@@ -3,8 +3,6 @@ package com.weiho.scaffold.system.security.vo;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.weiho.scaffold.common.annotation.Desensitize;
-import com.weiho.scaffold.common.sensitive.enums.SensitiveStrategy;
 import com.weiho.scaffold.system.entity.Avatar;
 import com.weiho.scaffold.system.entity.enums.SexEnum;
 import io.swagger.annotations.ApiModel;
@@ -48,11 +46,9 @@ public class JwtUserVO implements UserDetails {
     @ApiModelProperty("性别 0-女 1-男")
     private SexEnum sex;
 
-    @Desensitize(strategy = SensitiveStrategy.EMAIL)
     @ApiModelProperty("邮箱")
     private String email;
 
-    @Desensitize(strategy = SensitiveStrategy.PHONE)
     @ApiModelProperty("手机号码")
     private String phone;
 
