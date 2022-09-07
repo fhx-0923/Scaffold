@@ -21,4 +21,9 @@ class UserServiceTest {
         user.setUsername("root");
         System.out.println(userService.getBaseJwtUserVO(user));
     }
+
+    @Test
+    void updateEmail() {
+        userService.list().forEach(System.err::println);
+    }
 }

@@ -25,13 +25,13 @@ import java.util.Map;
  */
 @Api(tags = "操作日志管理")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class LogController {
     private final LogService logService;
 
     @ApiOperation("查询操作日志")
-    @GetMapping("/logs/list")
+    @GetMapping("/logs")
     @PreAuthorize("@el.check('PlayLog:list')")
     public Map<String, Object> getAll(LogQueryCriteria criteria, Pageable pageable) {
         criteria.setLogType("INFO");
@@ -39,7 +39,7 @@ public class LogController {
     }
 
     @ApiOperation("查询异常日志")
-    @GetMapping("/errorLogs/list")
+    @GetMapping("/errorLogs")
     @PreAuthorize("@el.check('ErrorLog:list')")
     public Map<String, Object> getAllError(LogQueryCriteria criteria, Pageable pageable) {
         criteria.setLogType("ERROR");
@@ -74,7 +74,7 @@ public class LogController {
 
     @Logging(title = "删除所有INFO日志")
     @ApiOperation("删除所有INFO日志")
-    @DeleteMapping("/logs/delete")
+    @DeleteMapping("/logs")
     @PreAuthorize("@el.check('PlayLog:delete')")
     public void deleteAllInfo() {
         logService.deleteAllByInfo();
@@ -82,7 +82,7 @@ public class LogController {
 
     @Logging(title = "删除所有ERROR日志")
     @ApiOperation("删除所有ERROR日志")
-    @DeleteMapping("/errorLogs/delete")
+    @DeleteMapping("/errorLogs")
     @PreAuthorize("@el.check('ErrorLog:delete')")
     public void deleteAllError() {
         logService.deleteAllByError();

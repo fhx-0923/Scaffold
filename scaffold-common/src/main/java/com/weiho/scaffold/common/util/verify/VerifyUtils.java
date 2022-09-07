@@ -106,70 +106,70 @@ public class VerifyUtils {
     /**
      * 验证手机号（精确）
      */
-    public static boolean isMobileExact(String phone) {
+    public boolean isMobileExact(String phone) {
         return isMatch(PATTERN_REGEX_MOBILE_EXACT, phone);
     }
 
     /**
      * 验证固定电话号码
      */
-    public static boolean isTel(String tel) {
+    public boolean isTel(String tel) {
         return isMatch(PATTERN_REGEX_TEL, tel);
     }
 
     /**
      * 验证15或18位身份证号码
      */
-    public static boolean isIdCard(String idCard) {
+    public boolean isIdCard(String idCard) {
         return isMatch(PATTERN_REGEX_ID_CARD18, idCard);
     }
 
     /**
      * 验证邮箱
      */
-    public static boolean isEmail(String email) {
+    public boolean isEmail(String email) {
         return isMatch(PATTERN_REGEX_EMAIL, email);
     }
 
     /**
      * 验证URL
      */
-    public static boolean isUrl(String url) {
+    public boolean isUrl(String url) {
         return isMatch(PATTERN_REGEX_URL, url);
     }
 
     /**
      * 验证yyyy-MM-dd格式的日期校验,已考虑平闰年
      */
-    public static boolean isDate(String date) {
+    public boolean isDate(String date) {
         return isMatch(PATTERN_REGEX_DATE, date);
     }
 
     /**
      * 验证IP地址
      */
-    public static boolean isIp(String ip) {
+    public boolean isIp(String ip) {
         return isMatch(PATTERN_REGEX_IP, ip);
     }
 
     /**
      * 验证车牌号
      */
-    public static boolean isCar(String carNum) {
+    public boolean isCar(String carNum) {
         return isMatch(PATTERN_REGEX_CAR, carNum);
     }
 
     /**
      * 验证人名
      */
-    public static boolean isName(String name) {
+    public boolean isName(String name) {
         return isMatch(PATTERN_REGEX_NAME, name);
     }
 
     /**
      * 验证mac
      */
-    public static boolean isMac(String mac) {
+    public boolean isMac(String mac) {
         return isMatch(PATTERN_REGEX_MAC, mac);
     }
 

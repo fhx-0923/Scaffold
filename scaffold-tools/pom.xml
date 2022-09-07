@@ -49,5 +49,11 @@
             <artifactId>scaffold-redis</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <!-- 引入模板引擎 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
     </dependencies>
 </project>

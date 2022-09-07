@@ -26,11 +26,14 @@ public class ScaffoldSystemProperties {
     private TaskThreadPoolProperties threadPoolProperties;
     private RSAProperties rsaProperties;
     private RabbitMqProperties rabbitMqProperties;
+    private EmailProperties emailProperties;
+    private FileProperties fileProperties;
 
     public ScaffoldSystemProperties(SwaggerProperties swaggerProperties, RateLimiterProperties rateLimiterProperties,
                                     JwtProperties jwtProperties, CodeProperties codeProperties,
                                     MonitorProperties monitorProperties, TaskThreadPoolProperties taskThreadPoolProperties,
-                                    RSAProperties rsaProperties, RabbitMqProperties rabbitMqProperties) {
+                                    RSAProperties rsaProperties, RabbitMqProperties rabbitMqProperties,
+                                    EmailProperties emailProperties, FileProperties fileProperties) {
         this.swaggerProperties = swaggerProperties;
         this.rateLimiterProperties = rateLimiterProperties;
         this.jwtProperties = jwtProperties;
@@ -39,6 +42,8 @@ public class ScaffoldSystemProperties {
         this.threadPoolProperties = taskThreadPoolProperties;
         this.rsaProperties = rsaProperties;
         this.rabbitMqProperties = rabbitMqProperties;
+        this.emailProperties = emailProperties;
+        this.fileProperties = fileProperties;
     }
 
     @Getter
@@ -167,5 +172,29 @@ public class ScaffoldSystemProperties {
         private String exchangeName;
         // 路由Key名称
         private String routingKeyName;
+    }
+
+    @Getter
+    @Setter
+    @Configuration
+    @ConfigurationProperties(prefix = "scaffold.email")
+    public static class EmailProperties {
+        // 邮箱验证码的长度
+        private int codeLength;
+        // 邮箱验证码的缓存前缀
+        private String codeKey;
+        // 邮箱验证码的过期时间(min)
+        private Long expiration;
+    }
+
+    @Getter
+    @Setter
+    @Configuration
+    @ConfigurationProperties(prefix = "scaffold.file")
+    public static class FileProperties {
+        // 本地地址前缀
+        private String localAddressPrefix;
+        // 服务器地址前缀
+        private String serverAddressPrefix;
     }
 }

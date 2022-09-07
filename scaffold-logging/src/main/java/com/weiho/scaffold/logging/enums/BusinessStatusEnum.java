@@ -2,6 +2,7 @@ package com.weiho.scaffold.logging.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Getter;
  * @date 2022/8/6
  */
 @Getter
+@AllArgsConstructor
 public enum BusinessStatusEnum {
     /**
      * 成功
@@ -27,9 +29,4 @@ public enum BusinessStatusEnum {
 
     @JsonValue
     private final String value;
-
-    BusinessStatusEnum(Integer key, String value) {
-        this.key = key;
-        this.value = value;
-    }
 }

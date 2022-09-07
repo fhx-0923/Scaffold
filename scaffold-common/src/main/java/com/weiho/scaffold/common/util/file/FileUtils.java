@@ -5,6 +5,9 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.weiho.scaffold.common.exception.BadRequestException;
+import com.weiho.scaffold.common.util.date.DateUtils;
+import com.weiho.scaffold.common.util.date.FormatEnum;
+import com.weiho.scaffold.common.util.md5.MD5Utils;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import lombok.experimental.UtilityClass;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,11 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * 文件工具类,扩展hutool包
@@ -184,14 +184,9 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
      * @return 新的文件名
      */
     public StringBuffer fileRename() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        String time = sdf.format(new Date());
+        String time = DateUtils.getNowDateFormat(FormatEnum.YYYYMMDD);
         StringBuffer buf = new StringBuffer(time);
-        Random r = new Random();
-        //循环取得三个不大于10的随机整数
-        for (int x = 0; x < 3; x++) {
-            buf.append(r.nextInt(10));
-        }
+        buf.append("_").append(MD5Utils.getMd5(IdUtil.simpleUUID()));
         return buf;
     }
 

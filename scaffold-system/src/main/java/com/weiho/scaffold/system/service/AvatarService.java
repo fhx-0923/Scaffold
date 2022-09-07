@@ -20,4 +20,11 @@ public interface AvatarService extends CommonService<Avatar> {
      * @return 头像实体
      */
     Avatar selectByAvatarId(Long avatarId, String username);
+
+    /**
+     * 修改头像
+     *
+     * @param avatar 头像
+     */
+    Avatar updateAvatar(Avatar avatar, String username);
 }

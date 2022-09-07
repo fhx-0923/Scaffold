@@ -68,7 +68,7 @@ public class SwaggerConfig {
         }
         return createCommonDocket(properties.getSwaggerProperties().getEnabled(), apiInfo(), "com.weiho.scaffold")
                 //设置接口名称除了"/auth"开头的不需要token
-                .paths(PathSelectors.ant("/auth/**").negate())
+                .paths(PathSelectors.ant("/api/v1/auth/**").negate())
                 .build()
                 .groupName("需要Token")
                 .globalRequestParameters(createHeaderRequired());
@@ -86,7 +86,7 @@ public class SwaggerConfig {
         }
         return createCommonDocket(properties.getSwaggerProperties().getEnabled(), apiInfo(), "com.weiho.scaffold")
                 //设置接口名称"/auth"开头的不需要token
-                .paths(PathSelectors.ant("/auth/**"))
+                .paths(PathSelectors.ant("/api/v1/auth/**"))
                 .build()
                 .groupName("不需要Token");
     }

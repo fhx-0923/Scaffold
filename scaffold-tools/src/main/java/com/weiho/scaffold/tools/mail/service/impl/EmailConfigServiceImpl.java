@@ -70,11 +70,7 @@ public class EmailConfigServiceImpl extends CommonServiceImpl<EmailConfigMapper,
         account.setHost(config.getHost());
         account.setPort(Integer.parseInt(config.getPort()));
         account.setAuth(true);
-        try {
-            account.setPass(DesUtils.desDecrypt(config.getPass()));
-        } catch (Exception e) {
-            throw new BadRequestException(I18nMessagesUtils.get("mail.send.error"));
-        }
+        account.setPass(config.getPass());
         account.setFrom(config.getUsername() + "<" + config.getFromUser() + ">");
         // ssl方式发送
         account.setSslEnable(true);
@@ -93,7 +89,8 @@ public class EmailConfigServiceImpl extends CommonServiceImpl<EmailConfigMapper,
                     .setUseGlobalSession(false)
                     .send();
         } catch (Exception e) {
-            throw new BadRequestException(I18nMessagesUtils.get("mail.send.error.tip"));
+            e.printStackTrace();
+//            throw new BadRequestException(I18nMessagesUtils.get("mail.send.error.tip"));
         }
     }
 }

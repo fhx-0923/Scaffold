@@ -36,4 +36,12 @@ public interface UserMapper extends CommonMapper<User> {
                     @Param("password") String password,
                     @Param("lastPassResetTime") String lastPassResetTime);
 
+    /**
+     * 修改用户的邮箱
+     *
+     * @param newEmail 新邮箱
+     * @param username 用户名
+     */
+    void updateEmail(@Param("username") String username, @Param("newEmail") String newEmail);
+
 }

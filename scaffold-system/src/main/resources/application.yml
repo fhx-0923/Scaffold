@@ -10,6 +10,8 @@ spring:
       matching-strategy: ant_path_matcher # 防止Spring Boot 2.7.X 与 SpringFox路径匹配不一致报错
   cache:
     type: redis
+  freemarker:
+    check-template-location: false
   messages:
     basename: i18n/messages # 国际化的资源文件相对路径
     encoding: UTF-8
@@ -83,6 +85,10 @@ spring:
     port: 5672
     username: admin
     password: 970049938
+  servlet:
+    multipart:
+      # 文件上传最大50M
+      max-file-size: 50MB
 
 logging:
   level:
@@ -182,8 +188,20 @@ scaffold:
     logging-monitor-enabled: true
   rabbitmq:
     # 队列名称
-    queue-name: ${spring.application.name}.middleware.log.queue
+    queue-name: ${spring.application.name}.middleware.mail.queue
     # 队列交换机名称
-    exchange-name: ${spring.application.name}.log.exchange
+    exchange-name: ${spring.application.name}.mail.exchange
     # 路由Key名称
-    routing-key-name: ${spring.application.name}.log.routing.key
+    routing-key-name: ${spring.application.name}.mail.routing.key
+  email:
+    # 邮箱验证码的长度
+    code-key: "Scaffold:EmailCode:"
+    # 邮箱验证码的缓存前缀
+    code-length: 6
+    # 邮箱验证码的过期时间(min)
+    expiration: 5
+  file:
+    # 本地地址
+    local-address-prefix: E:\Graduation_ChouChou\Scaffold-Weiho\Scaffold\avatar\
+    # 服务器地址
+    server-address-prefix: http://192.168.137.23:8888/local/avatar/

@@ -4,7 +4,6 @@ import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.tools.mail.entity.EmailConfig;
 import com.weiho.scaffold.tools.mail.entity.vo.EmailConfigVO;
 import com.weiho.scaffold.tools.mail.entity.vo.EmailVO;
-import org.springframework.scheduling.annotation.Async;
 
 /**
  * <p>
@@ -35,6 +34,5 @@ public interface EmailConfigService extends CommonService<EmailConfig> {
      * @param emailVO 邮件发送的内容，收件人，主题
      * @param config  邮件配置
      */
-    @Async
     void send(EmailVO emailVO, EmailConfigVO config);
 }

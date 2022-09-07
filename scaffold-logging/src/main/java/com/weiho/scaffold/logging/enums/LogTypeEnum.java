@@ -1,5 +1,6 @@
 package com.weiho.scaffold.logging.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -7,13 +8,10 @@ import lombok.Getter;
  * @date 2022/8/7
  */
 @Getter
+@AllArgsConstructor
 public enum LogTypeEnum {
     INFO("INFO"),
     ERROR("ERROR");
 
     private final String msg;
-
-    LogTypeEnum(String msg) {
-        this.msg = msg;
-    }
 }

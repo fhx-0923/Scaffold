@@ -3,6 +3,8 @@ package com.weiho.scaffold.system.security.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.exception.ResponsePackException;
+import com.weiho.scaffold.common.util.date.DateUtils;
+import com.weiho.scaffold.common.util.date.FormatEnum;
 import com.weiho.scaffold.common.util.des.DesUtils;
 import com.weiho.scaffold.common.util.file.FileUtils;
 import com.weiho.scaffold.common.util.ip.IpUtils;
@@ -20,7 +22,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -49,7 +50,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
             //构造实体
             onlineUser = new OnlineUserVO(jwtUser.getUsername(),
                     browser, ip, address, DesUtils.desEncrypt(token),
-                    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                    DateUtils.getNowDateFormat(FormatEnum.YYYY_MM_DD_HH_MM_SS));
             //存入Redis
             redisUtils.set(properties.getJwtProperties().getOnlineKey() + token,
                     onlineUser, properties.getJwtProperties().getTokenValidityInSeconds() / 1000);

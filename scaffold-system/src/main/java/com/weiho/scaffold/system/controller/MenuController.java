@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Api(tags = "菜单管理")
 @RestController
-@RequestMapping("/api/menus")
+@RequestMapping("/api/v1/menus")
 @RequiredArgsConstructor
 public class MenuController {
     private final MenuService menuService;

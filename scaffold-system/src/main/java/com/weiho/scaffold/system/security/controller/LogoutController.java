@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Api(tags = "系统注销")
 @RestController
-@RequestMapping("/api/out")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class LogoutController {
     private final LogoutService logoutService;
