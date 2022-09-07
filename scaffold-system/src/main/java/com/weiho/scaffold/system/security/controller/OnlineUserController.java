@@ -33,7 +33,7 @@ import java.util.Set;
  */
 @Api(tags = "在线用户管理")
 @RestController
-@RequestMapping("/api/online")
+@RequestMapping("/api/v1/online")
 @RequiredArgsConstructor
 public class OnlineUserController {
     private final OnlineUserService onlineUserService;
@@ -41,7 +41,7 @@ public class OnlineUserController {
     private final ScaffoldSystemProperties properties;
 
     @ApiOperation("查询在线用户")
-    @GetMapping("/list")
+    @GetMapping
     @PreAuthorize("@el.check('Online:list')")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "filter", value = "模糊查询字段,不填则全查", dataType = "String", dataTypeClass = String.class),
@@ -71,7 +71,7 @@ public class OnlineUserController {
     @Logging(title = "踢在线用户下线", businessType = BusinessTypeEnum.DELETE)
     @ApiOperation("踢在线用户下线")
     @PreAuthorize("@el.check('Online:list','Online:delete')")
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public Result delete(@RequestBody Set<String> keys) throws Exception {
         Set<String> usernames = new HashSet<>();
         for (String key : keys) {

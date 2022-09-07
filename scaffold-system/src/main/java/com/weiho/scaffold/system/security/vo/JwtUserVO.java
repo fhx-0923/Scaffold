@@ -56,6 +56,8 @@ public class JwtUserVO implements UserDetails {
     private boolean enabled;
 
     @ApiModelProperty("最后修改密码时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date lastPassResetTime;
 
     @ApiModelProperty("JWT创建时间")

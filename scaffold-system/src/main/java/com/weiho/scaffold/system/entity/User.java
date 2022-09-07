@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
@@ -24,6 +25,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
+@ToString
 @ApiModel(value = "User对象", description = "系统用户表")
 @TableName(value = "user", autoResultMap = true)
 public class User extends CommonEntity {

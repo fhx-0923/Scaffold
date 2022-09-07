@@ -4,6 +4,7 @@ import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.Avatar;
 import com.weiho.scaffold.system.mapper.AvatarMapper;
 import com.weiho.scaffold.system.service.AvatarService;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,12 @@ public class AvatarServiceImpl extends CommonServiceImpl<AvatarMapper, Avatar> i
     @Cacheable(value = "Scaffold:Commons:Avatar", key = "'loadAvatarByUsername:' + #p1")
     public Avatar selectByAvatarId(Long avatarId, String username) {
         return this.getBaseMapper().selectById(avatarId);
+    }
+
+    @Override
+    @CachePut(value = "Scaffold:Commons:Avatar", key = "'loadAvatarByUsername:' + #p1")
+    public Avatar updateAvatar(Avatar avatar, String username) {
+        this.getBaseMapper().updateById(avatar);
+        return avatar;
     }
 }

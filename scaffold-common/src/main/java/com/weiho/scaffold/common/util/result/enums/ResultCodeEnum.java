@@ -1,6 +1,7 @@
 package com.weiho.scaffold.common.util.result.enums;
 
 import com.weiho.scaffold.common.util.result.code.StatusCode;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Getter;
  * @author Weiho
  */
 @Getter
+@AllArgsConstructor
 public enum ResultCodeEnum implements StatusCode {
     SUCCESS(1200, "请求成功"),
     SYSTEM_FORBIDDEN(1403, "拒绝访问"),//限流
@@ -19,9 +21,4 @@ public enum ResultCodeEnum implements StatusCode {
 
     private final int code;
     private final String msg;
-
-    ResultCodeEnum(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
 }

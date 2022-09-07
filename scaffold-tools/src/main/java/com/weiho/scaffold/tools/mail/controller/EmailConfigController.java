@@ -26,21 +26,21 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(tags = "邮件配置")
 @RestController
-@RequestMapping("/api/email")
+@RequestMapping("/api/v1/email")
 @RequiredArgsConstructor
 public class EmailConfigController {
     private final EmailConfigService emailService;
     private final EmailConfigVOConvert emailConfigVOConvert;
 
     @ApiOperation("获取邮箱配置")
-    @GetMapping("/config")
+    @GetMapping
     @RateLimiter(limitType = LimitType.IP)
     public Result getConfig() {
         return Result.success(emailService.getConfig());
     }
 
     @Logging(title = "修改邮件配置")
-    @PutMapping("/update")
+    @PutMapping
     @ApiOperation("修改邮件配置")
     public Result updateEmailConfig(@RequestBody EmailConfigVO config) {
         emailService.updateEmailConfig(config);
@@ -48,7 +48,7 @@ public class EmailConfigController {
     }
 
     @Logging(title = "发送邮件")
-    @PostMapping("/send")
+    @PostMapping
     @ApiOperation("发送邮件")
     public Result sendEmail(@Validated @RequestBody EmailVO emailVO) {
         emailService.send(emailVO, emailConfigVOConvert.toPojo(emailService.getConfig()));

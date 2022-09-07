@@ -1,6 +1,7 @@
 package com.weiho.scaffold.tools.rabbitmq.core;
 
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
+import com.weiho.scaffold.tools.mail.entity.vo.EmailVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.MessageDeliveryMode;
@@ -20,12 +21,17 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class LogPublisher {
+public class MqPublisher {
     private final RabbitTemplate rabbitTemplate;
     private final ScaffoldSystemProperties properties;
 
+    /**
+     * 发送MQ发送邮件任务
+     *
+     * @param o Email实体
+     */
     @Async
-    public void sendLogMessage(Object o) {
+    public void sendEmailMqMessage(EmailVO o) {
         try {
             rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
             rabbitTemplate.setExchange(properties.getRabbitMqProperties().getExchangeName());
@@ -36,9 +42,8 @@ public class LogPublisher {
                 messageProperties.setHeader(AbstractJavaTypeMapper.DEFAULT_CONTENT_CLASSID_FIELD_NAME, o.getClass());
                 return message;
             });
-            log.info("系统日志记录-生产者-发送登录成功后的用户相关信息入队列-内容：{} ", o);
         } catch (Exception e) {
-            log.error("系统日志记录-生产者-发送登录成功后的用户相关信息入队列-发生异常：{} ", o, e.fillInStackTrace());
+            log.error("RabbitMQ -> MQ消息发送内容：{},发生异常：{}", o, e.fillInStackTrace());
         }
     }
 }

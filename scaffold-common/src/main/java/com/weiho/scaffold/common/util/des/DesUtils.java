@@ -106,4 +106,8 @@ public class DesUtils {
         }
         return b2;
     }
+//
+//    public static void main(String[] args) throws Exception {
+//        System.err.println(desEncrypt("XPIJHWGMHGKAIDFO"));
+//    }
 }

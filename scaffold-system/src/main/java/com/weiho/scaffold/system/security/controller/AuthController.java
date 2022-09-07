@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
 @Api(tags = "系统授权")
 @RequiredArgsConstructor
 public class AuthController {
@@ -26,7 +26,7 @@ public class AuthController {
 
     @Anonymous
     @ApiOperation("登录授权接口")
-    @Logging(title = "用户登录")
+    @Logging(title = "用户登录", saveResponseData = false, saveRequestData = false)
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody @Validated AuthUserVO authUserVO, HttpServletRequest request) throws Exception {
         return loginService.login(authUserVO, request);

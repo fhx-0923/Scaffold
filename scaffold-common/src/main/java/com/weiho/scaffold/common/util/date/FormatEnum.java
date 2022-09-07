@@ -1,10 +1,15 @@
 package com.weiho.scaffold.common.util.date;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * 时间格式化枚举类
  *
  * @author Weiho
  */
+@Getter
+@AllArgsConstructor
 public enum FormatEnum {
     /**
      * 年份 [yyyy] 格式
@@ -32,15 +37,4 @@ public enum FormatEnum {
     YYYY_MM_DD_HH_MM_SS("yyyy-MM-dd HH:mm:ss");
 
     private final String format;
-
-    FormatEnum(String format) {
-        this.format = format;
-    }
-
-    /**
-     * @return String
-     */
-    public String getFormat() {
-        return format;
-    }
 }

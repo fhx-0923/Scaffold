@@ -2,6 +2,7 @@ package com.weiho.scaffold.system.entity.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Getter;
  * 在书写DTO的时候最好是使用枚举类型而不是String类型
  */
 @Getter
+@AllArgsConstructor
 public enum SexEnum {
     WOMAN(0, "女"),
     MAN(1, "男");
@@ -18,9 +20,4 @@ public enum SexEnum {
 
     @JsonValue
     private final String display;
-
-    SexEnum(Integer key, String display) {
-        this.key = key;
-        this.display = display;
-    }
 }
