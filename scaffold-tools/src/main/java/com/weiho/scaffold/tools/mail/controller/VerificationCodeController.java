@@ -7,6 +7,7 @@ import com.weiho.scaffold.common.util.verify.VerifyUtils;
 import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.redis.limiter.annotation.RateLimiter;
 import com.weiho.scaffold.redis.limiter.enums.LimitType;
+import com.weiho.scaffold.tools.mail.entity.vo.EmailSelectVO;
 import com.weiho.scaffold.tools.mail.entity.vo.EmailVO;
 import com.weiho.scaffold.tools.mail.entity.vo.VerificationCodeVO;
 import com.weiho.scaffold.tools.mail.service.VerificationCodeService;
@@ -14,11 +15,9 @@ import com.weiho.scaffold.tools.rabbitmq.core.MqPublisher;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,7 +37,6 @@ public class VerificationCodeController {
     @ApiOperation("请求发送邮箱验证码")
     @RateLimiter(count = 1, limitType = LimitType.IP)// 一分钟之内只能请求1次
     public Result getEmailCode(@RequestBody VerificationCodeVO codeVO) {
-        // TODO: 明天前端需要更改接口请求方式，集成多款邮箱
         if (!VerifyUtils.isEmail(codeVO.getAccount() + codeVO.getSuffix().getEmailSuffix())) {
             throw new BadRequestException(I18nMessagesUtils.get("mail.error.no.email"));
         }
@@ -47,5 +45,12 @@ public class VerificationCodeController {
         // 放入MQ消息队列
         mqPublisher.sendEmailMqMessage(emailVO);
         return Result.success(codeResult.get("uuid"));
+    }
+
+    @GetMapping("/options")
+    @ApiOperation("获取前端的下拉列表")
+    @RateLimiter(limitType = LimitType.IP)
+    public List<EmailSelectVO> getSelectList() {
+        return verificationCodeService.getSelectList();
     }
 }

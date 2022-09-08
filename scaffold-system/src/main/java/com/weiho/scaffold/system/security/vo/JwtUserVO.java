@@ -14,7 +14,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -60,10 +59,10 @@ public class JwtUserVO implements UserDetails {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date lastPassResetTime;
 
-    @ApiModelProperty("JWT创建时间")
+    @ApiModelProperty("注册时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    private Timestamp createTime;
+    private Date createTime;
 
     @JsonIgnore
     @JSONField(serialize = false)

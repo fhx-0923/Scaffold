@@ -21,7 +21,8 @@ public enum EmailTypeEnum {
     SINA(6, "@sina.com"),
     SOHU(7, "@sohu.com"),
     MICROSOFT(8, "@outlook.com"),
-    GOOGLE(9, "@gmail.com");
+    GOOGLE(9, "@gmail.com"),
+    SEIG(10, "@smail.seig.edu.cn");
 
     @EnumValue
     private final Integer key;

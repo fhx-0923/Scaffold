@@ -1,5 +1,6 @@
 package com.weiho.scaffold.system.entity.vo;
 
+import com.weiho.scaffold.tools.mail.enums.EmailTypeEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,6 +24,9 @@ public class VerificationVO {
     @NotBlank(message = "验证码不能为空")
     @ApiModelProperty(value = "验证码", required = true)
     private String code;
+
+    @ApiModelProperty(value = "邮箱后缀", required = true)
+    private EmailTypeEnum suffix;
 
     @NotBlank(message = "当前密码不能为空")
     @ApiModelProperty(value = "当前账号密码", required = true)
