@@ -16,6 +16,7 @@ import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.weiho.scaffold.system.service.AvatarService;
 import com.weiho.scaffold.system.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -84,5 +85,11 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
         if (StringUtils.isNotBlank(oldFileNamePath)) {
             FileUtil.del(oldFileNamePath);
         }
+    }
+
+    @Override
+    @CachePut(value = "Scaffold:Commons:User", key = "'loadUserByUsername:' + #p0.getUsername()", unless = "#result == null || #result.enabled == false")
+    public User updateCache(User newUser) {
+        return newUser;
     }
 }

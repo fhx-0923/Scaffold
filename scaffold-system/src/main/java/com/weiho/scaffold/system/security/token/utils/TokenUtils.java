@@ -190,7 +190,7 @@ public class TokenUtils {
      *
      * @param userDetails 用户信息
      */
-    private void putUserDetails(UserDetails userDetails) {
+    public void putUserDetails(UserDetails userDetails) {
         redisUtils.set(properties.getJwtProperties().getDetailKey() + userDetails.getUsername(), JSON.toJSON(userDetails), properties.getJwtProperties().getTokenValidityInSeconds() / 1000);
     }
 

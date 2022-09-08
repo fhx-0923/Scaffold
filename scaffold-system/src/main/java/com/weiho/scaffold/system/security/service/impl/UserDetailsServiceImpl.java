@@ -1,7 +1,6 @@
 package com.weiho.scaffold.system.security.service.impl;
 
 import com.weiho.scaffold.common.exception.BadRequestException;
-import com.weiho.scaffold.common.util.date.DateUtils;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
@@ -47,7 +46,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     private UserDetails createJwtUserVO(User user) {
         JwtUserVO jwtUserVO = userService.getBaseJwtUserVO(user);
-        jwtUserVO.setCreateTime(DateUtils.getNowTimestamp());
         jwtUserVO.setAuthorities(roleService.mapToGrantedAuthorities(user.getId(), user.getUsername()));
         return jwtUserVO;
     }

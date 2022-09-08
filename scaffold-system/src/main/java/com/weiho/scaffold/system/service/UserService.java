@@ -52,4 +52,12 @@ public interface UserService extends CommonService<User> {
      * @param multipartFile 头像
      */
     void updateAvatar(MultipartFile multipartFile);
+
+    /**
+     * 更新缓存
+     *
+     * @param newUser 新的用户信息
+     * @return /
+     */
+    User updateCache(User newUser);
 }

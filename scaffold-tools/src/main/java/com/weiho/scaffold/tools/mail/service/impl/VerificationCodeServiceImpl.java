@@ -9,15 +9,15 @@ import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.redis.util.RedisUtils;
+import com.weiho.scaffold.tools.mail.entity.vo.EmailSelectVO;
 import com.weiho.scaffold.tools.mail.entity.vo.EmailVO;
 import com.weiho.scaffold.tools.mail.entity.vo.VerificationCodeVO;
+import com.weiho.scaffold.tools.mail.enums.EmailTypeEnum;
 import com.weiho.scaffold.tools.mail.service.VerificationCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -51,5 +51,15 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
             put("uuid", key);
             put("emailVO", emailVO);
         }};
+    }
+
+    @Override
+    public List<EmailSelectVO> getSelectList() {
+        List<EmailSelectVO> selectList = new ArrayList<>();
+        EmailTypeEnum[] emailTypeEnums = EmailTypeEnum.values();
+        for (EmailTypeEnum emailTypeEnum : emailTypeEnums) {
+            selectList.add(new EmailSelectVO(emailTypeEnum.getKey(), emailTypeEnum.getEmailSuffix()));
+        }
+        return selectList;
     }
 }

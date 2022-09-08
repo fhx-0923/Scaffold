@@ -17,6 +17,7 @@ import com.weiho.scaffold.redis.util.RedisUtils;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.vo.UserPassVO;
 import com.weiho.scaffold.system.entity.vo.VerificationVO;
+import com.weiho.scaffold.system.security.token.utils.TokenUtils;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.weiho.scaffold.system.service.UserService;
 import io.swagger.annotations.Api;
@@ -50,13 +51,13 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final RedisUtils redisUtils;
+    private final TokenUtils tokenUtils;
 
     @ApiOperation("获取登录后的用户信息")
     @GetMapping("/info")
     @RateLimiter(limitType = LimitType.IP)
-    public Result getUserInfo() {
-        JwtUserVO jwtUserVO = (JwtUserVO) userDetailsService.loadUserByUsername(SecurityUtils.getUsername());
-        return Result.success(jwtUserVO);
+    public JwtUserVO getUserInfo() {
+        return (JwtUserVO) userDetailsService.loadUserByUsername(SecurityUtils.getUsername());
     }
 
     @ApiOperation("修改密码")
@@ -80,9 +81,10 @@ public class UserController {
     @Logging(title = "修改邮箱")
     @ApiOperation("修改邮箱")
     @PostMapping("/email")
-    public Result updateEmail(VerificationVO verificationVO) throws Exception {
+    public Result updateEmail(@RequestBody VerificationVO verificationVO) throws Exception {
+        String newEmail = verificationVO.getNewEmail() + verificationVO.getSuffix().getEmailSuffix();
         // 根据传入的新邮箱去查找数据库
-        List<User> usersForNewEmail = userService.list(new LambdaQueryWrapper<User>().eq(User::getEmail, AesUtils.encrypt(verificationVO.getNewEmail())));
+        List<User> usersForNewEmail = userService.list(new LambdaQueryWrapper<User>().eq(User::getEmail, AesUtils.encrypt(newEmail)));
         // 如果存在结果
         if (usersForNewEmail.size() != 0) {
             throw new BadRequestException(I18nMessagesUtils.get("mail.change.error"));
@@ -103,7 +105,11 @@ public class UserController {
             if (!passwordEncoder.matches(password, user.getPassword())) {
                 throw new BadRequestException(I18nMessagesUtils.get("mail.change.pass.error"));
             }
-            userService.updateEmail(user.getUsername(), verificationVO.getNewEmail());
+            userService.updateEmail(user.getUsername(), newEmail);
+            // 更新缓存
+            user.setEmail(newEmail);
+            userService.updateCache(user);
+            tokenUtils.putUserDetails(userDetailsService.loadUserByUsername(SecurityUtils.getUsername()));
             return Result.success(I18nMessagesUtils.get("update.success.tip"));
         }
     }
@@ -113,6 +119,8 @@ public class UserController {
     @PostMapping("/avatar")
     public Result updateAvatar(@RequestParam MultipartFile file) {
         userService.updateAvatar(file);
-        return Result.success("修改成功");
+        // 更新缓存
+        tokenUtils.putUserDetails(userDetailsService.loadUserByUsername(SecurityUtils.getUsername()));
+        return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
 }
