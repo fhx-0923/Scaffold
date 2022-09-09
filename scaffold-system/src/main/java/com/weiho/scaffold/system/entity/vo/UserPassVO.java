@@ -13,11 +13,11 @@ import javax.validation.constraints.NotBlank;
 @Data
 @ApiModel("用户修改密码实体")
 public class UserPassVO {
-    @NotBlank
+    @NotBlank(message = "旧密码不能为空")
     @ApiModelProperty(value = "旧密码", required = true)
     private String oldPassword;
 
-    @NotBlank
+    @NotBlank(message = "新密码不能为空")
     @ApiModelProperty(value = "新密码", required = true)
     private String newPassword;
 }

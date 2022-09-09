@@ -8,6 +8,7 @@ import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import com.weiho.scaffold.common.util.throwable.ThrowableUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -62,6 +63,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({CaptchaException.class})
     public Result captchaException(CaptchaException e) {
         return Result.of(e.getCode(), e.getMsg(), e.getMessage());
+    }
+
+    /**
+     * 处理用户名或密码错误的异常
+     */
+    @ExceptionHandler({BadCredentialsException.class})
+    public Result badCredentialsException(BadCredentialsException e) {
+        return Result.of(ResultCodeEnum.BAD_REQUEST_ERROR, e.getMessage());
     }
 
 }

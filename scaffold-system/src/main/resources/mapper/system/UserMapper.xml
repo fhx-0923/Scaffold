@@ -28,7 +28,7 @@
 
     <update id="updatePass">
         UPDATE user
-        SET password             = #{password},
+        SET password             = #{password,typeHandler=com.weiho.scaffold.mp.handler.EncryptHandler},
             last_pass_reset_time = #{lastPassResetTime}
         WHERE username = #{username}
           AND is_del = 0

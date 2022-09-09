@@ -63,7 +63,7 @@ public class UserController {
     @ApiOperation("修改密码")
     @PostMapping("/pass")
     @Logging(title = "修改密码", saveRequestData = false)
-    public Result updatePass(@RequestBody @Validated UserPassVO passVO) throws Exception {
+    public Result updatePass(@Validated @RequestBody UserPassVO passVO) throws Exception {
         // 密码解密
         String oldPass = RsaUtils.decryptByPrivateKey(properties.getRsaProperties().getPrivateKey(), passVO.getOldPassword());
         String newPass = RsaUtils.decryptByPrivateKey(properties.getRsaProperties().getPrivateKey(), passVO.getNewPassword());
@@ -74,7 +74,9 @@ public class UserController {
         if (passwordEncoder.matches(newPass, user.getPassword())) {
             throw new BadRequestException(I18nMessagesUtils.get("user.update.tip"));
         }
-        userService.updatePass(user.getPassword(), passwordEncoder.encode(newPass));
+        userService.updatePass(user.getUsername(), passwordEncoder.encode(newPass));
+        user.setPassword(passwordEncoder.encode(newPass));
+        userService.updateCache(user);
         return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
 
