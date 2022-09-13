@@ -5,15 +5,19 @@ import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson2.JSON;
 import com.github.pagehelper.PageInfo;
 import com.weiho.scaffold.common.util.file.FileUtils;
+import com.weiho.scaffold.common.util.security.SecurityUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.common.util.throwable.ThrowableUtils;
 import com.weiho.scaffold.common.util.validation.ValidationUtils;
 import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.logging.entity.Log;
+import com.weiho.scaffold.logging.entity.convert.LogErrorUserVOConvert;
 import com.weiho.scaffold.logging.entity.convert.LogErrorVOConvert;
+import com.weiho.scaffold.logging.entity.convert.LogUserVOConvert;
 import com.weiho.scaffold.logging.entity.convert.LogVOConvert;
 import com.weiho.scaffold.logging.entity.criteria.LogQueryCriteria;
 import com.weiho.scaffold.logging.enums.BusinessStatusEnum;
+import com.weiho.scaffold.logging.enums.LogTypeEnum;
 import com.weiho.scaffold.logging.mapper.LogMapper;
 import com.weiho.scaffold.logging.service.LogService;
 import com.weiho.scaffold.mp.core.QueryHelper;
@@ -51,6 +55,8 @@ import java.util.*;
 public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements LogService {
 
     private final LogErrorVOConvert logErrorVOConvert;
+    private final LogUserVOConvert logUserVOConvert;
+    private final LogErrorUserVOConvert logErrorUserVOConvert;
     private final LogVOConvert logVOConvert;
 
     @Override
@@ -64,7 +70,7 @@ public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements
         PageInfo<Log> pageInfo = new PageInfo<>(findAll(criteria));
         Map<String, Object> map = new LinkedHashMap<>(2);
         if (!StringUtils.isBlank(criteria.getLogType())) {
-            if (criteria.getLogType().equals("INFO")) {
+            if (criteria.getLogType().equals(LogTypeEnum.INFO.getMsg())) {
                 map.put("content", logVOConvert.toPojo(pageInfo.getList()));
                 map.put("totalElements", pageInfo.getTotal());
             } else {
@@ -126,13 +132,13 @@ public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteAllByInfo() {
-        this.getBaseMapper().deleteByLogType("INFO");
+        this.getBaseMapper().deleteByLogType(LogTypeEnum.INFO.getMsg());
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteAllByError() {
-        this.getBaseMapper().deleteByLogType("ERROR");
+        this.getBaseMapper().deleteByLogType(LogTypeEnum.ERROR.getMsg());
     }
 
     @Override
@@ -141,6 +147,21 @@ public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements
         ValidationUtils.isNull(log.getId(), "Log", "id", id);
         byte[] details = log.getExceptionDetail().getBytes();
         return Dict.create().set("exception", new String(ObjectUtil.isNotNull(details) ? details : "".getBytes()));
+    }
+
+    @Override
+    public Map<String, Object> findByUsername(LogTypeEnum logType, Pageable pageable) {
+        startPage(pageable);
+        PageInfo<Log> pageInfo = new PageInfo<>(this.getBaseMapper().selectByUsername(SecurityUtils.getUsername(), logType.getMsg()));
+        Map<String, Object> map = new LinkedHashMap<>(2);
+        if (logType.equals(LogTypeEnum.INFO)) {
+            map.put("content", logUserVOConvert.toPojo(pageInfo.getList()));
+            map.put("totalElements", pageInfo.getTotal());
+        } else {
+            map.put("content", logErrorUserVOConvert.toPojo(pageInfo.getList()));
+            map.put("totalElements", pageInfo.getTotal());
+        }
+        return map;
     }
 
     /**

@@ -25,7 +25,7 @@ class LogServiceTest {
     @Test
     void findAll() {
         LogQueryCriteria criteria = new LogQueryCriteria();
-        criteria.setLogType("INFO");
+        criteria.setLogType("ERROR");
         logService.findAll(criteria).forEach(System.err::println);
     }
 

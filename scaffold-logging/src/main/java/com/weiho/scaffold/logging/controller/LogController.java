@@ -2,6 +2,7 @@ package com.weiho.scaffold.logging.controller;
 
 import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.logging.entity.criteria.LogQueryCriteria;
+import com.weiho.scaffold.logging.enums.LogTypeEnum;
 import com.weiho.scaffold.logging.service.LogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -34,7 +35,7 @@ public class LogController {
     @GetMapping("/logs")
     @PreAuthorize("@el.check('PlayLog:list')")
     public Map<String, Object> getAll(LogQueryCriteria criteria, Pageable pageable) {
-        criteria.setLogType("INFO");
+        criteria.setLogType(LogTypeEnum.INFO.getMsg());
         return logService.findAllByPage(criteria, pageable);
     }
 
@@ -42,7 +43,7 @@ public class LogController {
     @GetMapping("/errorLogs")
     @PreAuthorize("@el.check('ErrorLog:list')")
     public Map<String, Object> getAllError(LogQueryCriteria criteria, Pageable pageable) {
-        criteria.setLogType("ERROR");
+        criteria.setLogType(LogTypeEnum.ERROR.getMsg());
         return logService.findAllByPage(criteria, pageable);
     }
 
@@ -51,7 +52,7 @@ public class LogController {
     @GetMapping("/logs/download")
     @PreAuthorize("@el.check('PlayLog:list')")
     public void downloadInfo(LogQueryCriteria criteria, HttpServletResponse response) throws IOException {
-        criteria.setLogType("INFO");
+        criteria.setLogType(LogTypeEnum.INFO.getMsg());
         logService.download(logService.findAll(criteria), response);
     }
 
@@ -60,7 +61,7 @@ public class LogController {
     @GetMapping("/errorLogs/download")
     @PreAuthorize("@el.check('ErrorLog:list')")
     public void downloadError(LogQueryCriteria criteria, HttpServletResponse response) throws IOException {
-        criteria.setLogType("ERROR");
+        criteria.setLogType(LogTypeEnum.ERROR.getMsg());
         logService.download(logService.findAll(criteria), response);
     }
 
@@ -86,5 +87,17 @@ public class LogController {
     @PreAuthorize("@el.check('ErrorLog:delete')")
     public void deleteAllError() {
         logService.deleteAllByError();
+    }
+
+    @ApiOperation("查询个人操作日志")
+    @GetMapping("/center/logs")
+    public Map<String, Object> getMyLogs(Pageable pageable) {
+        return logService.findByUsername(LogTypeEnum.INFO, pageable);
+    }
+
+    @ApiOperation("查询个人异常日志")
+    @GetMapping("/center/errorLogs")
+    public Map<String, Object> getMyErrorLogs(Pageable pageable) {
+        return logService.findByUsername(LogTypeEnum.ERROR, pageable);
     }
 }

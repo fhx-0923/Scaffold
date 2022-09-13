@@ -1,0 +1,617 @@
+2022-09-11 16:23:56.961 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.3.Final
+2022-09-11 16:23:56.967 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - Starting AppRun using Java 1.8.0_144 on LAPTOP-SR0899OB with PID 12872 (E:\Graduation_ChouChou\Scaffold-Weiho\Scaffold\scaffold-system\target\classes started by Weiho in E:\Graduation_ChouChou\Scaffold-Weiho\Scaffold)
+2022-09-11 16:23:56.967 [restartedMain] DEBUG com.weiho.scaffold.system.AppRun - Running with Spring Boot v2.7.0, Spring v5.3.20
+2022-09-11 16:23:56.968 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - No active profile set, falling back to 1 default profile: "default"
+2022-09-11 16:23:57.031 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-09-11 16:23:57.031 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-09-11 16:23:58.852 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-09-11 16:23:58.854 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-09-11 16:23:58.881 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2022-09-11 16:23:59.866 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8888 (http)
+2022-09-11 16:23:59.877 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8888"]
+2022-09-11 16:23:59.878 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-09-11 16:23:59.878 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2022-09-11 16:23:59.953 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-09-11 16:23:59.953 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2921 ms
+2022-09-11 16:24:00.192 [restartedMain] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2022-09-11 16:24:00.956 [restartedMain] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2022-09-11 16:24:03.069 [restartedMain] INFO  c.w.scaffold.common.config.swagger.SwaggerConfig - Swagger -> [Swagger接口文档分组 '需要token验证' 初始化]
+2022-09-11 16:24:03.091 [restartedMain] INFO  c.w.scaffold.common.config.swagger.SwaggerConfig - Swagger -> [Swagger接口文档分组 '不需要token验证' 初始化]
+2022-09-11 16:24:03.612 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2022-09-11 16:24:03.814 [restartedMain] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3363758f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@73aa6e40, org.springframework.security.web.context.SecurityContextPersistenceFilter@7ffdce0b, org.springframework.security.web.header.HeaderWriterFilter@27f30c59, org.springframework.security.web.authentication.logout.LogoutFilter@30dd4ed4, org.springframework.web.filter.CorsFilter@39d00462, com.weiho.scaffold.system.security.token.filter.TokenFilter@59a874c4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@38a9271, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1f456e06, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@696df8cf, org.springframework.security.web.session.SessionManagementFilter@25064060, org.springframework.security.web.access.ExceptionTranslationFilter@37bdf653, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@47834700]
+2022-09-11 16:24:03.990 [restartedMain] INFO  com.weiho.scaffold.redis.config.RedisConfig - Redis -> [Redis缓存错误处理程序初始化]
+2022-09-11 16:24:04.875 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8888"]
+2022-09-11 16:24:04.901 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-09-11 16:24:04.901 [restartedMain] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-09-11 16:24:04.904 [restartedMain] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2022-09-11 16:24:04.907 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8888 (http) with context path ''
+2022-09-11 16:24:05.530 [restartedMain] INFO  o.s.a.rabbit.connection.CachingConnectionFactory - Attempting to connect to: [192.168.137.128:5672]
+2022-09-11 16:24:05.567 [restartedMain] INFO  o.s.a.rabbit.connection.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#2a479cbc:0/SimpleConnection@64228d36 [delegate=amqp://admin@192.168.137.128:5672/, localPort= 22442]
+2022-09-11 16:24:05.630 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - Started AppRun in 9.213 seconds (JVM running for 10.39)
+2022-09-11 16:44:27.719 [http-nio-8888-exec-1] INFO  com.weiho.scaffold.logging.aspect.LoggingAspect - Log -> 日志对象创建
+2022-09-11 16:44:28.994 [http-nio-8888-exec-1] DEBUG c.w.s.common.thread.VisibleThreadPoolTaskExecutor - Initializing ExecutorService
+2022-09-11 16:44:28.994 [http-nio-8888-exec-1] INFO  c.w.s.common.thread.VisibleThreadPoolTaskExecutor - 线程池状况 -> 线程前缀为[Scaffold-async-thread-],当前线程总数为[0],完成的线程总数为[0],当前正在处理任务的线程数为[0],当前在队列中等待的线程数为[0]
+2022-09-11 16:44:29.004 [Scaffold-async-thread-1] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 开始收集操作日志信息
+2022-09-11 16:44:29.006 [http-nio-8888-exec-1] ERROR o.a.c.c.C.[.[localhost].[/].[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.IllegalStateException: Impossible modulus [1]] with root cause
+java.lang.IllegalStateException: Impossible modulus [1]
+	at org.apache.tomcat.util.codec.binary.Base64.decode(Base64.java:682)
+	at org.apache.tomcat.util.codec.binary.BaseNCodec.decode(BaseNCodec.java:362)
+	at org.apache.tomcat.util.codec.binary.BaseNCodec.decode(BaseNCodec.java:353)
+	at org.apache.tomcat.util.codec.binary.BaseNCodec.decode(BaseNCodec.java:379)
+	at org.apache.tomcat.util.codec.binary.Base64.decodeBase64(Base64.java:172)
+	at com.weiho.scaffold.common.util.rsa.RsaUtils.decryptByPrivateKey(RsaUtils.java:80)
+	at com.weiho.scaffold.system.security.service.impl.LoginServiceImpl.login(LoginServiceImpl.java:74)
+	at com.weiho.scaffold.system.security.controller.AuthController.login(AuthController.java:32)
+	at com.weiho.scaffold.system.security.controller.AuthController$$FastClassBySpringCGLIB$$5a1a9aa8.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.aspectj.AspectJAfterThrowingAdvice.invoke(AspectJAfterThrowingAdvice.java:64)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.adapter.AfterReturningAdviceInterceptor.invoke(AfterReturningAdviceInterceptor.java:57)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:58)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.weiho.scaffold.logging.aspect.LoggingAspect.doAround(LoggingAspect.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:624)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:72)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.weiho.scaffold.system.security.controller.AuthController$$EnhancerBySpringCGLIB$$7f34a717.login(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:124)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:327)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at com.weiho.scaffold.system.security.token.filter.TokenFilter.doFilter(TokenFilter.java:65)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+2022-09-11 16:44:29.047 [Scaffold-async-thread-1] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 createTime]
+2022-09-11 16:44:29.047 [Scaffold-async-thread-1] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 updateTime]
+2022-09-11 16:44:29.067 [Scaffold-async-thread-1] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==>  Preparing: INSERT INTO log ( title, business_type, method, request_method, username, request_url, request_ip, browser, address, log_type, status, exception_detail, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2022-09-11 16:44:29.088 [Scaffold-async-thread-1] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==> Parameters: 用户登录(String), 0(Integer), com.weiho.scaffold.system.security.controller.AuthController.login()(String), POST(String), (String), /api/v1/auth/login(String), 127.0.0.1(String), Chrome 10(String),  本机地址(String), ERROR(String), 1(Integer), java.lang.IllegalStateException: Impossible modulus [1]
+	at org.apache.tomcat.util.codec.binary.Base64.decode(Base64.java:682)
+	at org.apache.tomcat.util.codec.binary.BaseNCodec.decode(BaseNCodec.java:362)
+	at org.apache.tomcat.util.codec.binary.BaseNCodec.decode(BaseNCodec.java:353)
+	at org.apache.tomcat.util.codec.binary.BaseNCodec.decode(BaseNCodec.java:379)
+	at org.apache.tomcat.util.codec.binary.Base64.decodeBase64(Base64.java:172)
+	at com.weiho.scaffold.common.util.rsa.RsaUtils.decryptByPrivateKey(RsaUtils.java:80)
+	at com.weiho.scaffold.system.security.service.impl.LoginServiceImpl.login(LoginServiceImpl.java:74)
+	at com.weiho.scaffold.system.security.controller.AuthController.login(AuthController.java:32)
+	at com.weiho.scaffold.system.security.controller.AuthController$$FastClassBySpringCGLIB$$5a1a9aa8.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.aspectj.AspectJAfterThrowingAdvice.invoke(AspectJAfterThrowingAdvice.java:64)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.adapter.AfterReturningAdviceInterceptor.invoke(AfterReturningAdviceInterceptor.java:57)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:58)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.weiho.scaffold.logging.aspect.LoggingAspect.doAround(LoggingAspect.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:624)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:72)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.weiho.scaffold.system.security.controller.AuthController$$EnhancerBySpringCGLIB$$7f34a717.login(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(Applicati(String), 2022-09-11 16:44:29.047(Timestamp)
+2022-09-11 16:44:29.106 [Scaffold-async-thread-1] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - <==    Updates: 1
+2022-09-11 16:44:29.112 [Scaffold-async-thread-1] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 操作日志已保存
+2022-09-11 16:45:36.683 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.listener.SimpleMessageListenerContainer - Waiting for workers to finish.
+2022-09-11 16:45:36.985 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.listener.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+2022-09-11 16:45:37.200 [SpringApplicationShutdownHook] INFO  o.s.a.r.listener.SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+2022-09-11 16:45:37.200 [SpringApplicationShutdownHook] INFO  c.w.s.common.util.spring.SpringContextHolder - SpringContextHolder -> [清除SpringContextHolder中的ApplicationContext:org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@47ea6f9, started on Sun Sep 11 16:23:57 GMT+08:00 2022]
+2022-09-11 16:45:37.445 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-09-11 16:45:37.459 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-09-11 16:45:41.924 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.3.Final
+2022-09-11 16:45:41.927 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - Starting AppRun using Java 1.8.0_144 on LAPTOP-SR0899OB with PID 13952 (E:\Graduation_ChouChou\Scaffold-Weiho\Scaffold\scaffold-system\target\classes started by Weiho in E:\Graduation_ChouChou\Scaffold-Weiho\Scaffold)
+2022-09-11 16:45:41.927 [restartedMain] DEBUG com.weiho.scaffold.system.AppRun - Running with Spring Boot v2.7.0, Spring v5.3.20
+2022-09-11 16:45:41.928 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - No active profile set, falling back to 1 default profile: "default"
+2022-09-11 16:45:41.991 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-09-11 16:45:41.991 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-09-11 16:45:43.205 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-09-11 16:45:43.207 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-09-11 16:45:43.233 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2022-09-11 16:45:44.220 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8888 (http)
+2022-09-11 16:45:44.229 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8888"]
+2022-09-11 16:45:44.230 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-09-11 16:45:44.230 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2022-09-11 16:45:44.309 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-09-11 16:45:44.310 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2318 ms
+2022-09-11 16:45:44.528 [restartedMain] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2022-09-11 16:45:44.897 [restartedMain] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2022-09-11 16:45:46.938 [restartedMain] INFO  c.w.scaffold.common.config.swagger.SwaggerConfig - Swagger -> [Swagger接口文档分组 '需要token验证' 初始化]
+2022-09-11 16:45:46.962 [restartedMain] INFO  c.w.scaffold.common.config.swagger.SwaggerConfig - Swagger -> [Swagger接口文档分组 '不需要token验证' 初始化]
+2022-09-11 16:45:47.514 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2022-09-11 16:45:47.729 [restartedMain] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5ad5582, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@215f3a70, org.springframework.security.web.context.SecurityContextPersistenceFilter@1adc0b61, org.springframework.security.web.header.HeaderWriterFilter@333787c5, org.springframework.security.web.authentication.logout.LogoutFilter@9ce235e, org.springframework.web.filter.CorsFilter@43fb265c, com.weiho.scaffold.system.security.token.filter.TokenFilter@1fd5d9e5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1e295f57, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@e064bc9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1858b917, org.springframework.security.web.session.SessionManagementFilter@7d93f842, org.springframework.security.web.access.ExceptionTranslationFilter@25e0e9ee, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@64ddb4d4]
+2022-09-11 16:45:47.894 [restartedMain] INFO  com.weiho.scaffold.redis.config.RedisConfig - Redis -> [Redis缓存错误处理程序初始化]
+2022-09-11 16:45:48.558 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8888"]
+2022-09-11 16:45:48.620 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-09-11 16:45:48.621 [restartedMain] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-09-11 16:45:48.623 [restartedMain] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2022-09-11 16:45:48.623 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8888 (http) with context path ''
+2022-09-11 16:45:48.991 [restartedMain] INFO  o.s.a.rabbit.connection.CachingConnectionFactory - Attempting to connect to: [192.168.137.128:5672]
+2022-09-11 16:45:49.030 [restartedMain] INFO  o.s.a.rabbit.connection.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#86a6da5:0/SimpleConnection@6fef528 [delegate=amqp://admin@192.168.137.128:5672/, localPort= 23283]
+2022-09-11 16:45:49.094 [restartedMain] INFO  com.weiho.scaffold.system.AppRun - Started AppRun in 7.63 seconds (JVM running for 8.812)
+2022-09-11 16:48:50.657 [http-nio-8888-exec-4] INFO  com.weiho.scaffold.logging.aspect.LoggingAspect - Log -> 日志对象创建
+2022-09-11 16:48:51.362 [http-nio-8888-exec-4] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:VerifyCode:c7e42f7c7192485cafb896ea2afd7cc5，结果：false
+2022-09-11 16:48:51.600 [http-nio-8888-exec-4] DEBUG c.w.s.common.thread.VisibleThreadPoolTaskExecutor - Initializing ExecutorService
+2022-09-11 16:48:51.601 [http-nio-8888-exec-4] INFO  c.w.s.common.thread.VisibleThreadPoolTaskExecutor - 线程池状况 -> 线程前缀为[Scaffold-async-thread-],当前线程总数为[0],完成的线程总数为[0],当前正在处理任务的线程数为[0],当前在队列中等待的线程数为[0]
+2022-09-11 16:48:51.613 [Scaffold-async-thread-1] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 开始收集操作日志信息
+2022-09-11 16:48:51.652 [Scaffold-async-thread-1] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 createTime]
+2022-09-11 16:48:51.653 [Scaffold-async-thread-1] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 updateTime]
+2022-09-11 16:48:51.668 [Scaffold-async-thread-1] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==>  Preparing: INSERT INTO log ( title, business_type, method, request_method, username, request_url, request_ip, browser, address, log_type, status, exception_detail, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2022-09-11 16:48:51.688 [Scaffold-async-thread-1] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==> Parameters: 用户登录(String), 0(Integer), com.weiho.scaffold.system.security.controller.AuthController.login()(String), POST(String), (String), /api/v1/auth/login(String), 127.0.0.1(String), Chrome 10(String),  本机地址(String), ERROR(String), 1(Integer), com.weiho.scaffold.common.exception.BadRequestException: 验证码不存在或已过期！
+	at com.weiho.scaffold.system.security.service.impl.LoginServiceImpl.login(LoginServiceImpl.java:82)
+	at com.weiho.scaffold.system.security.controller.AuthController.login(AuthController.java:32)
+	at com.weiho.scaffold.system.security.controller.AuthController$$FastClassBySpringCGLIB$$5a1a9aa8.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.aspectj.AspectJAfterThrowingAdvice.invoke(AspectJAfterThrowingAdvice.java:64)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.adapter.AfterReturningAdviceInterceptor.invoke(AfterReturningAdviceInterceptor.java:57)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:58)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.weiho.scaffold.logging.aspect.LoggingAspect.doAround(LoggingAspect.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:624)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:72)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.weiho.scaffold.system.security.controller.AuthController$$EnhancerBySpringCGLIB$$395539e8.login(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:124)
+	at org.apache.catalina.core.ApplicationFilterChain.internalD(String), 2022-09-11 16:48:51.652(Timestamp)
+2022-09-11 16:48:51.698 [Scaffold-async-thread-1] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - <==    Updates: 1
+2022-09-11 16:48:51.703 [Scaffold-async-thread-1] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 操作日志已保存
+2022-09-11 16:48:56.404 [http-nio-8888-exec-1] INFO  com.weiho.scaffold.logging.aspect.LoggingAspect - Log -> 日志对象创建
+2022-09-11 16:48:56.412 [http-nio-8888-exec-1] INFO  com.weiho.scaffold.redis.util.RedisUtils - 删除缓存：Scaffold:VerifyCode:2609427e3444490ab416142ae48b0af5，结果：true
+2022-09-11 16:48:56.514 [http-nio-8888-exec-1] DEBUG c.w.s.system.mapper.UserMapper.findByUsername - ==>  Preparing: SELECT create_time, update_time, is_del, id, avatar_id, username, password, sex, email, phone, enabled, last_pass_reset_time FROM user WHERE username = ? AND is_del = 0
+2022-09-11 16:48:56.515 [http-nio-8888-exec-1] DEBUG c.w.s.system.mapper.UserMapper.findByUsername - ==> Parameters: root(String)
+2022-09-11 16:48:56.548 [http-nio-8888-exec-1] DEBUG c.w.s.system.mapper.UserMapper.findByUsername - <==      Total: 1
+2022-09-11 16:48:56.586 [http-nio-8888-exec-1] DEBUG c.w.scaffold.system.mapper.AvatarMapper.selectById - ==>  Preparing: SELECT id,real_name,path,size,create_time,update_time,is_del FROM avatar WHERE id=? AND is_del=0
+2022-09-11 16:48:56.587 [http-nio-8888-exec-1] DEBUG c.w.scaffold.system.mapper.AvatarMapper.selectById - ==> Parameters: 4(Long)
+2022-09-11 16:48:56.590 [http-nio-8888-exec-1] DEBUG c.w.scaffold.system.mapper.AvatarMapper.selectById - <==      Total: 1
+2022-09-11 16:48:56.598 [http-nio-8888-exec-1] DEBUG c.w.s.system.mapper.RoleMapper.findSetByUserId - ==>  Preparing: SELECT r.create_time, r.update_time, r.is_del, r.id, r.name, r.level, r.permission FROM role r LEFT OUTER JOIN users_roles ur on r.id = ur.role_id LEFT OUTER JOIN user u on u.id = ur.user_id WHERE r.is_del = 0 AND u.id = ?
+2022-09-11 16:48:56.599 [http-nio-8888-exec-1] DEBUG c.w.s.system.mapper.RoleMapper.findSetByUserId - ==> Parameters: 4(Long)
+2022-09-11 16:48:56.604 [http-nio-8888-exec-1] DEBUG c.w.s.system.mapper.RoleMapper.findSetByUserId - <==      Total: 1
+2022-09-11 16:48:56.606 [http-nio-8888-exec-1] DEBUG c.w.s.system.mapper.MenuMapper.findSetByRoleId - ==>  Preparing: SELECT m.create_time, m.update_time, m.is_del, m.id, m.component, m.component_name, m.path, m.name, m.icon_cls, m.url, m.permission, m.keep_alive, m.hidden, m.parent_id, m.enabled, m.type, m.sort, m.name_zh_cn, m.name_zh_hk ,m.name_zh_tw ,m.name_en_us FROM menu m LEFT JOIN roles_menus rm on m.id = rm.menu_id LEFT JOIN role r on rm.role_id = r.id WHERE r.id = ? AND m.is_del = 0
+2022-09-11 16:48:56.606 [http-nio-8888-exec-1] DEBUG c.w.s.system.mapper.MenuMapper.findSetByRoleId - ==> Parameters: 1(Long)
+2022-09-11 16:48:56.649 [http-nio-8888-exec-1] DEBUG c.w.s.system.mapper.MenuMapper.findSetByRoleId - <==      Total: 84
+2022-09-11 16:48:57.447 [http-nio-8888-exec-1] INFO  c.w.s.common.thread.VisibleThreadPoolTaskExecutor - 线程池状况 -> 线程前缀为[Scaffold-async-thread-],当前线程总数为[1],完成的线程总数为[1],当前正在处理任务的线程数为[0],当前在队列中等待的线程数为[0]
+2022-09-11 16:48:57.448 [Scaffold-async-thread-2] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 开始收集操作日志信息
+2022-09-11 16:48:57.448 [Scaffold-async-thread-2] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 createTime]
+2022-09-11 16:48:57.448 [Scaffold-async-thread-2] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 updateTime]
+2022-09-11 16:48:57.449 [Scaffold-async-thread-2] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==>  Preparing: INSERT INTO log ( title, business_type, method, request_method, username, request_url, request_ip, browser, address, log_type, status, time, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2022-09-11 16:48:57.450 [Scaffold-async-thread-2] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==> Parameters: 用户登录(String), 0(Integer), com.weiho.scaffold.system.security.controller.AuthController.login()(String), POST(String), root(String), /api/v1/auth/login(String), 127.0.0.1(String), Chrome 10(String),  本机地址(String), INFO(String), 0(Integer), 1043(Long), 2022-09-11 16:48:57.448(Timestamp)
+2022-09-11 16:48:57.452 [Scaffold-async-thread-2] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - <==    Updates: 1
+2022-09-11 16:48:57.452 [Scaffold-async-thread-2] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 操作日志已保存
+2022-09-11 16:48:57.539 [http-nio-8888-exec-5] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/menus/build}
+2022-09-11 16:48:57.546 [http-nio-8888-exec-5] DEBUG c.w.s.system.mapper.RoleMapper.findListByUserId - ==>  Preparing: SELECT r.create_time, r.update_time, r.is_del, r.id, r.name, r.level, r.permission FROM role r LEFT JOIN users_roles ur on r.id = ur.role_id LEFT JOIN user u on u.id = ur.user_id WHERE u.id = ? AND r.is_del = 0
+2022-09-11 16:48:57.546 [http-nio-8888-exec-5] DEBUG c.w.s.system.mapper.RoleMapper.findListByUserId - ==> Parameters: 4(Long)
+2022-09-11 16:48:57.547 [http-nio-8888-exec-5] DEBUG c.w.s.system.mapper.RoleMapper.findListByUserId - <==      Total: 1
+2022-09-11 16:48:57.557 [http-nio-8888-exec-5] DEBUG c.w.s.system.mapper.MenuMapper.findListByRoles - ==>  Preparing: SELECT m.create_time, m.update_time, m.is_del, m.id, m.component, m.component_name, m.path, m.name, m.icon_cls, m.url, m.permission, m.keep_alive, m.hidden, m.parent_id, m.enabled, m.type, m.sort, m.name_zh_cn, m.name_zh_hk ,m.name_zh_tw ,m.name_en_us FROM menu m LEFT OUTER JOIN roles_menus rm on m.id = rm.menu_id LEFT OUTER JOIN role r on r.id = rm.role_id WHERE m.type != 2 AND m.is_del = 0 AND r.id IN ( ? ) ORDER BY m.sort
+2022-09-11 16:48:57.558 [http-nio-8888-exec-5] DEBUG c.w.s.system.mapper.MenuMapper.findListByRoles - ==> Parameters: 1(Long)
+2022-09-11 16:48:57.563 [http-nio-8888-exec-5] DEBUG c.w.s.system.mapper.MenuMapper.findListByRoles - <==      Total: 36
+2022-09-11 16:49:46.390 [http-nio-8888-exec-6] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/mail/options}
+2022-09-11 16:49:55.837 [task-1] INFO  c.weiho.scaffold.websocket.server.SysMonitorServer - Monitor -> [SysMonitorServer 系统监测任务开始]
+2022-09-11 16:50:08.379 [task-1] INFO  c.weiho.scaffold.websocket.server.SysMonitorServer - Monitor -> [SysMonitorServer 系统监测任务结束]
+2022-09-11 16:50:11.121 [http-nio-8888-exec-8] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/online}
+2022-09-11 16:50:14.649 [http-nio-8888-exec-3] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 16:50:14.724 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 16:50:14.724 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 16:50:14.725 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 16:50:14.728 [http-nio-8888-exec-3] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 16:50:14.729 [http-nio-8888-exec-3] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 16:50:14.731 [http-nio-8888-exec-3] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 10
+2022-09-11 16:50:30.539 [http-nio-8888-exec-6] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 16:50:30.545 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 16:50:30.545 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 16:50:30.546 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 16:50:30.548 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 16:50:30.548 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: ERROR(String), 10(Integer)
+2022-09-11 16:50:30.555 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 9
+2022-09-11 16:50:41.444 [http-nio-8888-exec-7] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 16:50:41.447 [http-nio-8888-exec-7] INFO  com.weiho.scaffold.logging.aspect.LoggingAspect - Log -> 日志对象创建
+2022-09-11 16:50:41.450 [http-nio-8888-exec-7] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==>  Preparing: UPDATE log SET is_del = 1 WHERE log_type = ? AND is_del = 0
+2022-09-11 16:50:41.450 [http-nio-8888-exec-7] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==> Parameters: ERROR(String)
+2022-09-11 16:50:41.453 [http-nio-8888-exec-7] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - <==    Updates: 9
+2022-09-11 16:50:52.547 [http-nio-8888-exec-7] INFO  c.w.s.common.thread.VisibleThreadPoolTaskExecutor - 线程池状况 -> 线程前缀为[Scaffold-async-thread-],当前线程总数为[2],完成的线程总数为[2],当前正在处理任务的线程数为[0],当前在队列中等待的线程数为[0]
+2022-09-11 16:50:52.547 [Scaffold-async-thread-3] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 开始收集操作日志信息
+2022-09-11 16:50:52.548 [Scaffold-async-thread-3] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 createTime]
+2022-09-11 16:50:52.548 [Scaffold-async-thread-3] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 updateTime]
+2022-09-11 16:50:52.549 [Scaffold-async-thread-3] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==>  Preparing: INSERT INTO log ( title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, log_type, status, time, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2022-09-11 16:50:52.550 [Scaffold-async-thread-3] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==> Parameters: 删除所有ERROR日志(String), 0(Integer), com.weiho.scaffold.logging.controller.LogController.deleteAllError()(String), DELETE(String), root(String), /api/v1/errorLogs(String), 127.0.0.1(String), Chrome 10(String),  本机地址(String), {}(String), INFO(String), 0(Integer), 11100(Long), 2022-09-11 16:50:52.548(Timestamp)
+2022-09-11 16:50:52.551 [Scaffold-async-thread-3] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - <==    Updates: 1
+2022-09-11 16:50:52.551 [Scaffold-async-thread-3] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 操作日志已保存
+2022-09-11 16:50:52.891 [http-nio-8888-exec-9] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 16:50:52.897 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 16:50:52.897 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 16:50:52.898 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 16:53:28.240 [http-nio-8888-exec-2] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 16:53:28.245 [http-nio-8888-exec-2] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 16:53:28.245 [http-nio-8888-exec-2] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 16:53:28.246 [http-nio-8888-exec-2] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 16:53:29.014 [http-nio-8888-exec-1] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 16:53:29.019 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 16:53:29.020 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 16:53:29.021 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 16:53:30.373 [http-nio-8888-exec-5] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 16:53:30.378 [http-nio-8888-exec-5] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 16:53:30.379 [http-nio-8888-exec-5] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 16:53:30.379 [http-nio-8888-exec-5] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 16:53:35.147 [http-nio-8888-exec-8] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 16:53:35.153 [http-nio-8888-exec-8] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 16:53:35.153 [http-nio-8888-exec-8] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 16:53:35.154 [http-nio-8888-exec-8] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 16:53:43.365 [http-nio-8888-exec-3] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 16:53:43.369 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 16:53:43.369 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 16:53:43.371 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 16:54:34.013 [http-nio-8888-exec-6] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/user/info}
+2022-09-11 16:54:34.097 [http-nio-8888-exec-7] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/menus/build}
+2022-09-11 16:54:34.291 [http-nio-8888-exec-9] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 16:54:34.299 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 16:54:34.299 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 16:54:34.300 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 16:57:25.398 [http-nio-8888-exec-3] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 16:57:25.409 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 16:57:25.409 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 16:57:25.410 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:00:42.024 [http-nio-8888-exec-9] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:00:42.030 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:00:42.030 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:00:42.031 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:00:42.033 [http-nio-8888-exec-9] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:00:42.033 [http-nio-8888-exec-9] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:00:42.035 [http-nio-8888-exec-9] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 10
+2022-09-11 17:00:45.125 [http-nio-8888-exec-1] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:00:45.128 [http-nio-8888-exec-1] INFO  com.weiho.scaffold.logging.aspect.LoggingAspect - Log -> 日志对象创建
+2022-09-11 17:00:45.130 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==>  Preparing: UPDATE log SET is_del = 1 WHERE log_type = ? AND is_del = 0
+2022-09-11 17:00:45.130 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==> Parameters: INFO(String)
+2022-09-11 17:00:45.132 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - <==    Updates: 34
+2022-09-11 17:00:56.230 [http-nio-8888-exec-1] INFO  c.w.s.common.thread.VisibleThreadPoolTaskExecutor - 线程池状况 -> 线程前缀为[Scaffold-async-thread-],当前线程总数为[3],完成的线程总数为[3],当前正在处理任务的线程数为[0],当前在队列中等待的线程数为[0]
+2022-09-11 17:00:56.231 [Scaffold-async-thread-4] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 开始收集操作日志信息
+2022-09-11 17:00:56.231 [Scaffold-async-thread-4] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 createTime]
+2022-09-11 17:00:56.231 [Scaffold-async-thread-4] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 updateTime]
+2022-09-11 17:00:56.232 [Scaffold-async-thread-4] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==>  Preparing: INSERT INTO log ( title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, log_type, status, time, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2022-09-11 17:00:56.233 [Scaffold-async-thread-4] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==> Parameters: 删除所有INFO日志(String), 0(Integer), com.weiho.scaffold.logging.controller.LogController.deleteAllInfo()(String), DELETE(String), root(String), /api/v1/logs(String), 127.0.0.1(String), Chrome 10(String),  本机地址(String), {}(String), INFO(String), 0(Integer), 11103(Long), 2022-09-11 17:00:56.231(Timestamp)
+2022-09-11 17:00:56.235 [Scaffold-async-thread-4] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - <==    Updates: 1
+2022-09-11 17:00:56.236 [Scaffold-async-thread-4] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 操作日志已保存
+2022-09-11 17:00:56.563 [http-nio-8888-exec-6] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:00:56.567 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:00:56.568 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:00:56.569 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:00:56.570 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:00:56.570 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:00:56.571 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 1
+2022-09-11 17:01:02.841 [http-nio-8888-exec-2] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:01:02.846 [http-nio-8888-exec-2] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:01:02.846 [http-nio-8888-exec-2] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:01:02.847 [http-nio-8888-exec-2] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:01:02.848 [http-nio-8888-exec-2] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:01:02.849 [http-nio-8888-exec-2] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:01:02.850 [http-nio-8888-exec-2] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 1
+2022-09-11 17:01:03.950 [http-nio-8888-exec-4] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:01:03.954 [http-nio-8888-exec-4] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:01:03.955 [http-nio-8888-exec-4] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:01:03.955 [http-nio-8888-exec-4] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:01:03.956 [http-nio-8888-exec-4] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:01:03.956 [http-nio-8888-exec-4] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:01:03.957 [http-nio-8888-exec-4] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 1
+2022-09-11 17:04:10.603 [http-nio-8888-exec-5] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/user/info}
+2022-09-11 17:04:10.626 [http-nio-8888-exec-8] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/menus/build}
+2022-09-11 17:04:10.823 [http-nio-8888-exec-3] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:04:10.843 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:04:10.844 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:04:10.846 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:04:10.848 [http-nio-8888-exec-3] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:04:10.848 [http-nio-8888-exec-3] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:04:10.852 [http-nio-8888-exec-3] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 10
+2022-09-11 17:06:05.033 [http-nio-8888-exec-9] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/user/info}
+2022-09-11 17:06:05.063 [http-nio-8888-exec-1] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/menus/build}
+2022-09-11 17:06:05.264 [http-nio-8888-exec-6] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:06:05.275 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:06:05.275 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:06:05.277 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:06:05.279 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:06:05.280 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:06:05.284 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 10
+2022-09-11 17:06:32.311 [http-nio-8888-exec-4] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 17:06:32.315 [http-nio-8888-exec-4] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:06:32.316 [http-nio-8888-exec-4] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 17:06:32.316 [http-nio-8888-exec-4] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:06:32.317 [http-nio-8888-exec-4] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:06:32.317 [http-nio-8888-exec-4] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: ERROR(String), 10(Integer)
+2022-09-11 17:06:32.319 [http-nio-8888-exec-4] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 2
+2022-09-11 17:06:35.254 [http-nio-8888-exec-5] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 17:06:35.257 [http-nio-8888-exec-5] INFO  com.weiho.scaffold.logging.aspect.LoggingAspect - Log -> 日志对象创建
+2022-09-11 17:06:35.259 [http-nio-8888-exec-5] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==>  Preparing: UPDATE log SET is_del = 1 WHERE log_type = ? AND is_del = 0
+2022-09-11 17:06:35.259 [http-nio-8888-exec-5] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==> Parameters: ERROR(String)
+2022-09-11 17:06:35.261 [http-nio-8888-exec-5] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - <==    Updates: 2
+2022-09-11 17:06:35.356 [http-nio-8888-exec-5] INFO  c.w.s.common.thread.VisibleThreadPoolTaskExecutor - 线程池状况 -> 线程前缀为[Scaffold-async-thread-],当前线程总数为[4],完成的线程总数为[4],当前正在处理任务的线程数为[0],当前在队列中等待的线程数为[0]
+2022-09-11 17:06:35.357 [Scaffold-async-thread-5] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 开始收集操作日志信息
+2022-09-11 17:06:35.357 [Scaffold-async-thread-5] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 createTime]
+2022-09-11 17:06:35.357 [Scaffold-async-thread-5] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 updateTime]
+2022-09-11 17:06:35.358 [Scaffold-async-thread-5] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==>  Preparing: INSERT INTO log ( title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, log_type, status, time, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2022-09-11 17:06:35.359 [Scaffold-async-thread-5] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==> Parameters: 删除所有ERROR日志(String), 0(Integer), com.weiho.scaffold.logging.controller.LogController.deleteAllError()(String), DELETE(String), root(String), /api/v1/errorLogs(String), 127.0.0.1(String), Chrome 10(String),  本机地址(String), {}(String), INFO(String), 0(Integer), 99(Long), 2022-09-11 17:06:35.357(Timestamp)
+2022-09-11 17:06:35.361 [Scaffold-async-thread-5] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - <==    Updates: 1
+2022-09-11 17:06:35.361 [Scaffold-async-thread-5] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 操作日志已保存
+2022-09-11 17:06:35.375 [http-nio-8888-exec-8] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 17:06:35.381 [http-nio-8888-exec-8] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:06:35.381 [http-nio-8888-exec-8] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 17:06:35.382 [http-nio-8888-exec-8] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:06:39.594 [http-nio-8888-exec-3] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:06:39.597 [http-nio-8888-exec-3] INFO  com.weiho.scaffold.logging.aspect.LoggingAspect - Log -> 日志对象创建
+2022-09-11 17:06:39.598 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==>  Preparing: UPDATE log SET is_del = 1 WHERE log_type = ? AND is_del = 0
+2022-09-11 17:06:39.598 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==> Parameters: INFO(String)
+2022-09-11 17:06:39.600 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - <==    Updates: 36
+2022-09-11 17:06:39.653 [http-nio-8888-exec-3] INFO  c.w.s.common.thread.VisibleThreadPoolTaskExecutor - 线程池状况 -> 线程前缀为[Scaffold-async-thread-],当前线程总数为[5],完成的线程总数为[5],当前正在处理任务的线程数为[0],当前在队列中等待的线程数为[0]
+2022-09-11 17:06:39.653 [Scaffold-async-thread-6] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 开始收集操作日志信息
+2022-09-11 17:06:39.655 [Scaffold-async-thread-6] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 createTime]
+2022-09-11 17:06:39.655 [Scaffold-async-thread-6] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 updateTime]
+2022-09-11 17:06:39.656 [Scaffold-async-thread-6] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==>  Preparing: INSERT INTO log ( title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, log_type, status, time, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2022-09-11 17:06:39.656 [Scaffold-async-thread-6] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==> Parameters: 删除所有INFO日志(String), 0(Integer), com.weiho.scaffold.logging.controller.LogController.deleteAllInfo()(String), DELETE(String), root(String), /api/v1/logs(String), 127.0.0.1(String), Chrome 10(String),  本机地址(String), {}(String), INFO(String), 0(Integer), 56(Long), 2022-09-11 17:06:39.655(Timestamp)
+2022-09-11 17:06:39.658 [Scaffold-async-thread-6] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - <==    Updates: 1
+2022-09-11 17:06:39.659 [Scaffold-async-thread-6] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 操作日志已保存
+2022-09-11 17:06:39.670 [http-nio-8888-exec-7] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:06:39.675 [http-nio-8888-exec-7] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:06:39.675 [http-nio-8888-exec-7] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:06:39.676 [http-nio-8888-exec-7] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:06:39.677 [http-nio-8888-exec-7] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:06:39.677 [http-nio-8888-exec-7] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:06:39.678 [http-nio-8888-exec-7] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 1
+2022-09-11 17:10:18.308 [http-nio-8888-exec-1] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:10:18.312 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:10:18.312 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:10:18.313 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:10:18.314 [http-nio-8888-exec-1] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:10:18.314 [http-nio-8888-exec-1] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:10:18.328 [http-nio-8888-exec-1] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 10
+2022-09-11 17:10:20.713 [http-nio-8888-exec-2] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:10:20.725 [http-nio-8888-exec-2] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:10:20.725 [http-nio-8888-exec-2] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:10:20.726 [http-nio-8888-exec-2] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:10:20.728 [http-nio-8888-exec-2] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?, ?
+2022-09-11 17:10:20.728 [http-nio-8888-exec-2] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 30(Long), 10(Integer)
+2022-09-11 17:10:20.730 [http-nio-8888-exec-2] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 7
+2022-09-11 17:10:22.363 [http-nio-8888-exec-6] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:10:22.366 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:10:22.366 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:10:22.366 [http-nio-8888-exec-6] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:10:22.367 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?, ?
+2022-09-11 17:10:22.367 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Long), 10(Integer)
+2022-09-11 17:10:22.369 [http-nio-8888-exec-6] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 10
+2022-09-11 17:10:23.855 [http-nio-8888-exec-4] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:10:23.859 [http-nio-8888-exec-4] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:10:23.859 [http-nio-8888-exec-4] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:10:23.860 [http-nio-8888-exec-4] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:10:23.860 [http-nio-8888-exec-4] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:10:23.861 [http-nio-8888-exec-4] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:10:23.862 [http-nio-8888-exec-4] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 10
+2022-09-11 17:10:29.937 [http-nio-8888-exec-5] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:10:29.939 [http-nio-8888-exec-5] INFO  com.weiho.scaffold.logging.aspect.LoggingAspect - Log -> 日志对象创建
+2022-09-11 17:10:29.940 [http-nio-8888-exec-5] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==>  Preparing: UPDATE log SET is_del = 1 WHERE log_type = ? AND is_del = 0
+2022-09-11 17:10:29.940 [http-nio-8888-exec-5] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==> Parameters: INFO(String)
+2022-09-11 17:10:29.941 [http-nio-8888-exec-5] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - <==    Updates: 37
+2022-09-11 17:10:30.023 [http-nio-8888-exec-5] INFO  c.w.s.common.thread.VisibleThreadPoolTaskExecutor - 线程池状况 -> 线程前缀为[Scaffold-async-thread-],当前线程总数为[6],完成的线程总数为[6],当前正在处理任务的线程数为[0],当前在队列中等待的线程数为[0]
+2022-09-11 17:10:30.023 [Scaffold-async-thread-7] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 开始收集操作日志信息
+2022-09-11 17:10:30.024 [Scaffold-async-thread-7] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 createTime]
+2022-09-11 17:10:30.024 [Scaffold-async-thread-7] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 updateTime]
+2022-09-11 17:10:30.025 [Scaffold-async-thread-7] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==>  Preparing: INSERT INTO log ( title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, log_type, status, time, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2022-09-11 17:10:30.025 [Scaffold-async-thread-7] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==> Parameters: 删除所有INFO日志(String), 0(Integer), com.weiho.scaffold.logging.controller.LogController.deleteAllInfo()(String), DELETE(String), root(String), /api/v1/logs(String), 127.0.0.1(String), Chrome 10(String),  本机地址(String), {}(String), INFO(String), 0(Integer), 84(Long), 2022-09-11 17:10:30.024(Timestamp)
+2022-09-11 17:10:30.027 [Scaffold-async-thread-7] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - <==    Updates: 1
+2022-09-11 17:10:30.028 [Scaffold-async-thread-7] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 操作日志已保存
+2022-09-11 17:10:30.191 [http-nio-8888-exec-8] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:10:30.195 [http-nio-8888-exec-8] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:10:30.195 [http-nio-8888-exec-8] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:10:30.196 [http-nio-8888-exec-8] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:10:30.196 [http-nio-8888-exec-8] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:10:30.197 [http-nio-8888-exec-8] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:10:30.198 [http-nio-8888-exec-8] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 1
+2022-09-11 17:10:34.770 [http-nio-8888-exec-3] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 17:10:34.773 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:10:34.774 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 17:10:34.774 [http-nio-8888-exec-3] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:10:46.349 [http-nio-8888-exec-7] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 17:10:46.352 [http-nio-8888-exec-7] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:10:46.353 [http-nio-8888-exec-7] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 17:10:46.353 [http-nio-8888-exec-7] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:10:46.354 [http-nio-8888-exec-7] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:10:46.354 [http-nio-8888-exec-7] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: ERROR(String), 10(Integer)
+2022-09-11 17:10:46.356 [http-nio-8888-exec-7] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 2
+2022-09-11 17:10:48.846 [http-nio-8888-exec-10] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 17:10:48.847 [http-nio-8888-exec-10] INFO  com.weiho.scaffold.logging.aspect.LoggingAspect - Log -> 日志对象创建
+2022-09-11 17:10:48.848 [http-nio-8888-exec-10] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==>  Preparing: UPDATE log SET is_del = 1 WHERE log_type = ? AND is_del = 0
+2022-09-11 17:10:48.849 [http-nio-8888-exec-10] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - ==> Parameters: ERROR(String)
+2022-09-11 17:10:48.850 [http-nio-8888-exec-10] DEBUG c.w.s.logging.mapper.LogMapper.deleteByLogType - <==    Updates: 2
+2022-09-11 17:10:48.911 [http-nio-8888-exec-10] INFO  c.w.s.common.thread.VisibleThreadPoolTaskExecutor - 线程池状况 -> 线程前缀为[Scaffold-async-thread-],当前线程总数为[7],完成的线程总数为[7],当前正在处理任务的线程数为[0],当前在队列中等待的线程数为[0]
+2022-09-11 17:10:48.912 [Scaffold-async-thread-8] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 开始收集操作日志信息
+2022-09-11 17:10:48.912 [Scaffold-async-thread-8] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 createTime]
+2022-09-11 17:10:48.912 [Scaffold-async-thread-8] INFO  com.weiho.scaffold.mp.handler.MetaHandler - Mybatis-Plus -> [自动注入 updateTime]
+2022-09-11 17:10:48.913 [Scaffold-async-thread-8] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==>  Preparing: INSERT INTO log ( title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, log_type, status, time, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2022-09-11 17:10:48.914 [Scaffold-async-thread-8] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - ==> Parameters: 删除所有ERROR日志(String), 0(Integer), com.weiho.scaffold.logging.controller.LogController.deleteAllError()(String), DELETE(String), root(String), /api/v1/errorLogs(String), 127.0.0.1(String), Chrome 10(String),  本机地址(String), {}(String), INFO(String), 0(Integer), 64(Long), 2022-09-11 17:10:48.912(Timestamp)
+2022-09-11 17:10:48.916 [Scaffold-async-thread-8] DEBUG com.weiho.scaffold.logging.mapper.LogMapper.insert - <==    Updates: 1
+2022-09-11 17:10:48.917 [Scaffold-async-thread-8] INFO  c.w.scaffold.logging.service.impl.LogServiceImpl - Log -> 操作日志已保存
+2022-09-11 17:10:49.230 [http-nio-8888-exec-9] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/errorLogs}
+2022-09-11 17:10:49.234 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:10:49.235 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: ERROR(String)
+2022-09-11 17:10:49.235 [http-nio-8888-exec-9] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:10:53.820 [http-nio-8888-exec-1] INFO  c.w.s.system.security.token.filter.TokenFilter - Security -> 将身份验证设置为安全上下文,身份:{root},uri:{/api/v1/logs}
+2022-09-11 17:10:53.824 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==>  Preparing: SELECT count(0) FROM log WHERE is_del = 0 AND (log_type = ?)
+2022-09-11 17:10:53.824 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - ==> Parameters: INFO(String)
+2022-09-11 17:10:53.825 [http-nio-8888-exec-1] DEBUG c.w.s.logging.mapper.LogMapper.selectList_COUNT - <==      Total: 1
+2022-09-11 17:10:53.826 [http-nio-8888-exec-1] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==>  Preparing: SELECT id, title, business_type, method, request_method, username, request_url, request_ip, browser, address, request_params, response_result, log_type, status, exception_detail, time, create_time, update_time, is_del FROM log WHERE is_del = 0 AND (log_type = ?) order by id DESC LIMIT ?
+2022-09-11 17:10:53.826 [http-nio-8888-exec-1] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - ==> Parameters: INFO(String), 10(Integer)
+2022-09-11 17:10:53.827 [http-nio-8888-exec-1] DEBUG c.w.scaffold.logging.mapper.LogMapper.selectList - <==      Total: 2

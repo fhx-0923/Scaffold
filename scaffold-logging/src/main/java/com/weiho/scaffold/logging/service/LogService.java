@@ -3,6 +3,7 @@ package com.weiho.scaffold.logging.service;
 import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.logging.entity.Log;
 import com.weiho.scaffold.logging.entity.criteria.LogQueryCriteria;
+import com.weiho.scaffold.logging.enums.LogTypeEnum;
 import com.weiho.scaffold.mp.service.CommonService;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.data.domain.Pageable;
@@ -81,4 +82,13 @@ public interface LogService extends CommonService<Log> {
      * @return /
      */
     Object findByErrorDetail(Long id);
+
+    /**
+     * 根据当前登录的用户名查找操作记录
+     *
+     * @param logType  日志类型
+     * @param pageable 分页信息
+     * @return /
+     */
+    Map<String, Object> findByUsername(LogTypeEnum logType, Pageable pageable);
 }

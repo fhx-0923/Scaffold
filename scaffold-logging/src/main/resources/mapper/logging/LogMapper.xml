@@ -40,4 +40,13 @@
         WHERE log_type = #{logType}
           AND is_del = 0
     </update>
+
+    <select id="selectByUsername" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM log
+        WHERE username = #{username}
+        AND log_type = #{logType}
+        AND is_del = 0
+    </select>
 </mapper>
