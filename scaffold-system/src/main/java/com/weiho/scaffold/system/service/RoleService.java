@@ -3,6 +3,8 @@ package com.weiho.scaffold.system.service;
 import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.User;
+import com.weiho.scaffold.system.entity.criteria.RoleQueryCriteria;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
@@ -33,4 +35,13 @@ public interface RoleService extends CommonService<Role> {
      * @return 角色集合
      */
     List<Role> findListByUser(User user);
+
+    /**
+     * 查询所有的角色列表
+     *
+     * @param criteria 查询条件
+     * @param pageable 分页条件
+     * @return /
+     */
+    List<Role> findAll(RoleQueryCriteria criteria, Pageable pageable);
 }

@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson2.JSON;
 import com.github.pagehelper.PageInfo;
 import com.weiho.scaffold.common.util.file.FileUtils;
+import com.weiho.scaffold.common.util.page.PageUtils;
 import com.weiho.scaffold.common.util.security.SecurityUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.common.util.throwable.ThrowableUtils;
@@ -68,14 +69,12 @@ public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements
     public Map<String, Object> findAllByPage(LogQueryCriteria criteria, Pageable pageable) {
         startPage(pageable);
         PageInfo<Log> pageInfo = new PageInfo<>(findAll(criteria));
-        Map<String, Object> map = new LinkedHashMap<>(2);
+        Map<String, Object> map = null;
         if (!StringUtils.isBlank(criteria.getLogType())) {
             if (criteria.getLogType().equals(LogTypeEnum.INFO.getMsg())) {
-                map.put("content", logVOConvert.toPojo(pageInfo.getList()));
-                map.put("totalElements", pageInfo.getTotal());
+                map = PageUtils.toPageContainer(logVOConvert.toPojo(pageInfo.getList()), pageInfo.getTotal());
             } else {
-                map.put("content", logErrorVOConvert.toPojo(pageInfo.getList()));
-                map.put("totalElements", pageInfo.getTotal());
+                map = PageUtils.toPageContainer(logErrorVOConvert.toPojo(pageInfo.getList()), pageInfo.getTotal());
             }
         }
         return map;
@@ -153,13 +152,11 @@ public class LogServiceImpl extends CommonServiceImpl<LogMapper, Log> implements
     public Map<String, Object> findByUsername(LogTypeEnum logType, Pageable pageable) {
         startPage(pageable);
         PageInfo<Log> pageInfo = new PageInfo<>(this.getBaseMapper().selectByUsername(SecurityUtils.getUsername(), logType.getMsg()));
-        Map<String, Object> map = new LinkedHashMap<>(2);
+        Map<String, Object> map;
         if (logType.equals(LogTypeEnum.INFO)) {
-            map.put("content", logUserVOConvert.toPojo(pageInfo.getList()));
-            map.put("totalElements", pageInfo.getTotal());
+            map = PageUtils.toPageContainer(logUserVOConvert.toPojo(pageInfo.getList()), pageInfo.getTotal());
         } else {
-            map.put("content", logErrorUserVOConvert.toPojo(pageInfo.getList()));
-            map.put("totalElements", pageInfo.getTotal());
+            map = PageUtils.toPageContainer(logErrorUserVOConvert.toPojo(pageInfo.getList()), pageInfo.getTotal());
         }
         return map;
     }

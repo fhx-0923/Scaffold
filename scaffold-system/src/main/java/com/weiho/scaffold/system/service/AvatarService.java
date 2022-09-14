@@ -26,5 +26,6 @@ public interface AvatarService extends CommonService<Avatar> {
      *
      * @param avatar 头像
      */
+    @SuppressWarnings("all")
     Avatar updateAvatar(Avatar avatar, String username);
 }

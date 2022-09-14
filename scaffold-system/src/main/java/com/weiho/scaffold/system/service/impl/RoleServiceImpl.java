@@ -1,17 +1,22 @@
 package com.weiho.scaffold.system.service.impl;
 
 import com.weiho.scaffold.common.util.string.StringUtils;
+import com.weiho.scaffold.mp.core.QueryHelper;
+import com.weiho.scaffold.mp.enums.SortTypeEnum;
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.convert.RoleDTOConvert;
+import com.weiho.scaffold.system.entity.criteria.RoleQueryCriteria;
 import com.weiho.scaffold.system.entity.dto.RoleDTO;
 import com.weiho.scaffold.system.mapper.MenuMapper;
 import com.weiho.scaffold.system.mapper.RoleMapper;
 import com.weiho.scaffold.system.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.CastUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -69,5 +74,11 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
     @Cacheable(value = "Scaffold:Commons:Roles", key = "'loadRolesByUsername:' + #p0.getUsername()")
     public List<Role> findListByUser(User user) {
         return this.getBaseMapper().findListByUserId(user.getId());
+    }
+
+    @Override
+    public List<Role> findAll(RoleQueryCriteria criteria, Pageable pageable) {
+        startPage(pageable, "level", SortTypeEnum.ASC);
+        return this.getBaseMapper().selectList(CastUtils.cast(QueryHelper.getQueryWrapper(Role.class, criteria)));
     }
 }

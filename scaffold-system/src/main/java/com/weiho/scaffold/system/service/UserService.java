@@ -2,8 +2,14 @@ package com.weiho.scaffold.system.service;
 
 import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.system.entity.User;
+import com.weiho.scaffold.system.entity.criteria.UserQueryCriteria;
+import com.weiho.scaffold.system.entity.vo.UserVO;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -59,5 +65,23 @@ public interface UserService extends CommonService<User> {
      * @param newUser 新的用户信息
      * @return /
      */
+    @SuppressWarnings("all")
     User updateCache(User newUser);
+
+    /**
+     * 获取用户列表
+     *
+     * @param criteria 查询条件
+     * @param pageable 分页参数
+     * @return /
+     */
+    Map<String, Object> getUserList(UserQueryCriteria criteria, Pageable pageable);
+
+    /**
+     * 根据条件查询所有的用户列表
+     *
+     * @param criteria 条件
+     * @return /
+     */
+    List<UserVO> getAll(UserQueryCriteria criteria);
 }

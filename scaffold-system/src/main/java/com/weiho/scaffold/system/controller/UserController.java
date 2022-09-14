@@ -1,6 +1,5 @@
 package com.weiho.scaffold.system.controller;
 
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.exception.BadRequestException;
@@ -14,23 +13,31 @@ import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.redis.limiter.annotation.RateLimiter;
 import com.weiho.scaffold.redis.limiter.enums.LimitType;
 import com.weiho.scaffold.redis.util.RedisUtils;
+import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.User;
+import com.weiho.scaffold.system.entity.criteria.UserQueryCriteria;
 import com.weiho.scaffold.system.entity.vo.UserPassVO;
 import com.weiho.scaffold.system.entity.vo.VerificationVO;
 import com.weiho.scaffold.system.security.token.utils.TokenUtils;
-import com.weiho.scaffold.system.security.vo.JwtUserVO;
+import com.weiho.scaffold.system.service.RoleService;
 import com.weiho.scaffold.system.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -40,24 +47,36 @@ import java.util.List;
  * @author Weiho
  * @since 2022-08-04
  */
+@Slf4j
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 @Api(tags = "系统用户接口")
 @RequiredArgsConstructor
-@Slf4j
 public class UserController {
     private final UserDetailsService userDetailsService;
     private final ScaffoldSystemProperties properties;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private final RoleService roleService;
     private final RedisUtils redisUtils;
     private final TokenUtils tokenUtils;
 
     @ApiOperation("获取登录后的用户信息")
     @GetMapping("/info")
     @RateLimiter(limitType = LimitType.IP)
-    public JwtUserVO getUserInfo() {
-        return (JwtUserVO) userDetailsService.loadUserByUsername(SecurityUtils.getUsername());
+    public Map<String, Object> getUserInfo() {
+        List<Role> roles = roleService.findListByUser(userService.findByUsername(SecurityUtils.getUsername()));
+        return new LinkedHashMap<String, Object>(2) {{
+            put("userInfo", userDetailsService.loadUserByUsername(SecurityUtils.getUsername()));
+            put("maxLevel", Collections.max(roles.stream().map(Role::getLevel).collect(Collectors.toList())));
+        }};
+    }
+
+    @ApiOperation("查询用户列表")
+    @PreAuthorize("@el.check('User:list')")
+    @GetMapping
+    public Map<String, Object> getUserList(UserQueryCriteria criteria, Pageable pageable) {
+        return userService.getUserList(criteria, pageable);
     }
 
     @ApiOperation("修改密码")

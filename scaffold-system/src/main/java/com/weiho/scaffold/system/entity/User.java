@@ -65,5 +65,4 @@ public class User extends CommonEntity {
     @ApiModelProperty("最后修改密码时间")
     @TableField("last_pass_reset_time")
     private Date lastPassResetTime;
-
 }

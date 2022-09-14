@@ -6,13 +6,17 @@ import com.weiho.scaffold.common.exception.BadRequestException;
 import com.weiho.scaffold.common.exception.CaptchaException;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.rsa.RsaUtils;
+import com.weiho.scaffold.common.util.security.SecurityUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.redis.util.RedisUtils;
+import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.security.service.LoginService;
 import com.weiho.scaffold.system.security.service.OnlineUserService;
 import com.weiho.scaffold.system.security.token.utils.TokenUtils;
 import com.weiho.scaffold.system.security.vo.AuthUserVO;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
+import com.weiho.scaffold.system.service.RoleService;
+import com.weiho.scaffold.system.service.UserService;
 import com.wf.captcha.base.Captcha;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,9 +27,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +42,8 @@ public class LoginServiceImpl implements LoginService {
     private final RedisUtils redisUtils;
     private final TokenUtils tokenUtils;
     private final OnlineUserService onlineUserService;
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Override
     public Map<String, Object> getVerifyCodeInfo() {
@@ -100,9 +109,12 @@ public class LoginServiceImpl implements LoginService {
         if (properties.getJwtProperties().getSingleLogin()) {
             onlineUserService.checkLoginOnUser(authUserVO.getUsername(), token);
         }
-        return new HashMap<String, Object>() {{
+        // 获取最大权限等级
+        List<Role> roles = roleService.findListByUser(userService.findByUsername(SecurityUtils.getUsername()));
+        return new HashMap<String, Object>(3) {{
             put("token", properties.getJwtProperties().getTokenStartWith() + token);
             put("userInfo", jwtUserVO);
+            put("maxLevel", Collections.max(roles.stream().map(Role::getLevel).collect(Collectors.toList())));
         }};
     }
 }

@@ -23,7 +23,7 @@ public class LogQueryCriteria {
     private String blurry;
 
     @Query
-    @ApiModelProperty("日志的类型(INFO,ERROR)")
+    @ApiModelProperty(value = "日志的类型(INFO,ERROR)", hidden = true)
     private String logType;
 
     @Query(type = QueryTypeEnum.BETWEEN)
