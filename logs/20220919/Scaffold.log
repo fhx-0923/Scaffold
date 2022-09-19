@@ -32,3 +32,9 @@
 2022-09-19 12:36:05.139 [task-1] INFO  c.w.scaffold.websocket.server.LoggingMonitorServer - Monitor -> [LoggingMonitorServer 控制台日志监测任务结束]
 2022-09-19 12:36:30.575 [task-2] INFO  c.weiho.scaffold.websocket.server.SysMonitorServer - Monitor -> [SysMonitorServer 系统监测任务开始]
 2022-09-19 12:36:39.096 [task-2] INFO  c.weiho.scaffold.websocket.server.SysMonitorServer - Monitor -> [SysMonitorServer 系统监测任务结束]
+2022-09-19 12:49:05.752 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.listener.SimpleMessageListenerContainer - Waiting for workers to finish.
+2022-09-19 12:49:05.905 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.listener.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+2022-09-19 12:49:06.083 [SpringApplicationShutdownHook] INFO  o.s.a.r.listener.SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+2022-09-19 12:49:06.083 [SpringApplicationShutdownHook] INFO  c.w.s.common.util.spring.SpringContextHolder - SpringContextHolder -> [清除SpringContextHolder中的ApplicationContext:org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@7435f0cc, started on Mon Sep 19 12:26:25 GMT+08:00 2022]
+2022-09-19 12:49:06.109 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-09-19 12:49:06.110 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
