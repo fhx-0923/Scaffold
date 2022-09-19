@@ -1,9 +1,7 @@
 package com.weiho.scaffold.common.handler.exception;
 
-import com.weiho.scaffold.common.exception.BadRequestException;
-import com.weiho.scaffold.common.exception.CaptchaException;
-import com.weiho.scaffold.common.exception.RateLimitException;
-import com.weiho.scaffold.common.exception.ResponsePackException;
+import com.weiho.scaffold.common.exception.SecurityException;
+import com.weiho.scaffold.common.exception.*;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import com.weiho.scaffold.common.util.throwable.ThrowableUtils;
@@ -27,6 +25,14 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = BadRequestException.class)
     public Result badRequestException(BadRequestException e) {
+        return Result.of(e.getCode(), e.getMsg(), e.getMessage());
+    }
+
+    /**
+     * 处理服务器安全异常 SecurityException 类
+     */
+    @ExceptionHandler(value = SecurityException.class)
+    public Result securityException(SecurityException e) {
         return Result.of(e.getCode(), e.getMsg(), e.getMessage());
     }
 
