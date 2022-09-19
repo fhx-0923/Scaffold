@@ -1,7 +1,6 @@
 package com.weiho.scaffold.system.security.controller;
 
 import com.weiho.scaffold.common.annotation.Anonymous;
-import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.redis.limiter.annotation.RateLimiter;
 import com.weiho.scaffold.redis.limiter.enums.LimitType;
 import com.weiho.scaffold.system.security.service.LoginService;
@@ -26,7 +25,6 @@ public class AuthController {
 
     @Anonymous
     @ApiOperation("登录授权接口")
-    @Logging(title = "用户登录", saveResponseData = false, saveRequestData = false)
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody @Validated AuthUserVO authUserVO, HttpServletRequest request) throws Exception {
         return loginService.login(authUserVO, request);

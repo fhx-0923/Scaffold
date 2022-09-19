@@ -77,7 +77,7 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
     @Override
     public List<MenuVO> buildMenuList(List<MenuDTO> menuDTOS, HttpServletRequest request) {
         //获取语言环境
-        String language = request.getHeader("Accept-Language");
+        String language = request.getHeader("Accept-Language") == null ? "zh-CN" : request.getHeader("Accept-Language");
         //采用链表结构，提高add和remove有效率
         List<MenuVO> menuVOs = new LinkedList<>();
         menuDTOS.forEach(menuDTO -> {
