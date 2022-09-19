@@ -4,7 +4,9 @@ import cn.hutool.core.util.IdUtil;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.exception.BadRequestException;
 import com.weiho.scaffold.common.exception.CaptchaException;
+import com.weiho.scaffold.common.exception.SecurityException;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
+import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import com.weiho.scaffold.common.util.rsa.RsaUtils;
 import com.weiho.scaffold.common.util.security.SecurityUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
@@ -79,42 +81,46 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Map<String, Object> login(AuthUserVO authUserVO, HttpServletRequest request) throws Exception {
-        //使用RSA私钥解密
-        String password = RsaUtils.decryptByPrivateKey(properties.getRsaProperties().getPrivateKey(), authUserVO.getPassword());
-        //测试用
+        try {
+            //使用RSA私钥解密
+            String password = RsaUtils.decryptByPrivateKey(properties.getRsaProperties().getPrivateKey(), authUserVO.getPassword());
+            //测试用
 //        String password = authUserVO.getPassword();
-        //查询验证码
-        String code = (String) redisUtils.get(authUserVO.getUuid());
-        //清除验证码
-        redisUtils.del(authUserVO.getUuid());
-        if (StringUtils.isBlank(code)) {
-            throw new BadRequestException(I18nMessagesUtils.get("captcha.exception.not.found"));
+            //查询验证码
+            String code = (String) redisUtils.get(authUserVO.getUuid());
+            //清除验证码
+            redisUtils.del(authUserVO.getUuid());
+            if (StringUtils.isBlank(code)) {
+                throw new BadRequestException(I18nMessagesUtils.get("captcha.exception.not.found"));
+            }
+            if (StringUtils.isBlank(authUserVO.getCode()) || !authUserVO.getCode().equalsIgnoreCase(code)) {
+                throw new BadRequestException(I18nMessagesUtils.get("captcha.exception.error"));
+            }
+            //手动授权
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(authUserVO.getUsername(), password);
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+            //放入Security安全上下文
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            //获取用户信息生成token令牌
+            final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String token = tokenUtils.generateToken(userDetails);
+            final JwtUserVO jwtUserVO = (JwtUserVO) authentication.getPrincipal();
+            //保存用户在线信息
+            onlineUserService.save(jwtUserVO, token, request);
+            //若只允许单次登录则踢掉之前已经上线的token
+            if (properties.getJwtProperties().getSingleLogin()) {
+                onlineUserService.checkLoginOnUser(authUserVO.getUsername(), token);
+            }
+            // 获取最大权限等级
+            List<Role> roles = roleService.findListByUser(userService.findByUsername(SecurityUtils.getUsername()));
+            return new HashMap<String, Object>(3) {{
+                put("token", properties.getJwtProperties().getTokenStartWith() + token);
+                put("userInfo", jwtUserVO);
+                put("maxLevel", Collections.max(roles.stream().map(Role::getLevel).collect(Collectors.toList())));
+            }};
+        } catch (IllegalStateException e) {
+            throw new SecurityException(ResultCodeEnum.SYSTEM_FORBIDDEN, I18nMessagesUtils.get("login.error"));
         }
-        if (StringUtils.isBlank(authUserVO.getCode()) || !authUserVO.getCode().equalsIgnoreCase(code)) {
-            throw new BadRequestException(I18nMessagesUtils.get("captcha.exception.error"));
-        }
-        //手动授权
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(authUserVO.getUsername(), password);
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        //放入Security安全上下文
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        //获取用户信息生成token令牌
-        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String token = tokenUtils.generateToken(userDetails);
-        final JwtUserVO jwtUserVO = (JwtUserVO) authentication.getPrincipal();
-        //保存用户在线信息
-        onlineUserService.save(jwtUserVO, token, request);
-        //若只允许单次登录则踢掉之前已经上线的token
-        if (properties.getJwtProperties().getSingleLogin()) {
-            onlineUserService.checkLoginOnUser(authUserVO.getUsername(), token);
-        }
-        // 获取最大权限等级
-        List<Role> roles = roleService.findListByUser(userService.findByUsername(SecurityUtils.getUsername()));
-        return new HashMap<String, Object>(3) {{
-            put("token", properties.getJwtProperties().getTokenStartWith() + token);
-            put("userInfo", jwtUserVO);
-            put("maxLevel", Collections.max(roles.stream().map(Role::getLevel).collect(Collectors.toList())));
-        }};
     }
 }

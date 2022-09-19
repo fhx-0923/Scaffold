@@ -114,7 +114,12 @@ public class SecurityConfig {
                         "/**/*.css",
                         "/**/*.js",
                         "/websocket/**",
-                        "/local/avatar/**"
+                        // 头像
+                        "/local/avatar/**",
+                        // Postman测试用脚本
+                        "/local/postman/forge.js",
+                        // 系统Logo
+                        "/local/logo/logo.png"
                 ).permitAll()
                 //放行Swagger文档
                 .antMatchers("/swagger-ui.html").permitAll()
