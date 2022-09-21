@@ -13,13 +13,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 /**
  * @author Weiho
- * @date 2022/9/14
+ * @since 2022/9/14
  */
 @Getter
 @Setter
@@ -34,6 +37,7 @@ public class UserVO extends CommonEntity implements Serializable {
     private Avatar avatar;
 
     @ApiModelProperty("用户名")
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
     @JsonIgnore
@@ -42,15 +46,19 @@ public class UserVO extends CommonEntity implements Serializable {
     private String password;
 
     @ApiModelProperty("性别 0-女 1-男")
+    @NotBlank(message = "性别不能为空")
     private SexEnum sex;
 
     @ApiModelProperty("邮箱")
+    @Email(message = "邮箱格式不正确")
     private String email;
 
     @ApiModelProperty("手机号码")
+    @Pattern(regexp = "^(13\\d|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18\\d|19[0-35-9])\\d{8}$", message = "手机号码格式不正确")
     private String phone;
 
     @ApiModelProperty("状态：1启用 0禁用")
+    @NotBlank(message = "状态不能为空")
     private boolean enabled;
 
     @ApiModelProperty("最后修改密码时间")

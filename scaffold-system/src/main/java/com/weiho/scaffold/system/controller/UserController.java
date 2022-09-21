@@ -17,6 +17,7 @@ import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.criteria.UserQueryCriteria;
 import com.weiho.scaffold.system.entity.vo.UserPassVO;
+import com.weiho.scaffold.system.entity.vo.UserVO;
 import com.weiho.scaffold.system.entity.vo.VerificationVO;
 import com.weiho.scaffold.system.security.token.utils.TokenUtils;
 import com.weiho.scaffold.system.service.RoleService;
@@ -68,7 +69,7 @@ public class UserController {
         List<Role> roles = roleService.findListByUser(userService.findByUsername(SecurityUtils.getUsername()));
         return new LinkedHashMap<String, Object>(2) {{
             put("userInfo", userDetailsService.loadUserByUsername(SecurityUtils.getUsername()));
-            put("maxLevel", Collections.max(roles.stream().map(Role::getLevel).collect(Collectors.toList())));
+            put("maxLevel", Collections.min(roles.stream().map(Role::getLevel).collect(Collectors.toList())));
         }};
     }
 
@@ -142,6 +143,16 @@ public class UserController {
         userService.updateAvatar(file);
         // 更新缓存
         tokenUtils.putUserDetails(userDetailsService.loadUserByUsername(SecurityUtils.getUsername()));
+        return Result.success(I18nMessagesUtils.get("update.success.tip"));
+    }
+
+    @Logging(title = "修改用户")
+    @ApiOperation("修改用户")
+    @PutMapping
+    @PreAuthorize("@el.check('User:update')")
+    public Result update(@Validated @RequestBody UserVO resources) {
+        roleService.checkLevel(resources.getId());
+        userService.updateUser(resources);
         return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
 }

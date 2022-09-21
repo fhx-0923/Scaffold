@@ -9,7 +9,7 @@ import java.util.function.Function;
  * 脱敏策略
  *
  * @author Weiho
- * @date 2022/8/24
+ * @since 2022/8/24
  */
 public enum SensitiveStrategy {
     /**

@@ -13,7 +13,7 @@ import java.util.List;
  * 日志查询条件
  *
  * @author Weiho
- * @date 2022/8/29
+ * @since 2022/8/29
  */
 @Data
 @ApiModel("日志查询条件")

@@ -84,4 +84,11 @@ public interface UserService extends CommonService<User> {
      * @return /
      */
     List<UserVO> getAll(UserQueryCriteria criteria);
+
+    /**
+     * 编辑用户
+     *
+     * @param resource 编辑后的用户信息
+     */
+    void updateUser(UserVO resource);
 }

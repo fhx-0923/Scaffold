@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * 将TokenFilter过滤器添加到Spring Security的过滤链最高优先级中
  *
  * @author Weiho
- * @date 2022/7/29
+ * @since 2022/7/29
  */
 public class TokenConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
     private final TokenUtils tokenUtils;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * 国际化获取类
  *
  * @author Weiho
- * @date 2022/8/16
+ * @since 2022/8/16
  */
 @Component
 public class I18nMessagesUtils {

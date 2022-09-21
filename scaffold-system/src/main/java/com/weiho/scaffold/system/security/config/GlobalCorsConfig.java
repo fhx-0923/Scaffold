@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 配置跨域
  *
  * @author Weiho
- * @date 2022/7/29
+ * @since 2022/7/29
  */
 @Configuration
 @EnableWebMvc

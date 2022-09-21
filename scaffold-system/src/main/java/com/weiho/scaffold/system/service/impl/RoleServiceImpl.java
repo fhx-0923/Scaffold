@@ -1,5 +1,9 @@
 package com.weiho.scaffold.system.service.impl;
 
+import com.weiho.scaffold.common.exception.SecurityException;
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
+import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
+import com.weiho.scaffold.common.util.security.SecurityUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.mp.core.QueryHelper;
 import com.weiho.scaffold.mp.enums.SortTypeEnum;
@@ -14,6 +18,7 @@ import com.weiho.scaffold.system.mapper.MenuMapper;
 import com.weiho.scaffold.system.mapper.RoleMapper;
 import com.weiho.scaffold.system.service.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.CastUtils;
@@ -22,10 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -71,14 +73,41 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
     }
 
     @Override
+    @CachePut(value = "Scaffold:Commons:Permission", key = "'loadPermissionByUsername:' + #p1", unless = "#result.size() <= 1")
+    public Collection<SimpleGrantedAuthority> updateCacheForGrantedAuthorities(Long userId, String username) {
+        return this.mapToGrantedAuthorities(userId, username);
+    }
+
+
+    @Override
     @Cacheable(value = "Scaffold:Commons:Roles", key = "'loadRolesByUsername:' + #p0.getUsername()")
     public List<Role> findListByUser(User user) {
         return this.getBaseMapper().findListByUserId(user.getId());
     }
 
     @Override
+    @CachePut(value = "Scaffold:Commons:Roles", key = "'loadRolesByUsername:' + #p0.getUsername()")
+    public List<Role> updateCacheForRoleList(User user) {
+        return this.findListByUser(user);
+    }
+
+    @Override
     public List<Role> findAll(RoleQueryCriteria criteria, Pageable pageable) {
         startPage(pageable, "level", SortTypeEnum.ASC);
         return this.getBaseMapper().selectList(CastUtils.cast(QueryHelper.getQueryWrapper(Role.class, criteria)));
+    }
+
+    @Override
+    public Integer findHighLevel(Long userId) {
+        return Collections.min(this.getBaseMapper().findListByUserId(userId).stream().map(Role::getLevel).collect(Collectors.toList()));
+    }
+
+    @Override
+    public void checkLevel(Long resourceId) {
+        Integer resourceUserLevel = this.findHighLevel(resourceId);
+        Integer securityUserLevel = this.findHighLevel(SecurityUtils.getUserId());
+        if (resourceUserLevel < securityUserLevel) {
+            throw new SecurityException(ResultCodeEnum.FAILED, I18nMessagesUtils.get("permission.none.tip"));
+        }
     }
 }

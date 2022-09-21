@@ -8,7 +8,7 @@ import org.mapstruct.ReportingPolicy;
 
 /**
  * @author Weiho
- * @date 2022/8/29
+ * @since 2022/8/29
  */
 @Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface LogErrorVOConvert extends MapStructConvert<Log, LogErrorVO> {

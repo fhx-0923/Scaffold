@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 
 /**
  * @author Weiho
- * @date 2022/9/13
+ * @since 2022/9/13
  */
 @Data
 @ApiModel("LogErrorUserVO对象")

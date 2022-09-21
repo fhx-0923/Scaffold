@@ -16,7 +16,7 @@ import java.util.Objects;
  * 序列化注解自定义实现
  *
  * @author Weiho
- * @date 2022/8/24
+ * @since 2022/8/24
  */
 public class SensitiveJsonSerializer extends JsonSerializer<String> implements ContextualSerializer {
     private SensitiveStrategy strategy;

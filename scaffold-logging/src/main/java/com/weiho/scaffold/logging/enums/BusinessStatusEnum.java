@@ -9,7 +9,7 @@ import lombok.Getter;
  * 日志操作状态(  0-正常  ,  1-失败)
  *
  * @author Weiho
- * @date 2022/8/6
+ * @since 2022/8/6
  */
 @Getter
 @AllArgsConstructor

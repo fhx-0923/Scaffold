@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * 字段脱敏(姓名,身份证,电话号码),需要用在返回前端的VO中
  *
  * @author Weiho
- * @date 2022/8/24
+ * @since 2022/8/24
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

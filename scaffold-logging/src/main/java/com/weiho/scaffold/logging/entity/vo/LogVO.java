@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 
 /**
  * @author Weiho
- * @date 2022/8/29
+ * @since 2022/8/29
  */
 @Data
 @ApiModel(value = "LogVO对象", description = "操作日志VO")

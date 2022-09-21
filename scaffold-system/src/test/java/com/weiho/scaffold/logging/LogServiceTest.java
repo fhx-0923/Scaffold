@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author Weiho
- * @date 2022/8/29
+ * @since 2022/8/29
  */
 @SpringBootTest(classes = {AppRun.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ComponentScan({"com.weiho.scaffold"})

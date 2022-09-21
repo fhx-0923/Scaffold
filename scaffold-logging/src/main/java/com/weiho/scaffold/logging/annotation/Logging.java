@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  * 操作日志注解
  *
  * @author Weiho
- * @date 2022/8/6
+ * @since 2022/8/6
  */
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * @author Weiho
- * @date 2022/9/6
+ * @since 2022/9/6
  */
 @Data
 @ApiModel("发送邮箱验证码参数对象")
