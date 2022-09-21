@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * 消息生产者
  *
  * @author Weiho
- * @date 2022/8/28
+ * @since 2022/8/28
  */
 @Slf4j
 @Component

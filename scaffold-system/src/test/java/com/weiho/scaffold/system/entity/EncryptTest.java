@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * @author Weiho
- * @date 2022/8/23
+ * @since 2022/8/23
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class EncryptTest {

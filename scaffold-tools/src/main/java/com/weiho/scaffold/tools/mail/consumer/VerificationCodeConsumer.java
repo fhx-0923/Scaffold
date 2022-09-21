@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * 发送邮件消息消费者
  *
  * @author Weiho
- * @date 2022/8/28
+ * @since 2022/8/28
  */
 @Slf4j
 @Component

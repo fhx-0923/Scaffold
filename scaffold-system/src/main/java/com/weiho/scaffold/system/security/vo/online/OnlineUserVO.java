@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * 在线用户实体
  *
  * @author Weiho
- * @date 2022/7/29
+ * @since 2022/7/29
  */
 @Data
 @ApiModel("在线用户实体")

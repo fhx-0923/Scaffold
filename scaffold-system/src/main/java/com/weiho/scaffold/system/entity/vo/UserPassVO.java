@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * @author Weiho
- * @date 2022/9/5
+ * @since 2022/9/5
  */
 @Data
 @ApiModel("用户修改密码实体")

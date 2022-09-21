@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @author Weiho
- * @date 2022/9/18
+ * @since 2022/9/18
  */
 @Getter
 public class SecurityException extends RuntimeException {

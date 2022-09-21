@@ -9,7 +9,7 @@ import lombok.Getter;
  * 日志业务类型枚举类
  *
  * @author Weiho
- * @date 2022/8/6
+ * @since 2022/8/6
  */
 @Getter
 @AllArgsConstructor

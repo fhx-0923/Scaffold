@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * MQ 配置类
  *
  * @author Weiho
- * @date 2022/8/28
+ * @since 2022/8/28
  */
 @Slf4j
 @Configuration

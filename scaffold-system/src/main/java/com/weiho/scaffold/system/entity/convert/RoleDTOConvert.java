@@ -8,7 +8,7 @@ import org.mapstruct.ReportingPolicy;
 
 /**
  * @author Weiho
- * @date 2022/8/4
+ * @since 2022/8/4
  */
 @Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RoleDTOConvert extends MapStructConvert<Role, RoleDTO> {

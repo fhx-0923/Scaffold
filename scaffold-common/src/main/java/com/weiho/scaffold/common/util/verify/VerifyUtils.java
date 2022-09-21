@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * (手机号,固定电话,身份证号码,邮箱,url,车牌号,日期,ip地址,mac,人名)
  *
  * @author Weiho
- * @date 2022/8/24
+ * @since 2022/8/24
  */
 @UtilityClass
 public class VerifyUtils {

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * @author Weiho
- * @date 2022/9/6
+ * @since 2022/9/6
  */
 @Data
 @Api(tags = "修改邮箱参数对象")

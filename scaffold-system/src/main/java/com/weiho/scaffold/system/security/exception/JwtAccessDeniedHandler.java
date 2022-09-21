@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * 当用户在没有授权的情况下访问受保护的REST资源时，将调用此方法
  *
  * @author Weiho
- * @date 2022/7/29
+ * @since 2022/7/29
  */
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {

@@ -103,7 +103,7 @@ mybatis-plus:
     banner: false # 关闭控制台banner输出
   configuration:
     default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler # 处理枚举类
-#  type-aliases-package: com.r6.**.entity # 别名注解扫描路径
+  type-aliases-package: com.weiho.scaffold.system.entity # 别名注解扫描路径
 
 # PageHelper 分页插件
 pagehelper:

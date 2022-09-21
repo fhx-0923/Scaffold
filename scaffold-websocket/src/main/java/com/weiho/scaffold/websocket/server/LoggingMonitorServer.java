@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * 实时控制台传输
  *
  * @author huanzi-qch <a href="https://www.cnblogs.com/huanzi-qch/">参考链接</a>
- * @date 2022/8/21
+ * @since 2022/8/21
  */
 @Slf4j
 @Component

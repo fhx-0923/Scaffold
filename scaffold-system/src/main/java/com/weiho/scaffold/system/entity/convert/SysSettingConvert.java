@@ -8,7 +8,7 @@ import org.mapstruct.ReportingPolicy;
 
 /**
  * @author Weiho
- * @date 2022/9/19
+ * @since 2022/9/19
  */
 @Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SysSettingConvert extends MapStructConvert<SysSetting, SysSettingVO> {

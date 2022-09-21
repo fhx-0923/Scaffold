@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
  * AES加密工具类
  *
  * @author Weiho
- * @date 2022/8/23
+ * @since 2022/8/23
  */
 @UtilityClass
 public class AesUtils {

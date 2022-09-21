@@ -8,7 +8,7 @@ import lombok.Getter;
  * 验证码生成异常
  *
  * @author Weiho
- * @date 2022/8/1
+ * @since 2022/8/1
  */
 @Getter
 public class CaptchaException extends RuntimeException {

@@ -7,7 +7,7 @@ import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 
 /**
  * @author Weiho
- * @date 2022/8/30
+ * @since 2022/8/30
  */
 @UtilityClass
 public class ValidationUtils {

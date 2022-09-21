@@ -13,7 +13,7 @@ import java.io.IOException;
  * 当用户尝试访问安全的REST资源而不提供任何凭据时，将调用此方法
  *
  * @author Weiho
- * @date 2022/7/29
+ * @since 2022/7/29
  */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {

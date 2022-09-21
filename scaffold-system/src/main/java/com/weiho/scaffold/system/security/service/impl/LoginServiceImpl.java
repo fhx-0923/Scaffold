@@ -117,7 +117,7 @@ public class LoginServiceImpl implements LoginService {
             return new HashMap<String, Object>(3) {{
                 put("token", properties.getJwtProperties().getTokenStartWith() + token);
                 put("userInfo", jwtUserVO);
-                put("maxLevel", Collections.max(roles.stream().map(Role::getLevel).collect(Collectors.toList())));
+                put("maxLevel", Collections.min(roles.stream().map(Role::getLevel).collect(Collectors.toList())));
             }};
         } catch (IllegalStateException e) {
             throw new SecurityException(ResultCodeEnum.SYSTEM_FORBIDDEN, I18nMessagesUtils.get("login.error"));

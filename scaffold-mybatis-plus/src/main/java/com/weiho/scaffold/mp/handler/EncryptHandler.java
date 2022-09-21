@@ -18,7 +18,7 @@ import java.sql.SQLException;
  * 若使用xml自己写sql,需要在resultMap中给typeHandler赋值该类,否则也是不解密
  *
  * @author Weiho
- * @date 2022/8/23
+ * @since 2022/8/23
  */
 @SuppressWarnings("all")
 public class EncryptHandler extends BaseTypeHandler {

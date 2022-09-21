@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * 用户登录后接收Security的用户信息与权限
  *
  * @author Weiho
- * @date 2022/7/29
+ * @since 2022/7/29
  */
 @Getter
 @Setter

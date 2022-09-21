@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * 获取当前登录的用户
  *
  * @author Weiho
- * @date 2022/8/6
+ * @since 2022/8/6
  */
 @UtilityClass
 public class SecurityUtils {

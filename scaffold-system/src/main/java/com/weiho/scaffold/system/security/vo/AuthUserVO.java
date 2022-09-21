@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
  * 前端登录对象
  *
  * @author Weiho
- * @date 2022/7/29
+ * @since 2022/7/29
  */
 @Getter
 @Setter
