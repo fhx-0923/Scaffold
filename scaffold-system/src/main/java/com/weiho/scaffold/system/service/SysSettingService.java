@@ -2,7 +2,9 @@ package com.weiho.scaffold.system.service;
 
 import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.system.entity.SysSetting;
-import com.weiho.scaffold.system.entity.vo.SysSettingVO;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * <p>
@@ -13,5 +15,19 @@ import com.weiho.scaffold.system.entity.vo.SysSettingVO;
  * @since 2022-09-19
  */
 public interface SysSettingService extends CommonService<SysSetting> {
-    SysSettingVO getSysSettings();
+    /**
+     * 获取系统设置
+     *
+     * @return /
+     */
+    SysSetting getSysSettings();
+
+    /**
+     * 获取系统Logo和title
+     *
+     * @param request    请求对象
+     * @param sysSetting 系统设置
+     * @return /
+     */
+    Map<String, Object> getLogoAndTitle(HttpServletRequest request, SysSetting sysSetting);
 }

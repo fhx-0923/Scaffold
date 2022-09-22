@@ -25,11 +25,4 @@
             </if>
         </trim>
     </insert>
-
-    <delete id="deleteRolesByUserId">
-        DELETE
-        FROM users_roles
-        WHERE user_id = #{userId}
-    </delete>
-
 </mapper>

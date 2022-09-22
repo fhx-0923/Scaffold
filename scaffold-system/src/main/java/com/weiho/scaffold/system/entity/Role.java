@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * <p>
@@ -20,6 +21,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@ToString(callSuper = true)
 @ApiModel(value = "Role对象", description = "系统角色表")
 @TableName("role")
 public class Role extends CommonEntity {

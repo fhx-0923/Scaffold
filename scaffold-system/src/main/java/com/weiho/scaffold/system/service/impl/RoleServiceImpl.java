@@ -110,4 +110,18 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
             throw new SecurityException(ResultCodeEnum.FAILED, I18nMessagesUtils.get("permission.none.tip"));
         }
     }
+
+    @Override
+    public void checkLevel(Set<Role> roles) {
+        Set<Integer> integers = new HashSet<>();
+        Set<Long> ids = roles.stream().map(Role::getId).collect(Collectors.toSet());
+        for (Long id : ids) {
+            integers.add(this.getBaseMapper().selectById(id).getLevel());
+        }
+        Integer securityUserLevel = this.findHighLevel(SecurityUtils.getUserId());
+        Integer rolesUserLevel = Collections.min(integers);
+        if (rolesUserLevel < securityUserLevel) {
+            throw new SecurityException(ResultCodeEnum.FAILED, I18nMessagesUtils.get("permission.none.tip"));
+        }
+    }
 }

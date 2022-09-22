@@ -10,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <p>
  * 系统参数表 服务实现类
@@ -25,7 +29,33 @@ public class SysSettingServiceImpl extends CommonServiceImpl<SysSettingMapper, S
 
     @Override
     @Cacheable(value = "Scaffold:System", key = "'settings'")
-    public SysSettingVO getSysSettings() {
-        return sysSettingConvert.toPojo(this.list().get(0));
+    public SysSetting getSysSettings() {
+        return this.list().get(0);
+    }
+
+    @Override
+    public Map<String, Object> getLogoAndTitle(HttpServletRequest request, SysSetting sysSetting) {
+        Map<String, Object> result = new HashMap<>();
+        SysSettingVO sysSettingVO = sysSettingConvert.toPojo(sysSetting);
+        result.put("logo", sysSettingVO.getSysLogo());
+        String language = request.getHeader("Accept-Language") == null ? "zh-CN" : request.getHeader("Accept-Language");
+        switch (language) {
+            case "zh-CN":
+                result.put("title", sysSettingVO.getSysNameZhCn());
+                break;
+            case "zh-HK":
+                result.put("title", sysSettingVO.getSysNameZhHk());
+                break;
+            case "zh-TW":
+                result.put("title", sysSettingVO.getSysNameZhTw());
+                break;
+            case "en-US":
+                result.put("title", sysSettingVO.getSysNameEnUs());
+                break;
+            default:
+                result.put("title", sysSettingVO.getSysName());
+                break;
+        }
+        return result;
     }
 }

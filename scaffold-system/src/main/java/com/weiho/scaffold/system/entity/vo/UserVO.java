@@ -46,7 +46,6 @@ public class UserVO extends CommonEntity implements Serializable {
     private String password;
 
     @ApiModelProperty("性别 0-女 1-男")
-    @NotBlank(message = "性别不能为空")
     private SexEnum sex;
 
     @ApiModelProperty("邮箱")
@@ -58,7 +57,6 @@ public class UserVO extends CommonEntity implements Serializable {
     private String phone;
 
     @ApiModelProperty("状态：1启用 0禁用")
-    @NotBlank(message = "状态不能为空")
     private boolean enabled;
 
     @ApiModelProperty("最后修改密码时间")

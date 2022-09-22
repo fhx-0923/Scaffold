@@ -2,6 +2,9 @@ package com.weiho.scaffold.system.service;
 
 import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.system.entity.Avatar;
+import org.springframework.data.domain.Pageable;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -28,4 +31,12 @@ public interface AvatarService extends CommonService<Avatar> {
      */
     @SuppressWarnings("all")
     Avatar updateAvatar(Avatar avatar, String username);
+
+    /**
+     * 查询头像列表(可模糊查询)
+     *
+     * @param usernameLike 用户名模糊查询
+     * @return AvatarVO
+     */
+    Map<String, Object> selectAvatarList(String usernameLike, Pageable pageable);
 }

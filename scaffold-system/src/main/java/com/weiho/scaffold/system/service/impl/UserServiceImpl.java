@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageInfo;
 import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
 import com.weiho.scaffold.common.exception.BadRequestException;
+import com.weiho.scaffold.common.util.collection.SetUtils;
 import com.weiho.scaffold.common.util.date.DateUtils;
 import com.weiho.scaffold.common.util.date.FormatEnum;
 import com.weiho.scaffold.common.util.file.FileUtils;
@@ -23,30 +24,30 @@ import com.weiho.scaffold.system.entity.UsersRoles;
 import com.weiho.scaffold.system.entity.convert.JwtUserVOConvert;
 import com.weiho.scaffold.system.entity.convert.UserVOConvert;
 import com.weiho.scaffold.system.entity.criteria.UserQueryCriteria;
+import com.weiho.scaffold.system.entity.enums.AuditEnum;
 import com.weiho.scaffold.system.entity.vo.UserVO;
 import com.weiho.scaffold.system.mapper.AvatarMapper;
 import com.weiho.scaffold.system.mapper.RoleMapper;
 import com.weiho.scaffold.system.mapper.UserMapper;
+import com.weiho.scaffold.system.security.service.OnlineUserService;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
-import com.weiho.scaffold.system.service.AvatarService;
-import com.weiho.scaffold.system.service.RoleService;
-import com.weiho.scaffold.system.service.UserService;
-import com.weiho.scaffold.system.service.UsersRolesService;
+import com.weiho.scaffold.system.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.CastUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -69,6 +70,9 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     private final UserVOConvert userVOConvert;
     private final UsersRolesService usersRolesService;
     private final RedisUtils redisUtils;
+    private final SysSettingService sysSettingService;
+    private final PasswordEncoder passwordEncoder;
+    private final OnlineUserService onlineUserService;
 
     @Override
     public JwtUserVO getBaseJwtUserVO(User user) {
@@ -111,6 +115,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
         avatar.setRealName(file.getName());
         avatar.setPath(properties.getFileProperties().getServerAddressPrefix() + file.getName());
         avatar.setSize(FileUtils.getSize(multipartFile.getSize()));
+        avatar.setEnabled(AuditEnum.AUDIT_NO);
         avatarService.updateAvatar(avatar, user.getUsername());
         if (StringUtils.isNotBlank(oldFileNamePath)) {
             FileUtil.del(oldFileNamePath);
@@ -150,6 +155,14 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
         User user = this.getOne(new LambdaQueryWrapper<User>().eq(User::getId, resource.getId()));
         // 保存旧的用户名
         String oldUsername = user.getUsername();
+        // 为了考虑在线用户的缓存，暂时还不能修改用户名
+        if (!oldUsername.equals(resource.getUsername())) {
+            throw new BadRequestException(I18nMessagesUtils.get("update.username.tip"));
+        }
+        // 获取原来用户的角色ID列表
+        Set<Long> oldRoleIds = resource.getRoles().stream().map(Role::getId).collect(Collectors.toSet());
+        // 新的用户角色ID列表
+        Set<Long> newRoleIds = roleMapper.findSetByUserId(resource.getId()).stream().map(Role::getId).collect(Collectors.toSet());
         ValidationUtils.isNull(user.getId(), "User", "id", resource.getId());
         // 根据该实体中的用户名去查找
         User userUsername = this.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, resource.getUsername()));
@@ -174,28 +187,94 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
 
         // 查看是否修改用户信息成功
         boolean result = this.saveOrUpdate(user);
-        // 删除所有角色
-        usersRolesService.deleteRolesByUserId(resource.getId());
 
-        UsersRoles usersRoles = new UsersRoles();
-        usersRoles.setUserId(resource.getId());
+        // 如果角色集合不一致再进行更新
+        if (!SetUtils.isSetEqual(oldRoleIds, newRoleIds)) {
+            // 删除所有角色
+            usersRolesService.deleteRolesByUserId(resource.getId());
+
+            UsersRoles usersRoles = new UsersRoles();
+            usersRoles.setUserId(resource.getId());
+            Set<Role> set = resource.getRoles();
+            for (Role role : set) {
+                usersRoles.setRoleId(role.getId());
+                if (result) {
+                    usersRolesService.save(usersRoles);
+                }
+            }
+
+            // 若用户修改了角色，要手动删除一下缓存
+            String keyPermissions = "Scaffold:Commons:Permission::loadPermissionByUsername:" + oldUsername;
+            String keyRoles = "Scaffold:Commons:Roles::loadRolesByUsername:" + oldUsername;
+            if (redisUtils.hasKey(keyPermissions) && redisUtils.hasKey(keyRoles)) {
+                // 手动删除缓存
+                redisUtils.del(keyPermissions, keyRoles);
+                // 手动调用一次更新缓存
+                roleService.updateCacheForGrantedAuthorities(user.getId(), user.getUsername());
+                roleService.updateCacheForRoleList(user);
+            }
+        }
+    }
+
+    @Override
+    public void download(List<UserVO> all, HttpServletResponse response) throws IOException {
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (UserVO userVO : all) {
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("用户名", userVO.getUsername());
+            map.put("头像路径", userVO.getAvatar().getPath());
+            map.put("头像大小", userVO.getAvatar().getSize());
+            map.put("性别", userVO.getSex());
+            map.put("邮箱", userVO.getEmail());
+            map.put("手机号", userVO.getPhone());
+            map.put("状态", userVO.isEnabled());
+            map.put("最后修改密码时间", userVO.getLastPassResetTime());
+            map.put("注册时间", userVO.getCreateTime());
+            list.add(map);
+        }
+        FileUtils.downloadExcel(list, response);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean createUser(UserVO resource) {
+        // 根据用户名去查询是否存在用户
+        User userUsername = this.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, resource.getUsername()));
+        if (userUsername != null) {
+            throw new BadRequestException(I18nMessagesUtils.get("username.exists"));
+        }
+        // 根据邮箱去查询
+        User userEmail = this.getOne(new LambdaQueryWrapper<User>().eq(User::getEmail, resource.getEmail()));
+        if (userEmail != null) {
+            throw new BadRequestException(I18nMessagesUtils.get("email.exists"));
+        }
+        // 转换实体
+        User user = userVOConvert.toEntity(resource);
+        // 角色集合
         Set<Role> set = resource.getRoles();
+        // 设置默认密码
+        user.setPassword(passwordEncoder.encode(sysSettingService.getSysSettings().getUserInitPassword()));
+        // 保存
+        boolean result = this.save(user);
+        UsersRoles usersRoles = new UsersRoles();
+        if (result) {
+            usersRoles.setUserId(this.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, user.getUsername())).getId());
+        }
         for (Role role : set) {
             usersRoles.setRoleId(role.getId());
             if (result) {
                 usersRolesService.save(usersRoles);
             }
         }
+        return result;
+    }
 
-        // 若用户修改了角色，要手动删除一下缓存
-        if (!resource.getRoles().equals(roleMapper.findSetByUserId(resource.getId()))) {
-            String keyPermissions = "Scaffold:Commons:Permission::loadPermissionByUsername:" + oldUsername;
-            String keyRoles = "Scaffold:Commons:Roles::loadRolesByUsername:" + oldUsername;
-            // 手动删除缓存
-            redisUtils.del(keyPermissions, keyRoles);
-            // 手动调用一次更新缓存
-            roleService.updateCacheForGrantedAuthorities(user.getId(), user.getUsername());
-            roleService.updateCacheForRoleList(user);
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(Set<Long> ids) {
+        for (Long id : ids) {
+            usersRolesService.deleteRolesByUserId(id);
         }
+        this.removeByIds(ids);
     }
 }

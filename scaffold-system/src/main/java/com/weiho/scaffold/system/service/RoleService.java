@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -35,6 +36,7 @@ public interface RoleService extends CommonService<Role> {
      * @param username 当前登录的用户名
      * @return 权限集合
      */
+    @SuppressWarnings("all")
     Collection<SimpleGrantedAuthority> updateCacheForGrantedAuthorities(Long userId, String username);
 
     /**
@@ -51,6 +53,7 @@ public interface RoleService extends CommonService<Role> {
      * @param user 用户实体
      * @return 角色集合
      */
+    @SuppressWarnings("all")
     List<Role> updateCacheForRoleList(User user);
 
     /**
@@ -77,4 +80,12 @@ public interface RoleService extends CommonService<Role> {
      * @param resourceId 检查当前的用户ID
      */
     void checkLevel(Long resourceId);
+
+    /**
+     * 检查当前传入的角色等级是否低于当前操作的用户
+     * 若低于当前操作的用户则抛出异常
+     *
+     * @param roles 角色集合
+     */
+    void checkLevel(Set<Role> roles);
 }
