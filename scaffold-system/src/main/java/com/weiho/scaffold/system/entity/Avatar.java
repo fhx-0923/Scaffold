@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.weiho.scaffold.mp.entity.CommonEntity;
+import com.weiho.scaffold.system.entity.enums.AuditEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -41,4 +42,8 @@ public class Avatar extends CommonEntity {
     @ApiModelProperty("文件大小")
     @TableField("size")
     private String size;
+
+    @ApiModelProperty("是否审核 1-审核通过 0-审核不通过")
+    @TableField("enabled")
+    private AuditEnum enabled;
 }

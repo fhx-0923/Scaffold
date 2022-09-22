@@ -8,8 +8,11 @@ import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -91,4 +94,28 @@ public interface UserService extends CommonService<User> {
      * @param resource 编辑后的用户信息
      */
     void updateUser(UserVO resource);
+
+    /**
+     * 导出数据
+     *
+     * @param all      用户表头
+     * @param response /
+     */
+    void download(List<UserVO> all, HttpServletResponse response) throws IOException;
+
+    /**
+     * 新增用户
+     *
+     * @param resource 用户信息
+     * @return Boolean
+     */
+    @SuppressWarnings("all")
+    boolean createUser(UserVO resource);
+
+    /**
+     * 删除用户
+     *
+     * @param ids 用户ID
+     */
+    void delete(Set<Long> ids);
 }

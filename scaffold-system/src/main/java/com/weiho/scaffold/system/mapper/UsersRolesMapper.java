@@ -1,6 +1,7 @@
 package com.weiho.scaffold.system.mapper;
 
 import com.weiho.scaffold.system.entity.UsersRoles;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,7 @@ public interface UsersRolesMapper {
      *
      * @param userId 用户ID
      */
+    @Delete("DELETE FROM users_roles WHERE user_id = #{userId}")
     void deleteRolesByUserId(@Param("userId") Long userId);
 
     /**

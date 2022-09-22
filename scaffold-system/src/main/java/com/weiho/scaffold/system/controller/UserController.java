@@ -19,6 +19,7 @@ import com.weiho.scaffold.system.entity.criteria.UserQueryCriteria;
 import com.weiho.scaffold.system.entity.vo.UserPassVO;
 import com.weiho.scaffold.system.entity.vo.UserVO;
 import com.weiho.scaffold.system.entity.vo.VerificationVO;
+import com.weiho.scaffold.system.mapper.RoleMapper;
 import com.weiho.scaffold.system.security.token.utils.TokenUtils;
 import com.weiho.scaffold.system.service.RoleService;
 import com.weiho.scaffold.system.service.UserService;
@@ -34,10 +35,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -59,6 +59,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final RoleService roleService;
+    private final RoleMapper roleMapper;
     private final RedisUtils redisUtils;
     private final TokenUtils tokenUtils;
 
@@ -150,9 +151,46 @@ public class UserController {
     @ApiOperation("修改用户")
     @PutMapping
     @PreAuthorize("@el.check('User:update')")
-    public Result update(@Validated @RequestBody UserVO resources) {
+    public Result updateUser(@Validated @RequestBody UserVO resources) {
         roleService.checkLevel(resources.getId());
         userService.updateUser(resources);
         return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
+
+    @Logging(title = "新增用户")
+    @ApiOperation("新增用户")
+    @PostMapping
+    @PreAuthorize("@el.check('User:add')")
+    public Result createUser(@Validated @RequestBody UserVO resources) {
+        System.err.println(resources.toString());
+        roleService.checkLevel(resources.getRoles());
+        userService.createUser(resources);
+        return Result.success(I18nMessagesUtils.get("add.success.tip"));
+    }
+
+    @Logging(title = "删除用户")
+    @ApiOperation("删除用户")
+    @DeleteMapping
+    @PreAuthorize("@el.check('User:delete')")
+    public Result deleteUser(@RequestBody Set<Long> ids) {
+        for (Long id : ids) {
+            // 当前操作用户的级别
+            Integer currentLevel = Collections.min(roleMapper.findListByUserId(SecurityUtils.getUserId()).stream().map(Role::getLevel).collect(Collectors.toList()));
+            Integer optLevel = Collections.min(roleMapper.findListByUserId(id).stream().map(Role::getLevel).collect(Collectors.toList()));
+            if (currentLevel > optLevel) {
+                throw new BadRequestException(I18nMessagesUtils.get("delete.error.tip") + ":[" + userService.getById(id).getUsername() + "]");
+            }
+        }
+        userService.delete(ids);
+        return Result.success(I18nMessagesUtils.get("delete.success.tip"));
+    }
+
+    @Logging(title = "导出用户数据")
+    @ApiOperation("导出用户数据")
+    @GetMapping("/download")
+    @PreAuthorize("@el.check('User:list')")
+    public void download(HttpServletResponse response, UserQueryCriteria criteria) throws IOException {
+        userService.download(userService.getAll(criteria), response);
+    }
+
 }
