@@ -2,9 +2,15 @@ package com.weiho.scaffold.system.service;
 
 import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.system.entity.Avatar;
+import com.weiho.scaffold.system.entity.criteria.AvatarQueryCriteria;
+import com.weiho.scaffold.system.entity.vo.AvatarVO;
 import org.springframework.data.domain.Pageable;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -35,8 +41,31 @@ public interface AvatarService extends CommonService<Avatar> {
     /**
      * 查询头像列表(可模糊查询)
      *
-     * @param usernameLike 用户名模糊查询
+     * @param criteria 查询实体
      * @return AvatarVO
      */
-    Map<String, Object> selectAvatarList(String usernameLike, Pageable pageable);
+    Map<String, Object> selectAvatarList(AvatarQueryCriteria criteria, Pageable pageable);
+
+    /**
+     * 导出头像信息
+     *
+     * @param all      查询结果
+     * @param response 响应
+     */
+    void download(List<AvatarVO> all, HttpServletResponse response) throws IOException;
+
+    /**
+     * 根据条件查询所有头像列表
+     *
+     * @param criteria 查询实体
+     * @return List
+     */
+    List<AvatarVO> getAll(AvatarQueryCriteria criteria);
+
+    /**
+     * 删除用户
+     *
+     * @param ids 头像ID
+     */
+    void delete(Set<Long> ids);
 }

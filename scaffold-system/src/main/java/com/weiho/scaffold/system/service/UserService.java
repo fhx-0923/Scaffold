@@ -63,15 +63,6 @@ public interface UserService extends CommonService<User> {
     void updateAvatar(MultipartFile multipartFile);
 
     /**
-     * 更新缓存
-     *
-     * @param newUser 新的用户信息
-     * @return /
-     */
-    @SuppressWarnings("all")
-    User updateCache(User newUser);
-
-    /**
      * 获取用户列表
      *
      * @param criteria 查询条件

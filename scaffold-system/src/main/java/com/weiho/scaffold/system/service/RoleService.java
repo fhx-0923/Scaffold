@@ -30,31 +30,12 @@ public interface RoleService extends CommonService<Role> {
     Collection<SimpleGrantedAuthority> mapToGrantedAuthorities(Long userId, String username);
 
     /**
-     * 更新缓存(需要手动删除后调用)
-     *
-     * @param userId   用户ID
-     * @param username 当前登录的用户名
-     * @return 权限集合
-     */
-    @SuppressWarnings("all")
-    Collection<SimpleGrantedAuthority> updateCacheForGrantedAuthorities(Long userId, String username);
-
-    /**
      * 根据用户ID查询所有的角色信息
      *
      * @param user 用户实体
      * @return 角色集合
      */
     List<Role> findListByUser(User user);
-
-    /**
-     * 更新缓存(需要手动删除后调用)
-     *
-     * @param user 用户实体
-     * @return 角色集合
-     */
-    @SuppressWarnings("all")
-    List<Role> updateCacheForRoleList(User user);
 
     /**
      * 查询所有的角色列表

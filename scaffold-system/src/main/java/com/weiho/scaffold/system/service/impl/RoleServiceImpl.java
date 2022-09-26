@@ -1,5 +1,6 @@
 package com.weiho.scaffold.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.weiho.scaffold.common.exception.SecurityException;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
@@ -18,7 +19,6 @@ import com.weiho.scaffold.system.mapper.MenuMapper;
 import com.weiho.scaffold.system.mapper.RoleMapper;
 import com.weiho.scaffold.system.service.RoleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.CastUtils;
@@ -73,22 +73,17 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
     }
 
     @Override
-    @CachePut(value = "Scaffold:Commons:Permission", key = "'loadPermissionByUsername:' + #p1", unless = "#result.size() <= 1")
-    public Collection<SimpleGrantedAuthority> updateCacheForGrantedAuthorities(Long userId, String username) {
-        return this.mapToGrantedAuthorities(userId, username);
-    }
-
-
-    @Override
     @Cacheable(value = "Scaffold:Commons:Roles", key = "'loadRolesByUsername:' + #p0.getUsername()")
     public List<Role> findListByUser(User user) {
-        return this.getBaseMapper().findListByUserId(user.getId());
-    }
-
-    @Override
-    @CachePut(value = "Scaffold:Commons:Roles", key = "'loadRolesByUsername:' + #p0.getUsername()")
-    public List<Role> updateCacheForRoleList(User user) {
-        return this.findListByUser(user);
+        List<Role> roles = this.getBaseMapper().findListByUserId(user.getId());
+        // 没角色则给最低权限
+        if (roles.size() == 0) {
+            // 获取所有角色中等级最低的
+            Integer minLevel = Collections.max(this.list().stream().map(Role::getLevel).collect(Collectors.toSet()));
+            // 将最低等级的角色实体放入
+            roles.add(this.getOne(new LambdaQueryWrapper<Role>().eq(Role::getLevel, minLevel)));
+        }
+        return roles;
     }
 
     @Override
@@ -99,15 +94,22 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
 
     @Override
     public Integer findHighLevel(Long userId) {
-        return Collections.min(this.getBaseMapper().findListByUserId(userId).stream().map(Role::getLevel).collect(Collectors.toList()));
+        List<Role> roles = this.getBaseMapper().findListByUserId(userId);
+        if (roles.size() == 0) {
+            return 99;// 避免当用户还没角色时候报警告
+        } else {
+            return Collections.min(roles.stream().map(Role::getLevel).collect(Collectors.toList()));
+        }
     }
 
     @Override
     public void checkLevel(Long resourceId) {
-        Integer resourceUserLevel = this.findHighLevel(resourceId);
-        Integer securityUserLevel = this.findHighLevel(SecurityUtils.getUserId());
-        if (resourceUserLevel < securityUserLevel) {
-            throw new SecurityException(ResultCodeEnum.FAILED, I18nMessagesUtils.get("permission.none.tip"));
+        if (resourceId != null) {
+            Integer resourceUserLevel = this.findHighLevel(resourceId);
+            Integer securityUserLevel = this.findHighLevel(SecurityUtils.getUserId());
+            if (resourceUserLevel < securityUserLevel) {
+                throw new SecurityException(ResultCodeEnum.FAILED, I18nMessagesUtils.get("permission.none.tip"));
+            }
         }
     }
 
