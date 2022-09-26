@@ -12,6 +12,7 @@ import com.weiho.scaffold.common.util.page.PageUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.redis.util.RedisUtils;
 import com.weiho.scaffold.system.security.service.OnlineUserService;
+import com.weiho.scaffold.system.security.token.utils.TokenUtils;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.weiho.scaffold.system.security.vo.online.OnlineUserVO;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ import java.util.*;
 public class OnlineUserServiceImpl implements OnlineUserService {
     private final ScaffoldSystemProperties properties;
     private final RedisUtils redisUtils;
+    private final TokenUtils tokenUtils;
 
     @Override
     public void save(JwtUserVO jwtUser, String token, HttpServletRequest request) {
@@ -100,9 +102,17 @@ public class OnlineUserServiceImpl implements OnlineUserService {
 
     @Override
     public void logout(String token) {
+        String username = tokenUtils.getUsernameFromToken(token);
         //清除缓存
         String onlineCacheKey = properties.getJwtProperties().getOnlineKey() + token;
-        redisUtils.del(onlineCacheKey);
+        String avatarKey = redisUtils.getRedisCommonsKey("Avatar", username);
+        String menusKey = redisUtils.getRedisCommonsKey("Menus", username);
+        String permissionKey = redisUtils.getRedisCommonsKey("Permission", username);
+        String rolesKey = redisUtils.getRedisCommonsKey("Roles", username);
+        String userKey = redisUtils.getRedisCommonsKey("User", username);
+        String detailsKey = properties.getJwtProperties().getDetailKey() + username;
+        String tokenKey = properties.getJwtProperties().getTokenKey() + username + ":" + token;
+        redisUtils.del(onlineCacheKey, avatarKey, menusKey, permissionKey, rolesKey, userKey, detailsKey, tokenKey);
     }
 
     @Override
@@ -146,4 +156,5 @@ public class OnlineUserServiceImpl implements OnlineUserService {
             }
         }
     }
+
 }

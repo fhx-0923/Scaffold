@@ -1,17 +1,24 @@
 package com.weiho.scaffold.system.controller;
 
+import com.weiho.scaffold.common.exception.BadRequestException;
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
+import com.weiho.scaffold.common.util.result.Result;
+import com.weiho.scaffold.logging.annotation.Logging;
+import com.weiho.scaffold.system.entity.criteria.AvatarQueryCriteria;
 import com.weiho.scaffold.system.service.AvatarService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -31,9 +38,32 @@ public class AvatarController {
     @ApiOperation("查询头像列表")
     @GetMapping
     @PreAuthorize("@el.check('Avatar:list')")
-    @ApiImplicitParam(name = "usernameLike", value = "用户名模糊查询,赋空值则默认全查",
-            dataType = "String", dataTypeClass = String.class)
-    public Map<String, Object> getAvatarList(String usernameLike, Pageable pageable) {
-        return avatarService.selectAvatarList(usernameLike, pageable);
+    public Map<String, Object> getAvatarList(AvatarQueryCriteria criteria, Pageable pageable) {
+        return avatarService.selectAvatarList(criteria, pageable);
     }
+
+    @Logging(title = "导出头像信息")
+    @GetMapping("/download")
+    @ApiOperation("导出头像信息")
+    @PreAuthorize("@el.check('Avatar:list')")
+    public void download(HttpServletResponse response, AvatarQueryCriteria criteria) throws IOException {
+        avatarService.download(avatarService.getAll(criteria), response);
+    }
+
+    @DeleteMapping
+    @Logging(title = "删除头像信息")
+    @ApiOperation("删除头像信息")
+    @PreAuthorize("@el.check('Avatar:delete')")
+    public Result deleteAvatar(@RequestBody Set<Long> ids) {
+        // 过滤空值
+        ids = ids.stream().filter(Objects::nonNull).collect(Collectors.toSet());
+        // 部分用户不存在头像则抛出异常
+        if (ids.size() == 0) {
+            throw new BadRequestException(I18nMessagesUtils.get("avatar.error.tip"));
+        }
+        avatarService.delete(ids);
+        return Result.success(I18nMessagesUtils.get("delete.success.tip"));
+    }
+
+    // TODO 明天完成修改头像信息
 }

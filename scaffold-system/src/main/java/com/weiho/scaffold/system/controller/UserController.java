@@ -13,6 +13,7 @@ import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.redis.limiter.annotation.RateLimiter;
 import com.weiho.scaffold.redis.limiter.enums.LimitType;
 import com.weiho.scaffold.redis.util.RedisUtils;
+import com.weiho.scaffold.system.cache.service.CacheRefresh;
 import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.criteria.UserQueryCriteria;
@@ -58,6 +59,7 @@ public class UserController {
     private final ScaffoldSystemProperties properties;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private final CacheRefresh cacheRefresh;
     private final RoleService roleService;
     private final RoleMapper roleMapper;
     private final RedisUtils redisUtils;
@@ -97,7 +99,7 @@ public class UserController {
         }
         userService.updatePass(user.getUsername(), passwordEncoder.encode(newPass));
         user.setPassword(passwordEncoder.encode(newPass));
-        userService.updateCache(user);
+        cacheRefresh.updateUserCache(user);
         return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
 
@@ -131,7 +133,7 @@ public class UserController {
             userService.updateEmail(user.getUsername(), newEmail);
             // 更新缓存
             user.setEmail(newEmail);
-            userService.updateCache(user);
+            cacheRefresh.updateUserCache(user);
             tokenUtils.putUserDetails(userDetailsService.loadUserByUsername(SecurityUtils.getUsername()));
             return Result.success(I18nMessagesUtils.get("update.success.tip"));
         }

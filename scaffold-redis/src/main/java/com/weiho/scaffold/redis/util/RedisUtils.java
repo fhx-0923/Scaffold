@@ -688,4 +688,16 @@ public class RedisUtils {
         log.info("缓存删除数量：" + count + "个");
     }
 
+    /**
+     * 获取Redis中Commons模块的key
+     *
+     * @param common   模块名
+     * @param username 用户名
+     * @return key
+     */
+    public String getRedisCommonsKey(String common, String username) {
+        return "Scaffold:Commons:" + common + "::" + "load" + common +
+                "ByUsername:" + username;
+    }
+
 }

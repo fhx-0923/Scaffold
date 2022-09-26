@@ -17,6 +17,7 @@ import com.weiho.scaffold.common.util.validation.ValidationUtils;
 import com.weiho.scaffold.mp.core.QueryHelper;
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.redis.util.RedisUtils;
+import com.weiho.scaffold.system.cache.service.CacheRefresh;
 import com.weiho.scaffold.system.entity.Avatar;
 import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.User;
@@ -29,11 +30,9 @@ import com.weiho.scaffold.system.entity.vo.UserVO;
 import com.weiho.scaffold.system.mapper.AvatarMapper;
 import com.weiho.scaffold.system.mapper.RoleMapper;
 import com.weiho.scaffold.system.mapper.UserMapper;
-import com.weiho.scaffold.system.security.service.OnlineUserService;
 import com.weiho.scaffold.system.security.vo.JwtUserVO;
 import com.weiho.scaffold.system.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.CastUtils;
@@ -72,7 +71,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     private final RedisUtils redisUtils;
     private final SysSettingService sysSettingService;
     private final PasswordEncoder passwordEncoder;
-    private final OnlineUserService onlineUserService;
+    private final CacheRefresh cacheRefresh;
 
     @Override
     public JwtUserVO getBaseJwtUserVO(User user) {
@@ -108,24 +107,52 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     @Override
     public void updateAvatar(MultipartFile multipartFile) {
         User user = findByUsername(SecurityUtils.getUsername());
+        // 查找该用户的头像信息
         Avatar avatar = avatarService.selectByAvatarId(user.getAvatarId(), user.getUsername());
-        String oldFileName = avatar.getRealName();
-        String oldFileNamePath = properties.getFileProperties().getLocalAddressPrefix() + oldFileName;
+        if (avatar == null) {
+            // 若该用户不存在头像 插入
+            avatar = new Avatar();
+            getAvatar(multipartFile, avatar);
+            // 保存头像信息
+            boolean result = avatarService.save(avatar);
+            if (result) {
+                // 插入成功后,查询刚刚插入的头像ID
+                Long avatarNewId = avatarService.getOne(new LambdaQueryWrapper<Avatar>().eq(Avatar::getRealName, avatar.getRealName())).getId();
+                // 更新用户信息
+                user.setAvatarId(avatarNewId);
+                this.updateById(user);
+                // 删除用户缓存
+                cacheRefresh.updateUserCache(user);
+            }
+        } else {
+            // 若该用户存在头像 修改
+            String oldFileName = avatar.getRealName();
+            String oldFileNamePath = properties.getFileProperties().getLocalAddressPrefix() + oldFileName;
+            getAvatar(multipartFile, avatar);
+            // 更新缓存
+            avatarService.updateAvatar(avatar, user.getUsername());
+            if (StringUtils.isNotBlank(oldFileNamePath)) {
+                FileUtil.del(oldFileNamePath);
+            }
+        }
+    }
+
+    /**
+     * 提取上述方法公共体
+     *
+     * @param multipartFile 参数1
+     * @param avatar        参数2
+     */
+    private void getAvatar(MultipartFile multipartFile, Avatar avatar) {
         File file = FileUtils.upload(multipartFile, properties.getFileProperties().getLocalAddressPrefix());
         avatar.setRealName(file.getName());
         avatar.setPath(properties.getFileProperties().getServerAddressPrefix() + file.getName());
         avatar.setSize(FileUtils.getSize(multipartFile.getSize()));
-        avatar.setEnabled(AuditEnum.AUDIT_NO);
-        avatarService.updateAvatar(avatar, user.getUsername());
-        if (StringUtils.isNotBlank(oldFileNamePath)) {
-            FileUtil.del(oldFileNamePath);
+        if (SecurityUtils.getUsername().equals("root")) {
+            avatar.setEnabled(AuditEnum.AUDIT_OK);
+        } else {
+            avatar.setEnabled(AuditEnum.AUDIT_NO);
         }
-    }
-
-    @Override
-    @CachePut(value = "Scaffold:Commons:User", key = "'loadUserByUsername:' + #p0.getUsername()", unless = "#result == null || #result.enabled == false")
-    public User updateCache(User newUser) {
-        return newUser;
     }
 
     @Override
@@ -204,14 +231,14 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
             }
 
             // 若用户修改了角色，要手动删除一下缓存
-            String keyPermissions = "Scaffold:Commons:Permission::loadPermissionByUsername:" + oldUsername;
-            String keyRoles = "Scaffold:Commons:Roles::loadRolesByUsername:" + oldUsername;
+            String keyPermissions = redisUtils.getRedisCommonsKey("Permission", oldUsername);
+            String keyRoles = redisUtils.getRedisCommonsKey("Roles", oldUsername);
             if (redisUtils.hasKey(keyPermissions) && redisUtils.hasKey(keyRoles)) {
                 // 手动删除缓存
                 redisUtils.del(keyPermissions, keyRoles);
                 // 手动调用一次更新缓存
-                roleService.updateCacheForGrantedAuthorities(user.getId(), user.getUsername());
-                roleService.updateCacheForRoleList(user);
+                cacheRefresh.updateRolesCacheForGrantedAuthorities(user.getId(), user.getUsername());
+                cacheRefresh.updateRolesCacheForRoleList(user);
             }
         }
     }
