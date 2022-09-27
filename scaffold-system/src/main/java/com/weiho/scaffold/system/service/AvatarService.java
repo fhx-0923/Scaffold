@@ -3,6 +3,7 @@ package com.weiho.scaffold.system.service;
 import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.system.entity.Avatar;
 import com.weiho.scaffold.system.entity.criteria.AvatarQueryCriteria;
+import com.weiho.scaffold.system.entity.vo.AvatarEnabledVO;
 import com.weiho.scaffold.system.entity.vo.AvatarVO;
 import org.springframework.data.domain.Pageable;
 
@@ -68,4 +69,11 @@ public interface AvatarService extends CommonService<Avatar> {
      * @param ids 头像ID
      */
     void delete(Set<Long> ids);
+
+    /**
+     * 修改用户头像状态
+     *
+     * @param avatarEnabledVO 实体
+     */
+    void updateEnabled(AvatarEnabledVO avatarEnabledVO);
 }

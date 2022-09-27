@@ -3,6 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.weiho.scaffold.system.mapper.AvatarMapper">
 
+    <update id="updateEnabled">
+        UPDATE avatar a
+        SET a.enabled = #{enabled}
+        WHERE a.id = #{id}
+          AND a.is_del = 0
+    </update>
+
     <select id="selectAvatarList" resultType="com.weiho.scaffold.system.entity.vo.AvatarVO">
         SELECT u.username, a.id,a.real_name,a.path,a.size,a.enabled,a.create_time,a.update_time,a.is_del
         FROM user u
@@ -14,6 +21,9 @@
         </if>
         <if test="createTimeStart != null and createTimeEnd != null">
             AND a.create_time BETWEEN #{createTimeStart} AND #{createTimeEnd}
+        </if>
+        <if test="enabled != null">
+            AND a.enabled = #{enabled}
         </if>
     </select>
 </mapper>
