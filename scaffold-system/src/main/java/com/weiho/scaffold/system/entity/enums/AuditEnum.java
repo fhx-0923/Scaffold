@@ -12,8 +12,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum AuditEnum {
-    AUDIT_OK(1, "审核通过"),
-    AUDIT_NO(0, "审核不通过");
+    AUDIT_OK(1, "已审核"),
+    AUDIT_NO(0, "未审核");
 
     @EnumValue
     private final Integer key;

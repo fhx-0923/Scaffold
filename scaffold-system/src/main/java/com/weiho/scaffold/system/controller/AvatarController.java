@@ -5,6 +5,7 @@ import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.system.entity.criteria.AvatarQueryCriteria;
+import com.weiho.scaffold.system.entity.vo.AvatarEnabledVO;
 import com.weiho.scaffold.system.service.AvatarService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -65,5 +66,12 @@ public class AvatarController {
         return Result.success(I18nMessagesUtils.get("delete.success.tip"));
     }
 
-    // TODO 明天完成修改头像信息
+    @PutMapping
+    @Logging(title = "审核用户头像")
+    @ApiOperation("审核用户头像")
+    @PreAuthorize("@el.check('Avatar:update')")
+    public Result updateEnabled(@RequestBody AvatarEnabledVO avatarEnabledVO) {
+        avatarService.updateEnabled(avatarEnabledVO);
+        return Result.success(I18nMessagesUtils.get("update.success.tip"));
+    }
 }

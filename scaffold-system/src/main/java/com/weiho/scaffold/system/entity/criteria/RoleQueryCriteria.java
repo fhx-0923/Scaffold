@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @ApiModel("角色查询实体")
 public class RoleQueryCriteria {
-    @Query(blurry = "name,permission")
+    @Query(blurry = "name,permission,nameZhCn,nameZhTw,nameZhHk,nameEnUs")
     @ApiModelProperty("模糊查询字段")
     private String blurry;
 

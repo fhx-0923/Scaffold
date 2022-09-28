@@ -6,6 +6,7 @@ import com.weiho.scaffold.common.util.page.PageUtils;
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.Avatar;
 import com.weiho.scaffold.system.entity.criteria.AvatarQueryCriteria;
+import com.weiho.scaffold.system.entity.vo.AvatarEnabledVO;
 import com.weiho.scaffold.system.entity.vo.AvatarVO;
 import com.weiho.scaffold.system.mapper.AvatarMapper;
 import com.weiho.scaffold.system.service.AvatarService;
@@ -71,9 +72,17 @@ public class AvatarServiceImpl extends CommonServiceImpl<AvatarMapper, Avatar> i
     public List<AvatarVO> getAll(AvatarQueryCriteria criteria) {
         List<AvatarVO> avatarVOS;
         if (criteria.getCreateTime() != null && criteria.getCreateTime().size() > 0) {
-            avatarVOS = this.getBaseMapper().selectAvatarList(criteria.getBlurry(), criteria.getCreateTime().get(0), criteria.getCreateTime().get(1));
+            if (criteria.getEnabled() != null) {
+                avatarVOS = this.getBaseMapper().selectAvatarList(criteria.getBlurry(), criteria.getCreateTime().get(0), criteria.getCreateTime().get(1), criteria.getEnabled().getKey());
+            } else {
+                avatarVOS = this.getBaseMapper().selectAvatarList(criteria.getBlurry(), criteria.getCreateTime().get(0), criteria.getCreateTime().get(1), null);
+            }
         } else {
-            avatarVOS = this.getBaseMapper().selectAvatarList(criteria.getBlurry(), null, null);
+            if (criteria.getEnabled() != null) {
+                avatarVOS = this.getBaseMapper().selectAvatarList(criteria.getBlurry(), null, null, criteria.getEnabled().getKey());
+            } else {
+                avatarVOS = this.getBaseMapper().selectAvatarList(criteria.getBlurry(), null, null, null);
+            }
         }
         return avatarVOS;
     }
@@ -82,5 +91,11 @@ public class AvatarServiceImpl extends CommonServiceImpl<AvatarMapper, Avatar> i
     @Transactional(rollbackFor = Exception.class)
     public void delete(Set<Long> ids) {
         this.removeByIds(ids);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateEnabled(AvatarEnabledVO avatarEnabledVO) {
+        this.getBaseMapper().updateEnabled(avatarEnabledVO.getId(), avatarEnabledVO.getEnabled().getKey());
     }
 }

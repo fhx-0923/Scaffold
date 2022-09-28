@@ -1,4 +1,4 @@
-package com.weiho.scaffold.system.entity.dto;
+package com.weiho.scaffold.system.entity.vo;
 
 import com.weiho.scaffold.mp.entity.CommonEntity;
 import com.weiho.scaffold.system.entity.Menu;
@@ -13,18 +13,30 @@ import java.util.Set;
 
 /**
  * @author Weiho
- * @since 2022/8/4
+ * @since 2022/9/28
  */
-@Getter
 @Setter
+@Getter
 @ToString
-@ApiModel(value = "RoleDTO对象")
-public class RoleDTO extends CommonEntity implements Serializable {
+@ApiModel("前端用户VO")
+public class RoleVO extends CommonEntity implements Serializable {
     @ApiModelProperty("主键ID")
     private Long id;
 
     @ApiModelProperty("角色名称")
     private String name;
+
+    @ApiModelProperty("角色中文名称")
+    private String nameZhCn;
+
+    @ApiModelProperty("角色中国香港名称")
+    private String nameZhHk;
+
+    @ApiModelProperty("角色中国台湾名称")
+    private String nameZhTw;
+
+    @ApiModelProperty("角色英文名称")
+    private String nameEnUs;
 
     @ApiModelProperty("角色级别")
     private Integer level;

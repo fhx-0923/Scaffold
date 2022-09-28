@@ -27,9 +27,19 @@ public interface AvatarMapper extends CommonMapper<Avatar> {
      * @param usernameLike    模糊查询
      * @param createTimeStart 创建时间区间
      * @param createTimeEnd   创建时间区间
+     * @param enabled         状态
      * @return List
      */
     List<AvatarVO> selectAvatarList(@Param("usernameLike") String usernameLike,
                                     @Param("createTimeStart") Timestamp createTimeStart,
-                                    @Param("createTimeEnd") Timestamp createTimeEnd);
+                                    @Param("createTimeEnd") Timestamp createTimeEnd,
+                                    @Param("enabled") Integer enabled);
+
+    /**
+     * 修改用户头像状态
+     *
+     * @param id      主键ID
+     * @param enabled 头像状态
+     */
+    void updateEnabled(@Param("id") Long id, @Param("enabled") Integer enabled);
 }

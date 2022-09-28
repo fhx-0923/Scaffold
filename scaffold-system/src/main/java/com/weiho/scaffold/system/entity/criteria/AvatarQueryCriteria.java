@@ -1,5 +1,6 @@
 package com.weiho.scaffold.system.entity.criteria;
 
+import com.weiho.scaffold.system.entity.enums.AuditEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,6 +19,9 @@ import java.util.List;
 public class AvatarQueryCriteria {
     @ApiModelProperty("用户名模糊查询")
     private String blurry;
+
+    @ApiModelProperty("头像状态")
+    private AuditEnum enabled;
 
     @ApiModelProperty("创建时间范围")
     private List<Timestamp> createTime;
