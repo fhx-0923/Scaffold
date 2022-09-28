@@ -2,7 +2,6 @@ package com.weiho.scaffold.system.entity.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,8 +12,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SexEnum {
-    WOMAN(0, I18nMessagesUtils.get("sexEnum.female")),
-    MAN(1, I18nMessagesUtils.get("sexEnum.male"));
+    WOMAN(0, "女"),
+    MAN(1, "男");
 
     @EnumValue
     private final Integer key;

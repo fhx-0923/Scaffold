@@ -4,11 +4,16 @@ import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.criteria.RoleQueryCriteria;
+import com.weiho.scaffold.system.entity.dto.RoleDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -38,13 +43,22 @@ public interface RoleService extends CommonService<Role> {
     List<Role> findListByUser(User user);
 
     /**
-     * 查询所有的角色列表
+     * 查询所有的角色列表(带国际化)
      *
      * @param criteria 查询条件
      * @param pageable 分页条件
      * @return /
      */
-    List<Role> findAll(RoleQueryCriteria criteria, Pageable pageable);
+    Map<String, Object> findAll(RoleQueryCriteria criteria, Pageable pageable, HttpServletRequest request);
+
+    /**
+     * 查询所有角色列表(不带国际化)
+     *
+     * @param criteria 查询条件
+     * @param pageable 分页条件
+     * @return /
+     */
+    Map<String, Object> findAll(RoleQueryCriteria criteria, Pageable pageable);
 
     /**
      * 根据用户ID查找该用户的最高角色等级
@@ -69,4 +83,57 @@ public interface RoleService extends CommonService<Role> {
      * @param roles 角色集合
      */
     void checkLevel(Set<Role> roles);
+
+    /**
+     * 检查当前传入的级别是否高于当前登录用户的级别
+     *
+     * @param level 当前操作的角色级别
+     */
+    void checkLevel(Integer level);
+
+    /**
+     * 获取角色的角色权限等级范围
+     *
+     * @return Map
+     */
+    Map<String, Integer> getLevelScope();
+
+    /**
+     * 导出角色列表
+     *
+     * @param all      数据列
+     * @param response 响应对象
+     */
+    void download(List<RoleDTO> all, HttpServletResponse response) throws IOException;
+
+    /**
+     * 获取所有数据不分页
+     *
+     * @param criteria 查询条件
+     * @return /
+     */
+    List<Role> findAll(RoleQueryCriteria criteria);
+
+    /**
+     * 获取所有数据不分页，并且根据国际化转换结果语言
+     *
+     * @param criteria 查询条件
+     * @param request  请求对象
+     * @return /
+     */
+    List<RoleDTO> findAllForLanguage(RoleQueryCriteria criteria, HttpServletRequest request);
+
+    /**
+     * 修改角色
+     *
+     * @param resource 修改后的实体
+     */
+    void update(Role resource);
+
+    /**
+     * 删除角色
+     *
+     * @param ids 角色主键集合
+     */
+    void delete(Set<Long> ids);
 }

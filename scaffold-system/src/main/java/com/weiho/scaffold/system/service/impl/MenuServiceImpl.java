@@ -133,7 +133,38 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
         return menuVOs;
     }
 
-    public String getMenuNameForLanguage(MenuDTO menuDTO, String language) {
+    @Override
+    @Cacheable(value = "Scaffold:System", key = "'MenuTree'")
+    public Object getMenuTree(List<Menu> menus, HttpServletRequest request) {
+        String language = request.getHeader("Accept-Language") == null ? "zh-CN" : request.getHeader("Accept-Language");
+        List<Map<String, Object>> list = new LinkedList<>();
+        menus.forEach(menu -> {
+            if (menu != null) {
+                // 获取子菜单
+                List<Menu> menuList = this.getBaseMapper().findByParentId(menu.getId());
+                Map<String, Object> map = new HashMap<>(16);
+                map.put("id", menu.getId());
+                map.put("label", getMenuNameForLanguage(menu, language));
+                if (menuList != null && menuList.size() != 0) {
+                    map.put("children", getMenuTree(menuList, request));
+                }
+                list.add(map);
+            }
+        });
+        return list;
+    }
+
+    @Override
+    public List<Menu> findByPid(long pid) {
+        return this.getBaseMapper().findByParentId(pid);
+    }
+
+    @Override
+    public Set<Menu> findSetByRoleId(Long roleId) {
+        return this.getBaseMapper().findSetByRoleId(roleId);
+    }
+
+    private String getMenuNameForLanguage(MenuDTO menuDTO, String language) {
         switch (language) {
             case "zh-CN":
                 return menuDTO.getNameZhCn();
@@ -146,5 +177,19 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
             default:
                 return menuDTO.getName();
         }
+    }
+
+    private String getMenuNameForLanguage(Menu menu, String language) {
+        switch (language) {
+            case "zh-CN":
+                return menu.getNameZhCn();
+            case "zh-HK":
+                return menu.getNameZhHk();
+            case "zh-TW":
+                return menu.getNameZhTw();
+            case "en-US":
+                return menu.getNameEnUs();
+        }
+        return menu.getName();
     }
 }

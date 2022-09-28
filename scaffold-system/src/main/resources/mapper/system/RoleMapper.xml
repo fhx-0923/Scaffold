@@ -9,6 +9,10 @@
         <result column="update_time" property="updateTime"/>
         <result column="is_del" property="isDel"/>
         <result column="name" property="name"/>
+        <result column="name_zh_cn" property="nameZhCn"/>
+        <result column="name_zh_hk" property="nameZhHk"/>
+        <result column="name_zh_tw" property="nameZhTw"/>
+        <result column="name_en_us" property="nameEnUs"/>
         <result column="level" property="level"/>
         <result column="permission" property="permission"/>
     </resultMap>
@@ -18,7 +22,7 @@
         r.create_time,
         r.update_time,
         r.is_del,
-        r.id, r.name, r.level, r.permission
+        r.id, r.name, r.level, r.permission,r.name_zh_cn,r.name_zh_hk,r.name_zh_tw,r.name_en_us
     </sql>
 
     <select id="findSetByUserId" resultType="com.weiho.scaffold.system.entity.Role">

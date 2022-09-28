@@ -2,7 +2,6 @@ package com.weiho.scaffold.system.entity.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,8 +12,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum AuditEnum {
-    AUDIT_OK(1, I18nMessagesUtils.get("auditEnum.ok")),
-    AUDIT_NO(0, I18nMessagesUtils.get("auditEnum.no"));
+    AUDIT_OK(1, "已审核"),
+    AUDIT_NO(0, "未审核");
 
     @EnumValue
     private final Integer key;

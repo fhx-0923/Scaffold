@@ -13,6 +13,7 @@ import com.weiho.scaffold.system.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,5 +54,12 @@ public class MenuController {
         } catch (Exception e) {
             throw new SecurityException(ResultCodeEnum.FAILED, I18nMessagesUtils.get("menu.error.tip"));
         }
+    }
+
+    @ApiOperation("获取菜单树")
+    @GetMapping("/tree")
+    @PreAuthorize("@el.check('Role:list','Menu:list')")
+    public Object getMenuTree(HttpServletRequest request) {
+        return menuService.getMenuTree(menuService.findByPid(0L), request);
     }
 }

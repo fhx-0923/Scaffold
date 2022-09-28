@@ -8,6 +8,7 @@ import com.weiho.scaffold.system.entity.vo.MenuVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -41,4 +42,29 @@ public interface MenuService extends CommonService<Menu> {
      * @return 前端所需的路由表json
      */
     List<MenuVO> buildMenuList(List<MenuDTO> menuDTOS, HttpServletRequest request);
+
+    /**
+     * 获取菜单树
+     *
+     * @param menus   菜单列表
+     * @param request 请求对象
+     * @return /
+     */
+    Object getMenuTree(List<Menu> menus, HttpServletRequest request);
+
+    /**
+     * 根据上级ID查找菜单列表
+     *
+     * @param pid 上级ID
+     * @return /
+     */
+    List<Menu> findByPid(long pid);
+
+    /**
+     * 根据角色ID查询能访问的所有菜单
+     *
+     * @param roleId 角色ID
+     * @return 菜单集合
+     */
+    Set<Menu> findSetByRoleId(Long roleId);
 }
