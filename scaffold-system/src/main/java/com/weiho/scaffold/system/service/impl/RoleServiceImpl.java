@@ -15,6 +15,7 @@ import com.weiho.scaffold.mp.enums.SortTypeEnum;
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.system.entity.Role;
+import com.weiho.scaffold.system.entity.RolesMenus;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.convert.RoleDTOConvert;
 import com.weiho.scaffold.system.entity.convert.RoleVOConvert;
@@ -24,6 +25,7 @@ import com.weiho.scaffold.system.entity.vo.RoleVO;
 import com.weiho.scaffold.system.mapper.RoleMapper;
 import com.weiho.scaffold.system.service.MenuService;
 import com.weiho.scaffold.system.service.RoleService;
+import com.weiho.scaffold.system.service.RolesMenusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
@@ -54,6 +56,7 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
     private final MenuService menuService;
     private final RoleDTOConvert roleDTOConvert;
     private final RoleVOConvert roleVOConvert;
+    private final RolesMenusService rolesMenusService;
 
     @Override
     @Cacheable(value = "Scaffold:Commons:Permission", key = "'loadPermissionByUsername:' + #p1", unless = "#result.size() <= 1")
@@ -109,7 +112,8 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
         List<Role> roles = this.findAll(criteria);
         List<RoleVO> roleVOS = roleVOConvert.toPojo(roles);
         for (RoleVO roleVO : roleVOS) {
-            roleVO.setMenus(menuService.findSetByRoleId(roleVO.getId()));
+            // 过滤父节点菜单，避免前端的菜单树多选出现Bug
+            roleVO.setMenus(menuService.findSetByRoleId(roleVO.getId()).stream().filter(m -> m.getParentId() != 0L).collect(Collectors.toSet()));
         }
         PageInfo<RoleVO> pageInfo = new PageInfo<>(roleVOS);
         return PageUtils.toPageContainer(pageInfo.getList(), pageInfo.getTotal());
@@ -234,6 +238,36 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
     @Transactional(rollbackFor = Exception.class)
     public void delete(Set<Long> ids) {
         this.removeByIds(ids);
+    }
+
+    @Override
+    public RoleVO findById(Long id) {
+        Role role = this.getById(id);
+        RoleVO roleVO = roleVOConvert.toPojo(role);
+        roleVO.setMenus(menuService.findSetByRoleId(roleVO.getId()));
+        return roleVO;
+    }
+
+    @Override
+    public void updateMenu(RoleVO resource) {
+        if (resource.getMenus().size() > 0) {
+            List<RolesMenus> rolesMenusList = resource.getMenus().stream().map(i -> {
+                RolesMenus rolesMenus = new RolesMenus();
+                rolesMenus.setRoleId(resource.getId());
+                rolesMenus.setMenuId(i.getId());
+                return rolesMenus;
+            }).collect(Collectors.toList());
+            rolesMenusService.remove(new LambdaQueryWrapper<RolesMenus>().eq(RolesMenus::getRoleId, resource.getId()));
+            rolesMenusService.saveBatch(rolesMenusList);
+        }
+    }
+
+    @Override
+    public boolean create(Role resource) {
+        if (this.getOne(new LambdaQueryWrapper<Role>().eq(Role::getName, resource.getName())) != null) {
+            throw new BadRequestException(I18nMessagesUtils.get("role.exist.error"));
+        }
+        return this.save(resource);
     }
 
     public String getRoleNameForLanguage(Role role, String language) {
