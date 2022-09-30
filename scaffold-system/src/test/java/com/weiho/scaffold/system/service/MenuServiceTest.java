@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.stream.Collectors;
+
 /**
  * @author Weiho
  * @since 2022/8/9
@@ -24,11 +26,6 @@ class MenuServiceTest {
 
     @Test
     void findListByRoles() {
-//        Role role = new Role();
-//        role.setId(1L);
-//        List<Role> longs = new ArrayList<Role>() {{
-//            add(role);
-//        }};
-//        System.err.println(JSON.toJSONString(menuService.buildMenuList(menuService.buildTree(menuService.findListByRoles(longs, "root")))));
+        System.err.println(menuService.findSetByRoleId(6L).stream().filter(i -> i.getParentId() != 0L).collect(Collectors.toList()));
     }
 }

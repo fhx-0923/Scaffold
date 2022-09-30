@@ -1,5 +1,6 @@
 package com.weiho.scaffold.system.controller;
 
+import com.weiho.scaffold.common.exception.BadRequestException;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.logging.annotation.Logging;
@@ -7,6 +8,7 @@ import com.weiho.scaffold.redis.limiter.annotation.RateLimiter;
 import com.weiho.scaffold.redis.limiter.enums.LimitType;
 import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.criteria.RoleQueryCriteria;
+import com.weiho.scaffold.system.entity.vo.RoleVO;
 import com.weiho.scaffold.system.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -91,6 +93,36 @@ public class RoleController {
         roleService.delete(ids);
         return Result.success(I18nMessagesUtils.get("delete.success.tip"));
     }
-    
-    // TODO 明天完成菜单修改
+
+    @ApiOperation("获取单个Role")
+    @GetMapping("/{id}")
+    @PreAuthorize("@el.check('Role:list')")
+    public RoleVO getRoleById(@PathVariable Long id) {
+        return roleService.findById(id);
+    }
+
+    @Logging(title = "修改角色菜单")
+    @ApiOperation("修改角色菜单")
+    @PutMapping("/menus")
+    @PreAuthorize("@el.check('Role:update')")
+    public Result updateMenus(@RequestBody RoleVO resource) {
+        System.err.println(resource.getMenus().toString());
+        RoleVO roleVO = roleService.findById(resource.getId());
+        roleService.checkLevel(roleVO.getLevel());
+        roleService.updateMenu(resource);
+        return Result.success(I18nMessagesUtils.get("update.success.tip"));
+    }
+
+    @Logging(title = "新增角色")
+    @ApiOperation("新增角色")
+    @PostMapping
+    @PreAuthorize("@el.check('Role:add')")
+    public Result add(@Validated @RequestBody Role resource) {
+        if (resource.getId() != null) {
+            throw new BadRequestException(I18nMessagesUtils.get("role.add.error"));
+        }
+        roleService.checkLevel(resource.getLevel());
+        roleService.create(resource);
+        return Result.success(I18nMessagesUtils.get("add.success.tip"));
+    }
 }

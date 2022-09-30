@@ -5,6 +5,7 @@ import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.criteria.RoleQueryCriteria;
 import com.weiho.scaffold.system.entity.dto.RoleDTO;
+import com.weiho.scaffold.system.entity.vo.RoleVO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -136,4 +137,27 @@ public interface RoleService extends CommonService<Role> {
      * @param ids 角色主键集合
      */
     void delete(Set<Long> ids);
+
+    /**
+     * 根据角色ID查询角色信息
+     *
+     * @param id ID
+     * @return /
+     */
+    RoleVO findById(Long id);
+
+    /**
+     * 修改角色菜单对应关系
+     *
+     * @param resource 新的关系
+     */
+    void updateMenu(RoleVO resource);
+
+    /**
+     * 新增角色
+     *
+     * @param resource 角色信息
+     * @return /
+     */
+    boolean create(Role resource);
 }
