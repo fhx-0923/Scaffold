@@ -27,13 +27,13 @@ public class ScaffoldSystemProperties {
     private RSAProperties rsaProperties;
     private RabbitMqProperties rabbitMqProperties;
     private EmailProperties emailProperties;
-    private FileProperties fileProperties;
+    private ResourcesProperties resourcesProperties;
 
     public ScaffoldSystemProperties(SwaggerProperties swaggerProperties, RateLimiterProperties rateLimiterProperties,
                                     JwtProperties jwtProperties, CodeProperties codeProperties,
                                     MonitorProperties monitorProperties, TaskThreadPoolProperties taskThreadPoolProperties,
                                     RSAProperties rsaProperties, RabbitMqProperties rabbitMqProperties,
-                                    EmailProperties emailProperties, FileProperties fileProperties) {
+                                    EmailProperties emailProperties, ResourcesProperties resourcesProperties) {
         this.swaggerProperties = swaggerProperties;
         this.rateLimiterProperties = rateLimiterProperties;
         this.jwtProperties = jwtProperties;
@@ -43,7 +43,7 @@ public class ScaffoldSystemProperties {
         this.rsaProperties = rsaProperties;
         this.rabbitMqProperties = rabbitMqProperties;
         this.emailProperties = emailProperties;
-        this.fileProperties = fileProperties;
+        this.resourcesProperties = resourcesProperties;
     }
 
     @Getter
@@ -190,11 +190,13 @@ public class ScaffoldSystemProperties {
     @Getter
     @Setter
     @Configuration
-    @ConfigurationProperties(prefix = "scaffold.file")
-    public static class FileProperties {
-        // 本地地址前缀
+    @ConfigurationProperties(prefix = "scaffold.resources")
+    public static class ResourcesProperties {
+        // 本地资源路径
         private String localAddressPrefix;
-        // 服务器地址前缀
-        private String serverAddressPrefix;
+        // 头像本地地址前缀
+        private String avatarLocalAddressPrefix;
+        // 头像服务器地址前缀
+        private String avatarServerAddressPrefix;
     }
 }
