@@ -200,8 +200,10 @@ scaffold:
     code-length: 6
     # 邮箱验证码的过期时间(min)
     expiration: 5
-  file:
-    # 本地地址
-    local-address-prefix: E:\Graduation_ChouChou\Scaffold-Weiho\Scaffold\avatar\
-    # 服务器地址
-    server-address-prefix: http://192.168.137.23:8888/local/avatar/
+  resources:
+    # 本地资源路径
+    local-address-prefix: E:\Graduation_ChouChou\Scaffold-Weiho\resources\
+    # 头像本地地址前缀
+    avatar-local-address-prefix: ${scaffold.resources.local-address-prefix}avatar\
+    # 头像服务器地址前缀
+    avatar-server-address-prefix: http://192.168.137.23:${server.port}/local/avatar/

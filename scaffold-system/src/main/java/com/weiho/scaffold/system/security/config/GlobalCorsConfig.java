@@ -1,5 +1,7 @@
 package com.weiho.scaffold.system.security.config;
 
+import com.weiho.scaffold.common.config.system.ScaffoldSystemProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -17,7 +19,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @EnableWebMvc
+@RequiredArgsConstructor
 public class GlobalCorsConfig implements WebMvcConfigurer {
+    private final ScaffoldSystemProperties properties;
+
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -44,7 +49,7 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/local/**").addResourceLocations("file:" + System.getProperty("user.dir") + "/").setCachePeriod(0);
+        registry.addResourceHandler("/local/**").addResourceLocations("file:" + properties.getResourcesProperties().getLocalAddressPrefix()).setCachePeriod(0);
         registry.addResourceHandler("/favicon.ico").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");

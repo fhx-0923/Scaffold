@@ -127,7 +127,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
         } else {
             // 若该用户存在头像 修改
             String oldFileName = avatar.getRealName();
-            String oldFileNamePath = properties.getFileProperties().getLocalAddressPrefix() + oldFileName;
+            String oldFileNamePath = properties.getResourcesProperties().getAvatarLocalAddressPrefix() + oldFileName;
             getAvatar(multipartFile, avatar);
             // 更新缓存
             avatarService.updateAvatar(avatar, user.getUsername());
@@ -144,9 +144,9 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
      * @param avatar        参数2
      */
     private void getAvatar(MultipartFile multipartFile, Avatar avatar) {
-        File file = FileUtils.upload(multipartFile, properties.getFileProperties().getLocalAddressPrefix());
+        File file = FileUtils.upload(multipartFile, properties.getResourcesProperties().getAvatarLocalAddressPrefix());
         avatar.setRealName(file.getName());
-        avatar.setPath(properties.getFileProperties().getServerAddressPrefix() + file.getName());
+        avatar.setPath(properties.getResourcesProperties().getAvatarLocalAddressPrefix() + file.getName());
         avatar.setSize(FileUtils.getSize(multipartFile.getSize()));
         if (SecurityUtils.getUsername().equals("root")) {
             avatar.setEnabled(AuditEnum.AUDIT_OK);
