@@ -263,11 +263,11 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
     }
 
     @Override
-    public boolean create(Role resource) {
+    public void create(Role resource) {
         if (this.getOne(new LambdaQueryWrapper<Role>().eq(Role::getName, resource.getName())) != null) {
             throw new BadRequestException(I18nMessagesUtils.get("role.exist.error"));
         }
-        return this.save(resource);
+        this.save(resource);
     }
 
     public String getRoleNameForLanguage(Role role, String language) {

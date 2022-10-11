@@ -251,10 +251,10 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
             map.put("用户名", userVO.getUsername());
             map.put("头像路径", userVO.getAvatar().getPath());
             map.put("头像大小", userVO.getAvatar().getSize());
-            map.put("性别", userVO.getSex());
+            map.put("性别", userVO.getSex().getDisplay());
             map.put("邮箱", userVO.getEmail());
             map.put("手机号", userVO.getPhone());
-            map.put("状态", userVO.isEnabled());
+            map.put("状态", userVO.isEnabled() ? "启用" : "禁用");
             map.put("最后修改密码时间", userVO.getLastPassResetTime());
             map.put("注册时间", userVO.getCreateTime());
             list.add(map);

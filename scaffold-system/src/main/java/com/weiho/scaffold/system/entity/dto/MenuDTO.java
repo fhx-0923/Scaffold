@@ -2,6 +2,7 @@ package com.weiho.scaffold.system.entity.dto;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.weiho.scaffold.system.entity.enums.MenuTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -54,7 +55,7 @@ public class MenuDTO implements Serializable {
     private String permission;
 
     @ApiModelProperty("是否保持激活")
-    private Long keepAlive;
+    private Boolean keepAlive;
 
     @ApiModelProperty("是否隐藏")
     private Boolean hidden;
@@ -63,10 +64,10 @@ public class MenuDTO implements Serializable {
     private Long parentId;
 
     @ApiModelProperty("是否启用")
-    private boolean enabled;
+    private Boolean enabled;
 
     @ApiModelProperty("类型 1-菜单项 2-权限菜单")
-    private int type;
+    private MenuTypeEnum type;
 
     @ApiModelProperty("排序")
     private Long sort;

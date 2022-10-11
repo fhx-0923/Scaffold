@@ -122,7 +122,9 @@ public class SecurityConfig {
                         // 系统Logo
                         "/local/logo/logo.png",
                         // ICON列表的资源
-                        "/local/iconList/**"
+                        "/local/iconList/**",
+                        // SVG图标
+                        "/local/svg/**"
                 ).permitAll()
                 //放行Swagger文档
                 .antMatchers("/swagger-ui.html").permitAll()
