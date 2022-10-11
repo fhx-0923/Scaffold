@@ -201,7 +201,7 @@ scaffold:
     # 邮箱验证码的过期时间(min)
     expiration: 5
   resources:
-    # 本地资源路径
+    # 本地资源路径(代理路径)
     local-address-prefix: E:\Graduation_ChouChou\Scaffold-Weiho\resources\
     # 头像本地地址前缀
     avatar-local-address-prefix: ${scaffold.resources.local-address-prefix}avatar\

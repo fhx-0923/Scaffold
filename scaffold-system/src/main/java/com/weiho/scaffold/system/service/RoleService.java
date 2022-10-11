@@ -157,7 +157,6 @@ public interface RoleService extends CommonService<Role> {
      * 新增角色
      *
      * @param resource 角色信息
-     * @return /
      */
-    boolean create(Role resource);
+    void create(Role resource);
 }

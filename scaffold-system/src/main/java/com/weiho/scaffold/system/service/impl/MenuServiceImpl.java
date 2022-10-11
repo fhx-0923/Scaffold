@@ -2,10 +2,17 @@ package com.weiho.scaffold.system.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.weiho.scaffold.common.exception.BadRequestException;
+import com.weiho.scaffold.common.util.file.FileUtils;
+import com.weiho.scaffold.common.util.page.PageUtils;
+import com.weiho.scaffold.common.util.string.StringUtils;
+import com.weiho.scaffold.mp.core.QueryHelper;
 import com.weiho.scaffold.mp.service.impl.CommonServiceImpl;
 import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.system.entity.Role;
 import com.weiho.scaffold.system.entity.convert.MenuDTOConvert;
+import com.weiho.scaffold.system.entity.criteria.MenuQueryCriteria;
 import com.weiho.scaffold.system.entity.dto.MenuDTO;
 import com.weiho.scaffold.system.entity.vo.MenuMetaVO;
 import com.weiho.scaffold.system.entity.vo.MenuVO;
@@ -13,11 +20,14 @@ import com.weiho.scaffold.system.mapper.MenuMapper;
 import com.weiho.scaffold.system.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.util.CastUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,13 +49,13 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
     @Cacheable(value = "Scaffold:Commons:Menus", key = "'loadMenusByUsername:' + #p1")
     public List<MenuDTO> findListByRoles(List<Role> roles, String username) {
         List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
-        List<Menu> menus = this.getBaseMapper().findListByRoles(roleIds);
+        List<Menu> menus = this.getBaseMapper().findListByRoles(roleIds).stream().filter(Menu::isEnabled).collect(Collectors.toList());
         return menuDTOConvert.toPojo(menus);
     }
 
     @Override
     public List<MenuDTO> buildTree(List<MenuDTO> menuDTOS) {
-        //构建空地返回结果
+        //构建空的返回结果
         List<MenuDTO> trees = new ArrayList<>();
         //构造作为子菜单的主键集合,用于防止菜单树为空
         Set<Long> ids = new HashSet<>();
@@ -162,6 +172,103 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
     @Override
     public Set<Menu> findSetByRoleId(Long roleId) {
         return this.getBaseMapper().findSetByRoleId(roleId);
+    }
+
+    @Override
+    public Map<String, Object> buildTreeForList(List<MenuDTO> menuDTOS) {
+        return PageUtils.toPageContainer(this.buildTree(menuDTOS), menuDTOS.size());
+    }
+
+    @Override
+    public List<Menu> getAll(MenuQueryCriteria criteria) {
+        return this.getBaseMapper().selectList(CastUtils.cast(QueryHelper.getQueryWrapper(Menu.class, criteria)));
+    }
+
+    @Override
+    public void download(List<MenuDTO> all, HttpServletResponse response) throws IOException {
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (MenuDTO menuDTO : all) {
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("组件路径", menuDTO.getComponent());
+            map.put("组件名称", menuDTO.getComponentName());
+            map.put("前端使用的path", menuDTO.getPath());
+            map.put("菜单名称", menuDTO.getName());
+            map.put("图标名", menuDTO.getIconCls());
+            map.put("后端使用的url", menuDTO.getUrl());
+            map.put("权限", menuDTO.getPermission());
+            map.put("是否保持激活", menuDTO.getKeepAlive() ? "是" : "否");
+            map.put("是否隐藏", menuDTO.getHidden() ? "是" : "否");
+            map.put("是否启用", menuDTO.getEnabled() ? "启用" : "禁用");
+            map.put("菜单类型", menuDTO.getType().getDisplay());
+            map.put("排序", menuDTO.getSort());
+            map.put("创建时间", menuDTO.getCreateTime());
+            list.add(map);
+        }
+        FileUtils.downloadExcel(list, response);
+    }
+
+    @Override
+    public void create(Menu resources) {
+        if (this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getName, resources.getName())) != null) {
+            throw new BadRequestException("该菜单名已存在！");
+        }
+        if (resources.getType().getKey() == 0) {
+            if (StringUtils.isNotBlank(resources.getPath())) {
+                if (this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getPath, resources.getPath())) != null) {
+                    throw new BadRequestException("该菜单的前端路径已经存在！");
+                }
+            } else {
+                throw new BadRequestException("该菜单类型下的前端路径Path不能为空！");
+            }
+
+            if (StringUtils.isBlank(resources.getUrl())) {
+                throw new BadRequestException("该菜单类型下的后端路径URL不能为空！");
+            }
+
+            resources.setComponent(null);
+            resources.setComponentName(null);
+            resources.setPermission(null);
+        } else if (resources.getType().getKey() == 1) {
+            if (StringUtils.isNotBlank(resources.getComponentName())) {
+                if (this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getComponentName, resources.getComponentName())) != null) {
+                    throw new BadRequestException("该菜单的组件名称已经存在！");
+                }
+            } else {
+                throw new BadRequestException("该菜单类型下的组件名称不能为空！");
+            }
+
+            if (StringUtils.isBlank(resources.getComponent())) {
+                throw new BadRequestException("该菜单类型下的组件路径不能为空！");
+            }
+
+            if (StringUtils.isBlank(resources.getPermission())) {
+                throw new BadRequestException("该菜单类型下的权限标识不能为空！");
+            }
+
+            if (StringUtils.isNotBlank(resources.getPath())) {
+                if (this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getPath, resources.getPath())) != null) {
+                    throw new BadRequestException("该菜单的前端路径已经存在！");
+                }
+            } else {
+                throw new BadRequestException("该菜单类型下的前端路径不能为空！");
+            }
+
+            if (StringUtils.isBlank(resources.getUrl())) {
+                throw new BadRequestException("该菜单类型下的后端路径URL不能为空！");
+            }
+        } else {
+            if (StringUtils.isBlank(resources.getPermission())) {
+                throw new BadRequestException("该菜单类型下的权限标识不能为空！");
+            }
+
+            resources.setComponent(null);
+            resources.setComponentName(null);
+            resources.setPath(null);
+            resources.setIconCls(null);
+            resources.setUrl(null);
+        }
+
+        this.save(resources);
     }
 
     private String getMenuNameForLanguage(MenuDTO menuDTO, String language) {

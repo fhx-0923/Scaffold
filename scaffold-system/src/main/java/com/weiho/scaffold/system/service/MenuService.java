@@ -3,11 +3,15 @@ package com.weiho.scaffold.system.service;
 import com.weiho.scaffold.mp.service.CommonService;
 import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.system.entity.Role;
+import com.weiho.scaffold.system.entity.criteria.MenuQueryCriteria;
 import com.weiho.scaffold.system.entity.dto.MenuDTO;
 import com.weiho.scaffold.system.entity.vo.MenuVO;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -67,4 +71,35 @@ public interface MenuService extends CommonService<Menu> {
      * @return 菜单集合
      */
     Set<Menu> findSetByRoleId(Long roleId);
+
+    /**
+     * 构建菜单树并结合分页组件构造前端列表
+     *
+     * @param menuDTOS 菜单信息列表
+     * @return /
+     */
+    Map<String, Object> buildTreeForList(List<MenuDTO> menuDTOS);
+
+    /**
+     * 获取所有菜单（不分页）
+     *
+     * @param criteria 查询条件
+     * @return /
+     */
+    List<Menu> getAll(MenuQueryCriteria criteria);
+
+    /**
+     * 导出数据
+     *
+     * @param all      数据
+     * @param response 响应实体
+     */
+    void download(List<MenuDTO> all, HttpServletResponse response) throws IOException;
+
+    /**
+     * 新增菜单
+     *
+     * @param resources 菜单信息
+     */
+    void create(Menu resources);
 }

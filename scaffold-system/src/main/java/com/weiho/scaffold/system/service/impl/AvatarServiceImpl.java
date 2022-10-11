@@ -62,7 +62,7 @@ public class AvatarServiceImpl extends CommonServiceImpl<AvatarMapper, Avatar> i
             map.put("文件名", avatarVO.getRealName());
             map.put("头像路径", avatarVO.getPath());
             map.put("头像大小", avatarVO.getSize());
-            map.put("审核情况", avatarVO.getEnabled());
+            map.put("审核情况", avatarVO.getEnabled().getDisplay());
             list.add(map);
         }
         FileUtils.downloadExcel(list, response);

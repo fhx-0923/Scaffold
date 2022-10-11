@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.weiho.scaffold.mp.entity.CommonEntity;
+import com.weiho.scaffold.system.entity.enums.MenuTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * <p>
@@ -44,6 +47,7 @@ public class Menu extends CommonEntity {
 
     @ApiModelProperty("菜单名称")
     @TableField("name")
+    @NotBlank(message = "菜单名称不能为空")
     private String name;
 
     @ApiModelProperty("菜单中文名字")
@@ -76,7 +80,7 @@ public class Menu extends CommonEntity {
 
     @ApiModelProperty("是否保持激活")
     @TableField("keep_alive")
-    private Long keepAlive;
+    private boolean keepAlive;
 
     @ApiModelProperty("是否隐藏")
     @TableField("hidden")
@@ -92,7 +96,7 @@ public class Menu extends CommonEntity {
 
     @ApiModelProperty("类型 1-菜单项 2-权限菜单")
     @TableField("type")
-    private int type;
+    private MenuTypeEnum type;
 
     @ApiModelProperty("排序")
     @TableField("sort")
