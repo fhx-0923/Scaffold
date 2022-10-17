@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.weiho.scaffold.common.exception.BadRequestException;
 import com.weiho.scaffold.common.util.file.FileUtils;
+import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.page.PageUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.mp.core.QueryHelper;
@@ -165,7 +166,7 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
     }
 
     @Override
-    public List<Menu> findByPid(long pid) {
+    public List<Menu> findByParentId(long pid) {
         return this.getBaseMapper().findByParentId(pid);
     }
 
@@ -210,65 +211,165 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
     @Override
     public void create(Menu resources) {
         if (this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getName, resources.getName())) != null) {
-            throw new BadRequestException("该菜单名已存在！");
+            throw new BadRequestException(I18nMessagesUtils.get("menu.name.tip"));
         }
+        verifyResources(resources);
+        this.save(resources);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean update(Menu resources) {
+        // 验证上级不能为自己
+        if (resources.getId().equals(resources.getParentId())) {
+            throw new BadRequestException(I18nMessagesUtils.get("menu.parentId.error"));
+        }
+
+        Menu menuForId = this.getById(resources.getId());
+        Menu menuForName = this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getName, resources.getName()));
+
+        // 验证菜单名是否已存在
+        if (menuForName != null && !menuForName.getId().equals(menuForId.getId())) {
+            throw new BadRequestException(I18nMessagesUtils.get("menu.name.tip"));
+        }
+
+        // 根据菜单类型进行验证
         if (resources.getType().getKey() == 0) {
-            if (StringUtils.isNotBlank(resources.getPath())) {
-                if (this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getPath, resources.getPath())) != null) {
-                    throw new BadRequestException("该菜单的前端路径已经存在！");
-                }
-            } else {
-                throw new BadRequestException("该菜单类型下的前端路径Path不能为空！");
-            }
+            verifyPathAndUrlForUpdate(resources, menuForId);
 
-            if (StringUtils.isBlank(resources.getUrl())) {
-                throw new BadRequestException("该菜单类型下的后端路径URL不能为空！");
-            }
+            menuForId.setId(resources.getId());
+            menuForId.setParentId(resources.getParentId());
+            menuForId.setComponent(null);
+            menuForId.setComponentName(null);
+            setMenu(resources, menuForId);
+            menuForId.setPermission(null);
+            menuForId.setKeepAlive(resources.isKeepAlive());
+            menuForId.setSort(resources.getSort());
+            menuForId.setHidden(resources.isHidden());
+            menuForId.setEnabled(resources.isEnabled());
+            menuForId.setType(resources.getType());
 
-            resources.setComponent(null);
-            resources.setComponentName(null);
-            resources.setPermission(null);
         } else if (resources.getType().getKey() == 1) {
+            // ComponentName只能唯一并且一定存在
             if (StringUtils.isNotBlank(resources.getComponentName())) {
-                if (this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getComponentName, resources.getComponentName())) != null) {
-                    throw new BadRequestException("该菜单的组件名称已经存在！");
+                Menu menuForComponentName = this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getComponentName, resources.getComponentName()));
+                if (menuForComponentName != null && !menuForComponentName.getId().equals(menuForId.getId())) {
+                    throw new BadRequestException(I18nMessagesUtils.get("menu.componentName.tip"));
                 }
             } else {
-                throw new BadRequestException("该菜单类型下的组件名称不能为空！");
+                throw new BadRequestException(I18nMessagesUtils.get("menu.componentName.null.tip"));
             }
 
-            if (StringUtils.isBlank(resources.getComponent())) {
-                throw new BadRequestException("该菜单类型下的组件路径不能为空！");
-            }
-
-            if (StringUtils.isBlank(resources.getPermission())) {
-                throw new BadRequestException("该菜单类型下的权限标识不能为空！");
-            }
-
-            if (StringUtils.isNotBlank(resources.getPath())) {
-                if (this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getPath, resources.getPath())) != null) {
-                    throw new BadRequestException("该菜单的前端路径已经存在！");
+            // Component只能唯一并且一定存在
+            if (StringUtils.isNotBlank(resources.getComponent())) {
+                Menu menuForComponent = this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getComponent, resources.getComponent()));
+                if (menuForComponent != null && !menuForComponent.getId().equals(menuForId.getId())) {
+                    throw new BadRequestException(I18nMessagesUtils.get("menu.component.tip"));
                 }
             } else {
-                throw new BadRequestException("该菜单类型下的前端路径不能为空！");
+                throw new BadRequestException(I18nMessagesUtils.get("menu.component.null.tip"));
             }
 
-            if (StringUtils.isBlank(resources.getUrl())) {
-                throw new BadRequestException("该菜单类型下的后端路径URL不能为空！");
+            // Permission只能唯一并且一定存在
+            verifyPermissionForUpdate(resources, menuForId);
+
+            verifyPathAndUrlForUpdate(resources, menuForId);
+
+            menuForId.setId(resources.getId());
+            menuForId.setParentId(resources.getParentId());
+            menuForId.setComponent(resources.getComponent());
+            menuForId.setComponentName(resources.getComponentName());
+            setMenu(resources, menuForId);
+            menuForId.setPermission(resources.getPermission());
+            menuForId.setKeepAlive(resources.isKeepAlive());
+            menuForId.setSort(resources.getSort());
+            menuForId.setHidden(resources.isHidden());
+            menuForId.setEnabled(resources.isEnabled());
+            menuForId.setType(resources.getType());
+        } else {
+            // Permission只能唯一并且一定存在
+            verifyPermissionForUpdate(resources, menuForId);
+
+            menuForId.setId(resources.getId());
+            menuForId.setParentId(resources.getParentId());
+            menuForId.setComponent(null);
+            menuForId.setComponentName(null);
+            menuForId.setPath(null);
+            menuForId.setName(resources.getName());
+            menuForId.setNameZhCn(resources.getNameZhCn());
+            menuForId.setNameZhHk(resources.getNameZhHk());
+            menuForId.setNameZhTw(resources.getNameZhTw());
+            menuForId.setNameEnUs(resources.getNameEnUs());
+            menuForId.setIconCls(null);
+            menuForId.setUrl(null);
+            menuForId.setPermission(resources.getPermission());
+            menuForId.setKeepAlive(resources.isKeepAlive());
+            menuForId.setSort(resources.getSort());
+            menuForId.setHidden(resources.isHidden());
+            menuForId.setEnabled(resources.isEnabled());
+            menuForId.setType(resources.getType());
+
+        }
+
+        return this.saveOrUpdate(menuForId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean delete(Set<Long> ids) {
+        return this.removeByIds(ids);
+    }
+
+    @Override
+    public Set<Menu> getLowerMenus(List<Menu> childrenList, Set<Menu> resultList) {
+        // 通过遍历和递归查找下一级是否还有菜单
+        for (Menu menu : childrenList) {
+            resultList.add(menu);
+            // 查找子菜单列表
+            List<Menu> menus = this.getBaseMapper().findByParentId(menu.getId());
+            if (menus != null && menus.size() != 0) {
+                // 再次递归
+                getLowerMenus(menus, resultList);
+            }
+        }
+        return resultList;
+    }
+
+    private void verifyPermissionForUpdate(Menu resources, Menu menuForId) {
+        if (StringUtils.isNotBlank(resources.getPermission())) {
+            Menu menuForPermission = this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getPermission, resources.getPermission()));
+            if (menuForPermission != null && !menuForPermission.getId().equals(menuForId.getId())) {
+                throw new BadRequestException(I18nMessagesUtils.get("menu.permission.tip"));
             }
         } else {
-            if (StringUtils.isBlank(resources.getPermission())) {
-                throw new BadRequestException("该菜单类型下的权限标识不能为空！");
-            }
+            throw new BadRequestException(I18nMessagesUtils.get("menu.permission.null"));
+        }
+    }
 
-            resources.setComponent(null);
-            resources.setComponentName(null);
-            resources.setPath(null);
-            resources.setIconCls(null);
-            resources.setUrl(null);
+    private void setMenu(Menu resources, Menu menuForId) {
+        menuForId.setPath(resources.getPath());
+        menuForId.setName(resources.getName());
+        menuForId.setNameZhCn(resources.getNameZhCn());
+        menuForId.setNameZhHk(resources.getNameZhHk());
+        menuForId.setNameZhTw(resources.getNameZhTw());
+        menuForId.setNameEnUs(resources.getNameEnUs());
+        menuForId.setIconCls(resources.getIconCls());
+        menuForId.setUrl(resources.getUrl());
+    }
+
+    private void verifyPathAndUrlForUpdate(Menu resources, Menu menuForId) {
+        if (StringUtils.isNotBlank(resources.getPath())) {
+            Menu menuForPath = this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getPath, resources.getPath()));
+            if (menuForPath != null && !menuForPath.getId().equals(menuForId.getId())) {
+                throw new BadRequestException(I18nMessagesUtils.get("menu.path.tip"));
+            }
+        } else {
+            throw new BadRequestException(I18nMessagesUtils.get("menu.path.null.tip"));
         }
 
-        this.save(resources);
+        if (StringUtils.isBlank(resources.getUrl())) {
+            throw new BadRequestException(I18nMessagesUtils.get("menu.url.null.tip"));
+        }
     }
 
     private String getMenuNameForLanguage(MenuDTO menuDTO, String language) {
@@ -298,5 +399,57 @@ public class MenuServiceImpl extends CommonServiceImpl<MenuMapper, Menu> impleme
                 return menu.getNameEnUs();
         }
         return menu.getName();
+    }
+
+    private void verifyResources(Menu resources) {
+        if (resources.getType().getKey() == 0) {
+            verifyPathAndUrlForAdd(resources);
+
+            resources.setComponent(null);
+            resources.setComponentName(null);
+            resources.setPermission(null);
+        } else if (resources.getType().getKey() == 1) {
+            if (StringUtils.isNotBlank(resources.getComponentName())) {
+                if (this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getComponentName, resources.getComponentName())) != null) {
+                    throw new BadRequestException(I18nMessagesUtils.get("menu.componentName.tip"));
+                }
+            } else {
+                throw new BadRequestException(I18nMessagesUtils.get("menu.componentName.null.tip"));
+            }
+
+            if (StringUtils.isBlank(resources.getComponent())) {
+                throw new BadRequestException(I18nMessagesUtils.get("menu.component.null.tip"));
+            }
+
+            if (StringUtils.isBlank(resources.getPermission())) {
+                throw new BadRequestException(I18nMessagesUtils.get("menu.permission.null"));
+            }
+
+            verifyPathAndUrlForAdd(resources);
+        } else {
+            if (StringUtils.isBlank(resources.getPermission())) {
+                throw new BadRequestException(I18nMessagesUtils.get("menu.permission.null"));
+            }
+
+            resources.setComponent(null);
+            resources.setComponentName(null);
+            resources.setPath(null);
+            resources.setIconCls(null);
+            resources.setUrl(null);
+        }
+    }
+
+    private void verifyPathAndUrlForAdd(Menu resources) {
+        if (StringUtils.isNotBlank(resources.getPath())) {
+            if (this.getOne(new LambdaQueryWrapper<Menu>().eq(Menu::getPath, resources.getPath())) != null) {
+                throw new BadRequestException(I18nMessagesUtils.get("menu.path.tip"));
+            }
+        } else {
+            throw new BadRequestException(I18nMessagesUtils.get("menu.path.null.tip"));
+        }
+
+        if (StringUtils.isBlank(resources.getUrl())) {
+            throw new BadRequestException(I18nMessagesUtils.get("menu.url.null.tip"));
+        }
     }
 }

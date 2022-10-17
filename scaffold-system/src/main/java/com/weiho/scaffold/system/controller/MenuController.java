@@ -3,10 +3,13 @@ package com.weiho.scaffold.system.controller;
 import com.weiho.scaffold.common.exception.BadRequestException;
 import com.weiho.scaffold.common.exception.SecurityException;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
+import com.weiho.scaffold.common.util.page.PageUtils;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import com.weiho.scaffold.common.util.security.SecurityUtils;
 import com.weiho.scaffold.logging.annotation.Logging;
+import com.weiho.scaffold.redis.util.RedisUtils;
+import com.weiho.scaffold.system.cache.service.CacheRefresh;
 import com.weiho.scaffold.system.entity.Menu;
 import com.weiho.scaffold.system.entity.User;
 import com.weiho.scaffold.system.entity.convert.MenuDTOConvert;
@@ -26,8 +29,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -47,6 +52,8 @@ public class MenuController {
     private final MenuService menuService;
     private final RoleService roleService;
     private final UserService userService;
+    private final CacheRefresh cacheRefresh;
+    private final RedisUtils redisUtils;
 
     @ApiOperation("获取前端所需菜单")
     @GetMapping("/build")
@@ -70,7 +77,7 @@ public class MenuController {
     @GetMapping("/tree")
     @PreAuthorize("@el.check('Role:list','Menu:list')")
     public Object getMenuTree(HttpServletRequest request) {
-        return menuService.getMenuTree(menuService.findByPid(0L).stream().filter(Menu::isEnabled).collect(Collectors.toList()), request);
+        return menuService.getMenuTree(menuService.findByParentId(0L).stream().filter(Menu::isEnabled).collect(Collectors.toList()), request);
     }
 
     @ApiOperation("查询菜单列表")
@@ -78,7 +85,11 @@ public class MenuController {
     @PreAuthorize("@el.check('Menu:list')")
     public Map<String, Object> getMenuList(MenuQueryCriteria criteria) {
         List<MenuDTO> menuDTOS = menuDTOConvert.toPojo(menuService.getAll(criteria));
-        return menuService.buildTreeForList(menuDTOS);
+        if (criteria.getEnabled() == null || criteria.getEnabled()) {
+            return menuService.buildTreeForList(menuDTOS);
+        } else {
+            return PageUtils.toPageContainer(menuDTOS, menuDTOS.size());
+        }
     }
 
     @Logging(title = "导出菜单数据")
@@ -99,5 +110,62 @@ public class MenuController {
         }
         menuService.create(resources);
         return Result.success(I18nMessagesUtils.get("add.success.tip"));
+    }
+
+    @Logging(title = "修改菜单")
+    @ApiOperation("修改菜单")
+    @PutMapping
+    @PreAuthorize("@el.check('Menu:update')")
+    public Result updateMenu(@Validated @RequestBody Menu resources, HttpServletRequest request) {
+        // 刷新缓存
+        this.refreshMenuCache(menuService.update(resources), request);
+        return Result.success(I18nMessagesUtils.get("update.success.tip"));
+    }
+
+    @Logging(title = "删除菜单")
+    @ApiOperation("删除菜单")
+    @DeleteMapping
+    @PreAuthorize("@el.check('Menu:delete')")
+    public Result deleteMenu(@RequestBody Set<Long> ids, HttpServletRequest request) {
+        Set<Menu> menuSet = new HashSet<>();
+        for (Long id : ids) {
+            // 查找子菜单
+            List<Menu> menuChildren = menuService.findByParentId(id);
+            menuSet.add(menuService.getById(id));
+            menuSet = menuService.getLowerMenus(menuChildren, menuSet);
+        }
+        Set<Long> deleteIds = menuSet.stream().map(Menu::getId).collect(Collectors.toSet());
+        // 执行删除并且更新缓存
+        this.refreshMenuCache(menuService.delete(deleteIds), request);
+        return Result.success(I18nMessagesUtils.get("delete.success.tip"));
+    }
+
+    /**
+     * 刷新菜单缓存(在删除和更新菜单后都要刷新缓存)
+     *
+     * @param flag    是否刷新
+     * @param request 请求参数
+     */
+    public void refreshMenuCache(boolean flag, HttpServletRequest request) {
+        String username = SecurityUtils.getUsername();
+        Long userId = SecurityUtils.getUserId();
+
+        String keyPermission = redisUtils.getRedisCommonsKey("Permission", username);
+        String keyMenu = redisUtils.getRedisCommonsKey("Menus", username);
+        String keyMenuTree = "Scaffold:System::MenuTree";
+
+        if (flag) {
+            if (redisUtils.hasKey(keyPermission) && redisUtils.hasKey(keyMenu)) {
+                // 手动删除缓存
+                redisUtils.del(keyMenu, keyPermission);
+                // 调用更新缓存
+                cacheRefresh.updateRolesCacheForGrantedAuthorities(userId, username);
+                cacheRefresh.updateMenuCache(userId, username);
+            }
+            if (redisUtils.hasKey(keyMenuTree)) {
+                redisUtils.del(keyMenuTree);
+                cacheRefresh.updateMenuTree(request);
+            }
+        }
     }
 }
