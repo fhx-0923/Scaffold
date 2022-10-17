@@ -2,6 +2,7 @@ package com.weiho.scaffold.logging.controller;
 
 import com.weiho.scaffold.logging.annotation.Logging;
 import com.weiho.scaffold.logging.entity.criteria.LogQueryCriteria;
+import com.weiho.scaffold.logging.enums.BusinessTypeEnum;
 import com.weiho.scaffold.logging.enums.LogTypeEnum;
 import com.weiho.scaffold.logging.service.LogService;
 import io.swagger.annotations.Api;
@@ -73,7 +74,7 @@ public class LogController {
         return logService.findByErrorDetail(id);
     }
 
-    @Logging(title = "删除所有INFO日志")
+    @Logging(title = "删除所有INFO日志", businessType = BusinessTypeEnum.DELETE)
     @ApiOperation("删除所有INFO日志")
     @DeleteMapping("/logs")
     @PreAuthorize("@el.check('PlayLog:delete')")
@@ -81,7 +82,7 @@ public class LogController {
         logService.deleteAllByInfo();
     }
 
-    @Logging(title = "删除所有ERROR日志")
+    @Logging(title = "删除所有ERROR日志", businessType = BusinessTypeEnum.DELETE)
     @ApiOperation("删除所有ERROR日志")
     @DeleteMapping("/errorLogs")
     @PreAuthorize("@el.check('ErrorLog:delete')")

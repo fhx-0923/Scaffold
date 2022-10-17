@@ -8,6 +8,7 @@ import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.common.util.result.enums.ResultCodeEnum;
 import com.weiho.scaffold.common.util.security.SecurityUtils;
 import com.weiho.scaffold.logging.annotation.Logging;
+import com.weiho.scaffold.logging.enums.BusinessTypeEnum;
 import com.weiho.scaffold.redis.util.RedisUtils;
 import com.weiho.scaffold.system.cache.service.CacheRefresh;
 import com.weiho.scaffold.system.entity.Menu;
@@ -100,7 +101,7 @@ public class MenuController {
         menuService.download(menuDTOConvert.toPojo(menuService.getAll(criteria)), response);
     }
 
-    @Logging(title = "新增菜单")
+    @Logging(title = "新增菜单", businessType = BusinessTypeEnum.INSERT)
     @ApiOperation("新增菜单")
     @PostMapping
     @PreAuthorize("@el.check('Menu:add')")
@@ -112,7 +113,7 @@ public class MenuController {
         return Result.success(I18nMessagesUtils.get("add.success.tip"));
     }
 
-    @Logging(title = "修改菜单")
+    @Logging(title = "修改菜单", businessType = BusinessTypeEnum.UPDATE)
     @ApiOperation("修改菜单")
     @PutMapping
     @PreAuthorize("@el.check('Menu:update')")
@@ -122,7 +123,7 @@ public class MenuController {
         return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
 
-    @Logging(title = "删除菜单")
+    @Logging(title = "删除菜单", businessType = BusinessTypeEnum.DELETE)
     @ApiOperation("删除菜单")
     @DeleteMapping
     @PreAuthorize("@el.check('Menu:delete')")
