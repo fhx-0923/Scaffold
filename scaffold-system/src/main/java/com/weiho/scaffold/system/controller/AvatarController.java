@@ -4,6 +4,7 @@ import com.weiho.scaffold.common.exception.BadRequestException;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.logging.annotation.Logging;
+import com.weiho.scaffold.logging.enums.BusinessTypeEnum;
 import com.weiho.scaffold.system.entity.criteria.AvatarQueryCriteria;
 import com.weiho.scaffold.system.entity.vo.AvatarEnabledVO;
 import com.weiho.scaffold.system.service.AvatarService;
@@ -52,7 +53,7 @@ public class AvatarController {
     }
 
     @DeleteMapping
-    @Logging(title = "删除头像信息")
+    @Logging(title = "删除头像信息", businessType = BusinessTypeEnum.DELETE)
     @ApiOperation("删除头像信息")
     @PreAuthorize("@el.check('Avatar:delete')")
     public Result deleteAvatar(@RequestBody Set<Long> ids) {

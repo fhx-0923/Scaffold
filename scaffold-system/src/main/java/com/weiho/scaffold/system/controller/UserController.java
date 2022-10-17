@@ -10,6 +10,7 @@ import com.weiho.scaffold.common.util.rsa.RsaUtils;
 import com.weiho.scaffold.common.util.security.SecurityUtils;
 import com.weiho.scaffold.common.util.string.StringUtils;
 import com.weiho.scaffold.logging.annotation.Logging;
+import com.weiho.scaffold.logging.enums.BusinessTypeEnum;
 import com.weiho.scaffold.redis.limiter.annotation.RateLimiter;
 import com.weiho.scaffold.redis.limiter.enums.LimitType;
 import com.weiho.scaffold.redis.util.RedisUtils;
@@ -103,7 +104,7 @@ public class UserController {
         return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
 
-    @Logging(title = "修改邮箱")
+    @Logging(title = "修改邮箱", businessType = BusinessTypeEnum.UPDATE)
     @ApiOperation("修改邮箱")
     @PostMapping("/email")
     public Result updateEmail(@RequestBody VerificationVO verificationVO) throws Exception {
@@ -139,7 +140,7 @@ public class UserController {
         }
     }
 
-    @Logging(title = "修改头像")
+    @Logging(title = "修改头像", businessType = BusinessTypeEnum.UPDATE)
     @ApiOperation("修改头像")
     @PostMapping("/avatar")
     public Result updateAvatar(@RequestParam MultipartFile file) {
@@ -149,7 +150,7 @@ public class UserController {
         return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
 
-    @Logging(title = "修改用户")
+    @Logging(title = "修改用户", businessType = BusinessTypeEnum.UPDATE)
     @ApiOperation("修改用户")
     @PutMapping
     @PreAuthorize("@el.check('User:update')")
@@ -159,7 +160,7 @@ public class UserController {
         return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
 
-    @Logging(title = "新增用户")
+    @Logging(title = "新增用户", businessType = BusinessTypeEnum.INSERT)
     @ApiOperation("新增用户")
     @PostMapping
     @PreAuthorize("@el.check('User:add')")
@@ -170,7 +171,7 @@ public class UserController {
         return Result.success(I18nMessagesUtils.get("add.success.tip"));
     }
 
-    @Logging(title = "删除用户")
+    @Logging(title = "删除用户", businessType = BusinessTypeEnum.DELETE)
     @ApiOperation("删除用户")
     @DeleteMapping
     @PreAuthorize("@el.check('User:delete')")

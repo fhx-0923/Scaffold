@@ -4,6 +4,7 @@ package com.weiho.scaffold.tools.mail.controller;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.logging.annotation.Logging;
+import com.weiho.scaffold.logging.enums.BusinessTypeEnum;
 import com.weiho.scaffold.redis.limiter.annotation.RateLimiter;
 import com.weiho.scaffold.redis.limiter.enums.LimitType;
 import com.weiho.scaffold.tools.mail.entity.convert.EmailConfigVOConvert;
@@ -39,7 +40,7 @@ public class EmailConfigController {
         return Result.success(emailService.getConfig());
     }
 
-    @Logging(title = "修改邮件配置")
+    @Logging(title = "修改邮件配置", businessType = BusinessTypeEnum.UPDATE)
     @PutMapping
     @ApiOperation("修改邮件配置")
     public Result updateEmailConfig(@RequestBody EmailConfigVO config) {

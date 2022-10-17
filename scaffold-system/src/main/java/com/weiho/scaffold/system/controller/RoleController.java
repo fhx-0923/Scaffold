@@ -4,6 +4,7 @@ import com.weiho.scaffold.common.exception.BadRequestException;
 import com.weiho.scaffold.common.util.message.I18nMessagesUtils;
 import com.weiho.scaffold.common.util.result.Result;
 import com.weiho.scaffold.logging.annotation.Logging;
+import com.weiho.scaffold.logging.enums.BusinessTypeEnum;
 import com.weiho.scaffold.redis.limiter.annotation.RateLimiter;
 import com.weiho.scaffold.redis.limiter.enums.LimitType;
 import com.weiho.scaffold.system.entity.Role;
@@ -72,7 +73,7 @@ public class RoleController {
         roleService.download(roleService.findAllForLanguage(criteria, request), response);
     }
 
-    @Logging(title = "修改角色信息")
+    @Logging(title = "修改角色信息", businessType = BusinessTypeEnum.UPDATE)
     @ApiOperation("修改角色信息")
     @PutMapping
     @PreAuthorize("@el.check('Role:update')")
@@ -82,7 +83,7 @@ public class RoleController {
         return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
 
-    @Logging(title = "删除角色信息")
+    @Logging(title = "删除角色信息", businessType = BusinessTypeEnum.DELETE)
     @ApiOperation("删除角色信息")
     @DeleteMapping
     @PreAuthorize("@el.check('Role:delete')")
@@ -101,7 +102,7 @@ public class RoleController {
         return roleService.findById(id);
     }
 
-    @Logging(title = "修改角色菜单")
+    @Logging(title = "修改角色菜单", businessType = BusinessTypeEnum.UPDATE)
     @ApiOperation("修改角色菜单")
     @PutMapping("/menus")
     @PreAuthorize("@el.check('Role:update')")
@@ -113,7 +114,7 @@ public class RoleController {
         return Result.success(I18nMessagesUtils.get("update.success.tip"));
     }
 
-    @Logging(title = "新增角色")
+    @Logging(title = "新增角色", businessType = BusinessTypeEnum.INSERT)
     @ApiOperation("新增角色")
     @PostMapping
     @PreAuthorize("@el.check('Role:add')")
